@@ -8,6 +8,7 @@ body{
     width: 100%;
     display: flex;
 }
+
 .leftcontainer{
     width: 400px;
     height: 180px;
@@ -18,12 +19,12 @@ body{
     display: flex;
     justify-content: start;
     align-items: start;
-    
     flex-direction: column;
     
 }
 .leftbottomcontainer{
     background-color: rgb(75, 75, 75,0.2);
+    border-radius: 10px;
     width: 400px;
     height: auto;
     margin-left: 10px;
@@ -55,6 +56,8 @@ body{
     justify-content: start;
     align-items: start;
     flex-direction: column;
+    border-radius: 10px;
+    padding: 2px;
 
 }
 .small{
@@ -92,11 +95,14 @@ body{
     color: white;
     font-size: 10px;
     font-weight: bolder;
-    width:70px;
-    height: 30px;
+    width:110px;
+    height: 35px;
     border-radius: 20px;
     margin-top: 50px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .rightcontainer{
     width: 80%;
@@ -196,6 +202,8 @@ body{
 }
 .albumimage{
     border-radius: 10px;
+    height: 200px;
+    width: 200px;
 }
 .album-text{
     font-size: large;
@@ -269,11 +277,17 @@ hr{
 
 .artistcontainer:hover{
     background-color: rgb(75, 75, 75,0.4);
+    
 }
 .albumsubcontainer:hover{
     background-color: rgb(75, 75, 75,0.4);
 }
-
+.artistcontainer:hover .playbutton{
+    visibility: visible;
+}
+.albumsubcontainer:hover .playbutton{
+    visibility: visible;
+}
 
 a{
     text-decoration: none;
@@ -290,6 +304,13 @@ a{
     background-color: rgb(75, 75, 75,0.4);
     margin: 10px;
     border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.socialimage{
+    height: 30px;
+    width: 30px;
 }
 .playbutton{
     background-color: rgb(27, 167, 27);
@@ -299,5 +320,76 @@ a{
     position: relative;
     margin-top: -20px;
     margin-left: 70px;
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+.playimage{
+    height: 30px;
+    width: 30px;
+}
+.icons{
+    height: 25px;
+    width: 25px;
+    margin-left: 10px;
+}
+.iconcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grey{
+    color: gray;
+    font-size: 17px;
+}
+#left-shift{
+    margin-right: 180px;
+}
+
+.normal-size-text{
+    font-size: 17px;
+}
+.small-size-text{
+    font-size: 15px;
+}
+
+.bottom-tab-container{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    height: 60px;
+    background: rgb(255,101,179);
+    background: linear-gradient(90deg, rgba(255,101,179,1) 2%, rgba(44,138,186,1) 32%, rgba(47,134,182,1) 94%, rgba(63,56,110,1) 100%, rgba(64,49,103,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.para-container{
+    display: flex;
+    font-size: smaller;
+    font-weight: bold;
+    height: 90px;
+    color: white;
+}
+.large-text{
+    font-size: small;
+  
+
+}
+.bottom-tab-sub-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#loginbutton{
+    margin-right: 30px;
+    font-size: small;
+    position: relative;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
