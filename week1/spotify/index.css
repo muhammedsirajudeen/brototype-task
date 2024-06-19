@@ -1,0 +1,303 @@
+body{
+    display: flex;
+    background-color: black;
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+.maincontainer{
+    width: 100%;
+    display: flex;
+}
+.leftcontainer{
+    width: 400px;
+    height: 180px;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: rgb(75, 75, 75,0.2);
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    
+    flex-direction: column;
+    
+}
+.leftbottomcontainer{
+    background-color: rgb(75, 75, 75,0.2);
+    width: 400px;
+    height: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.top-left-text{
+    color: white;
+    opacity: 1;
+    margin-left: 10px;
+}
+.bottom-left-text{
+    color: white;
+    opacity: 1;
+}
+.leftbottomsubcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(75, 75, 75,0.4);
+    width: 380px;
+    height: 150px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+
+}
+.small{
+    font-size: 15px;
+}
+.create{
+    background-color: white;
+    border-style: hidden;
+    color: black;
+    border-radius: 30px;
+    padding: 8px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+.tiny-bottom-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.first-row{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+.tinytext{
+    font-size: smaller;
+    color: grey;
+    margin: 10px;
+}
+.language-container{
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    background-color: rgb(75, 75, 75,0.1);
+    color: white;
+    font-size: 10px;
+    font-weight: bolder;
+    width:70px;
+    height: 30px;
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+.rightcontainer{
+    width: 80%;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.top-right-container{
+    display: flex;
+    height:60px;
+    width: 100%;
+    background-color:  rgb(75, 75, 75,0.2) ;
+    border-radius: 10px;
+}
+.auth-container{
+    margin-left: 74rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly
+}
+.signup{
+    margin: 10px;
+    width: 70px;
+    color: gray;
+    background-color: rgb(75, 75, 75,0.1);
+    border-style: hidden;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+.login{
+    border-style: hidden;
+    padding: 15px;
+    border-radius: 30px;
+    width: 90px;
+    font-weight: bolder;
+    font-size: 16px;
+}
+.bottom-right-container{
+    background-color: rgb(75, 75, 75,0.4);
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.top-right-text{
+    color: white;
+    font-size: x-large;
+    margin-left: 10px;
+}
+.artistmaincontainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.artistcontainer{
+    width: 200px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+}
+.artistimage{
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+}
+.artist-text{
+    font-size: 16px;
+    color: white;
+    font-weight: bolder;
+    margin-right: 30px;
+}
+#artist-sub-text{
+    font-size: smaller;
+    color: gray;
+}
+
+.albumcontainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+
+}
+.albumsubcontainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+.albumimage{
+    border-radius: 10px;
+}
+.album-text{
+    font-size: large;
+    color: white;
+    font-weight: bolder;
+    margin-left: 20px;
+}
+#album-sub-text{
+    font-size: smaller;
+    color: gray;
+    margin-left: 20px;
+}
+.color-container{
+    height: 170px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: indianred;
+}
+.color-text{
+    font-size: 40px;
+    color: white;
+    font-weight: 900;
+}
+#second{
+    background-color: blueviolet;
+}
+#third{
+    background-color: lightgreen;
+}
+#fourth{
+    background-color: brown;
+}
+.bottom-text-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    width: 100%;
+    margin: 20px;
+}
+
+.text-sub-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.bottom-text{
+    font-size: small;
+    font-weight: 900;
+    color: white;
+}
+
+#alternate{
+    color: gray;
+    font-size: smaller;
+}
+hr{
+    width: 80%;
+    background-color: gray;
+    color: gray;
+}
+.copyright-text{
+    color: gray;
+    margin-left: 10px;
+    font-size: small;
+}
+
+.artistcontainer:hover{
+    background-color: rgb(75, 75, 75,0.4);
+}
+.albumsubcontainer:hover{
+    background-color: rgb(75, 75, 75,0.4);
+}
+
+
+a{
+    text-decoration: none;
+}
+.social-media-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+.social{
+    height: 40px;
+    width: 40px;
+    background-color: rgb(75, 75, 75,0.4);
+    margin: 10px;
+    border-radius: 100%;
+}
+.playbutton{
+    background-color: rgb(27, 167, 27);
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    position: relative;
+    margin-top: -20px;
+    margin-left: 70px;
+    display: none;
+}
