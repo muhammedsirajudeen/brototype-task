@@ -171,8 +171,8 @@ a{
     background-color: black;
 }
 .black-image{
-    height: inherit;
-    width: inherit;
+    height: 30vh;
+    width: 100%;
 }
 .black-container-text{
     color:white;
