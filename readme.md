@@ -1,6 +1,6 @@
 Spotify Live Production Deploy
 
-https://6673d1907ffbc4055ce23627--cozy-banoffee-f76491.netlify.app/
+https://cozy-banoffee-f76491.netlify.app/
 
 Myntra Live Production Deploy
 
