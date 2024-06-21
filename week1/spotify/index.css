@@ -3,6 +3,8 @@ body{
     background-color: black;
     font-family: sans-serif;
     overflow-x: hidden;
+    margin: 0px;
+    padding: 0px;
 }
 .maincontainer{
     width: 100%;
@@ -392,4 +394,124 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.mobile-navigation-container{
+    display: none;
+}
+#mobile{
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    body{
+        background-color: rgb(14, 14, 14);
+        overflow-x: hidden;
+    }
+    .leftsubcontainer{
+        display: none;
+    }
+    .top-right-container{
+        display: none;
+    }
+    .bottom-right-container{
+        background-color: inherit;
+    }
+    .mobile-navigation-container{
+        position: fixed;
+        display: inline;
+        width: 100%;
+        height: 60px;
+        background-color: black;
+        top: 0;
+        left: 0;
+    }
+    .icon{
+        height: 40px;
+        width: 40px;
+    }
+    .mobile-navigation-sub-container{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+    .open-text{
+        background-color: white;
+        padding: 10px;
+        border-style: hidden;
+        border-radius: 30px;
+        font-weight: 900;
+    }
+    .mob-nav-icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 45vw;
+        
+
+    }
+    .nav-icon{
+        height: 25px;
+        width: 25px;
+        margin: 20px;
+    }
+    .top-right-text{
+        margin-top: 7vh;
+        font-size: 20px;
+    }
+    .artistimage{
+        height: 20vh;
+        width: 35vw;
+        border-radius: 0px;
+    }
+    .artistmaincontainer{
+        overflow-x: scroll;
+        width: 90vw;
+    }
+    #artist-sub-text{
+        display: none;
+    }
+    .artist-text{
+        font-weight: 400;
+    }
+    .albumcontainer{
+        overflow-x: scroll;
+        width: 90vw; 
+    }
+    .albumsubcontainer{
+        margin: 10px;
+    }
+    .albumimage{
+        height: 20vh;
+        width: 35vw;
+        border-radius: 0px;
+    }
+    #album-sub-text{
+        display: none;
+    }
+    .album-text{
+        font-weight: 400;
+    }
+    .color-container{
+        border-radius: 0px;
+        width: 35vw;
+    }
+    .color-text{
+        font-size: 25px;
+    }
+    .bottom-text-container{
+        flex-direction: column;
+    }
+    .horizontal-line{
+        width: 100%;
+        font-weight: lighter;
+        font-size: 0.5px;
+        height: 1px;
+        background-color: rgb(71, 71, 71);
+    }
+    #mobile{
+        visibility: visible;
+    }
+
 }
