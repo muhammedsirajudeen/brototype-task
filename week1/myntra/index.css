@@ -80,6 +80,7 @@ a{
 }
 .main-image-container{
     width: 100%;
+    overflow: hidden;
 }
 .main-image{
     width: 100%;
