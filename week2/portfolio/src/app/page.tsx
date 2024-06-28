@@ -10,9 +10,10 @@ export default function Home() {
   //selector to select elements 
   let educationbannercontainer=useRef<HTMLDivElement | null>(null);
   let skillsbannercontainer=useRef<HTMLDivElement | null>(null);
+  let contactbannercontainer=useRef<HTMLDivElement | null >(null);
 
   //state to display sections
-  let [education,setEducation]=useState<boolean>(false)
+  let [education,setEducation]=useState<boolean>(false);
   let [skills,setSkills]=useState<boolean>(false);
   let [contact,setContact]=useState<boolean>(false);
 
@@ -189,6 +190,9 @@ export default function Home() {
   },[])
 
   function navigationHandler(section:String){
+
+    console.log("hello")
+
     const observerCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -230,9 +234,15 @@ export default function Home() {
 
       },250)
     }else if(section==="contact"){
+      console.log("hey")
       setContact(true)
       setEducation(false)
       setSkills(false)
+      setTimeout(()=>{
+        let contactbanner=contactbannercontainer.current
+        if(contactbanner) observer.observe(contactbanner)
+
+      },250)
     }
   }
   
@@ -390,18 +400,42 @@ export default function Home() {
 
               }
               {contact ? 
-                  <></>
+                    <div className='h-auto flex items-center flex-col justify-start information-container mt-3'>
+                    <div className= 'text-center m-0 ' >
+                      <p className='font-bold text-xl mt-3 ' >CONTACT ME</p>
+                    </div>
+                    <div className='banner bg-black' ref={contactbannercontainer}></div>
+    
+                    <div className=' shadow-2xl flex flex-col items-start justify-start w-62 '>
+                      <div className='flex items-center justify-start mt-30'>
+                        <span className="material-symbols-outlined" id="black-icon" >call</span>
+                        <span className='font-bold text-xs'>+917907140006</span>
+                      </div>
+                      <div className='flex items-center justify-start mt-30'>
+                        <span className="material-symbols-outlined" id="black-icon" >mail</span>
+                        <span className='font-bold text-xs'>muhammedsirajudeen29@gmail.com</span>
+                      </div>
+                      <div className='flex items-center justify-start mt-30'>
+                        <span className="material-symbols-outlined" id="black-icon" >home</span>
+                        <span className='font-bold text-xs'>Paduvil(H) Karimpuzha Palakkad <br/>679513 </span>
+                      </div>
+
+
+                    </div>   
+                    {/* give details about hobbies here  */}
+                    </div>
                     :
-                  <></>
+
+                    <></>
               }
 
           </div>
         </main>
           <div className='nav-items-container'>
             <div className='flex items-center justify-center w-full h-full transition-visibility  '>
-              <span onClick={()=> navigationHandler("education") } className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</span>
-              <span onClick={()=> navigationHandler("skills")} className="nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</span>
-              <span className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</span>
+              <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
+              <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
+              <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
     
             </div>
           </div>
