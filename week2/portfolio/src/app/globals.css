@@ -21,6 +21,7 @@ body{
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   box-shadow: 1px 1px 4px;
+  background-color: white;
 }
 .material-symbols-outlined {
   font-variation-settings:
@@ -97,6 +98,12 @@ body{
   width: 60vw;
   left: auto;
   bottom: 4vh;
-  transition: all 3s;
+transition: all 2s;
 }
-
+.information-container{
+  height: 50vh;
+  overflow: scroll;
+}
+meter::-webkit-meter-optimum-value {
+  background: black;
+}

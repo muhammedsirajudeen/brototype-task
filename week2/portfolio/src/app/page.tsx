@@ -6,6 +6,16 @@ export default function Home() {
   let iconRef=useRef<HTMLSpanElement | null>(null);
   let parentcontainer=useRef<HTMLElement | null>(null);
   let loadingcontainer=useRef<HTMLDivElement | null>(null);
+  
+  //selector to select elements 
+  let educationbannercontainer=useRef<HTMLDivElement | null>(null);
+  let skillsbannercontainer=useRef<HTMLDivElement | null>(null);
+
+  //state to display sections
+  let [education,setEducation]=useState<boolean>(false)
+  let [skills,setSkills]=useState<boolean>(false);
+  let [contact,setContact]=useState<boolean>(false);
+
 
   let wavy=false;
   let EXECUTION_PARAMETER=0
@@ -30,28 +40,7 @@ export default function Home() {
  
 
   useEffect(()=>{
-    //using the intersection observer API
-    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Add a class to start the animation
-          (entry.target as HTMLElement).style.width = '0px';
-          // Stop observing the element
-          observer.unobserve(entry.target);
-        }
-      });
-    };
 
-    const observerOptions: IntersectionObserverInit = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px',
-      threshold: 1 // Trigger when 10% of the element is visible
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    let banner=document.querySelector(".banner")
-    if(banner) observer.observe(banner) 
 
     let element=iconRef.current
     let iconelements=document.querySelectorAll(".nav-icons") ?? []
@@ -81,8 +70,6 @@ export default function Home() {
     }
 
     //star dust code
-
-
     // function move(){
     //   if(STAR_COUNT<100){
     //     let stardust=document.createElement("div")
@@ -200,6 +187,54 @@ export default function Home() {
     },3000)
 
   },[])
+
+  function navigationHandler(section:String){
+    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add a class to start the animation
+          (entry.target as HTMLElement).style.width = '0px';
+          // Stop observing the element
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observerOptions: IntersectionObserverInit = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 1 // Trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+
+    if(section==="education"){
+      setEducation(true)
+      setContact(false)
+      setSkills(false)
+      //hacky code
+      setTimeout(()=>{
+        let banner=educationbannercontainer.current
+        if(banner) observer.observe(banner)         
+
+      },250)
+    }
+    else if(section==="skills"){
+      setSkills(true)
+      setContact(false)
+      setEducation(false)
+      setTimeout(()=>{
+        let skillbanner=skillsbannercontainer.current
+        if(skillbanner) observer.observe(skillbanner)
+
+      },250)
+    }else if(section==="contact"){
+      setContact(true)
+      setEducation(false)
+      setSkills(false)
+    }
+  }
   
   
   return (
@@ -243,59 +278,129 @@ export default function Home() {
           {/* here we switch the item  */}
           <div className='flex justify-center items-center mt-5'>
               {/* give overflow to this container */}
-              <div className='h-auto flex items-center flex-col justify-center overflow-y-scroll'>
-                <p className='font-bold mt-5 text-xl ' >EDUCATION</p>
-                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5'>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                    <p className='text-sm font-bold' >Bsc. Computer Science</p>              
-                  </div>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                    <p className='text-sm font-bold' >Calicut University</p>              
-                  </div>             
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                    <p className='text-sm font-bold' >Calicut</p>              
-                  </div> 
-                </div>      
-                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-10 '>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                    <p className='text-sm font-bold' >12th Grade</p>              
-                  </div>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                    <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                  </div>             
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                    <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                  </div> 
-                </div>
-                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-10 '>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                    <p className='text-sm font-bold' >10th Grade</p>              
-                  </div>
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                    <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                  </div>             
-                  <div className='text-sm flex items-center justify-start w-full'>
-                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                    <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                  </div> 
-                </div>    
-                
-              </div>
+              {education ? 
+                    <div className='h-auto flex items-center flex-col justify-center information-container'>
+                            <div className= 'text-center' >
+                              <p className='font-bold text-xl ' >EDUCATION</p>
+            
+                            </div>
+                            <div className='banner bg-black' ref={educationbannercontainer} ></div>
+            
+                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 '>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                                <p className='text-sm font-bold' >Bsc. Computer Science</p>              
+                              </div>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                                <p className='text-sm font-bold' >Calicut University</p>              
+                              </div>             
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                                <p className='text-sm font-bold' >Calicut</p>              
+                              </div> 
+                            </div>      
+                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5 '>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                                <p className='text-sm font-bold' >12th Grade</p>              
+                              </div>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                                <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                              </div>             
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                                <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                              </div> 
+                            </div>
+                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5 '>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                                <p className='text-sm font-bold' >10th Grade</p>              
+                              </div>
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                                <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                              </div>             
+                              <div className='text-sm flex items-center justify-start w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                                <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                              </div> 
+                            </div>
+            
+                            
+                    </div>
+                    :
+                    <></>
+              }
+              {skills ?
+                    <div className='h-auto flex items-center flex-col justify-start information-container mt-3'>
+                      <div className= 'text-center m-0 ' >
+                        <p className='font-bold text-xl mt-3 ' >SKILLS & HOBBIES</p>
+                      </div>
+                      <div className='banner bg-black' ref={skillsbannercontainer} ></div>
+      
+                      <div className=' shadow-2xl flex flex-col items-center justify-start w-60 '>
+                        <div className='text-sm flex items-center justify-start w-full'>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>JS</span>
+                              <span className='font text-sm font-light'>90%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black'></meter>
+                          </div>
+
+                          </div>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
+                              <div className='flex justify-between w-full'>
+                                <span className='font font-bold text-sm'>PYTHON</span>
+                                <span className='font text-sm font-light'>95%</span>
+                              </div>
+                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
+                          </div>
+                        <div className='flex flex-col items-start justify-center w-full'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>MERN</span>
+                              <span className='font text-sm font-light'>95%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
+                        </div>
+                        <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>DJANGO</span>
+                              <span className='font text-sm font-light'>65%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
+                        </div>
+                        <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>REACT NATIVE</span>
+                              <span className='font text-sm font-light'>75%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
+                        </div>
+
+
+                      </div>   
+                      {/* give details about hobbies here  */}
+                    </div>
+                    :
+                <></> 
+
+              }
+              {contact ? 
+                  <></>
+                    :
+                  <></>
+              }
+
           </div>
-          <div className='banner bg-black'></div>
         </main>
           <div className='nav-items-container'>
             <div className='flex items-center justify-center w-full h-full transition-visibility  '>
-              <span className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</span>
-              <span className="nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</span>
+              <span onClick={()=> navigationHandler("education") } className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</span>
+              <span onClick={()=> navigationHandler("skills")} className="nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</span>
               <span className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</span>
     
             </div>
