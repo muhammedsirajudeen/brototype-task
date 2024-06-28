@@ -348,7 +348,7 @@ export default function Home() {
                               <span className='font font-bold text-sm'>JS</span>
                               <span className='font text-sm font-light'>90%</span>
                             </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black'></meter>
+                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
                           </div>
 
                           </div>
@@ -357,7 +357,7 @@ export default function Home() {
                                 <span className='font font-bold text-sm'>PYTHON</span>
                                 <span className='font text-sm font-light'>95%</span>
                               </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
+                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
                           </div>
                         <div className='flex flex-col items-start justify-center w-full'>
                             <div className='flex justify-between w-full'>
