@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Triangle } from 'react-loader-spinner';
 export default function Home() {
   let iconRef=useRef<HTMLSpanElement | null>(null);
-  let parentcontainer=useRef<HTMLElement | null>(null);
+  let parentcontainer=useRef<HTMLDivElement | null>(null);
   let loadingcontainer=useRef<HTMLDivElement | null>(null);
   
   //selector to select elements 
@@ -42,6 +42,10 @@ export default function Home() {
 
   useEffect(()=>{
 
+    window.onscroll = function () {
+       window.scrollTo(0, 0); 
+      console.log("scrolled")
+      };
 
     let element=iconRef.current
     let iconelements=document.querySelectorAll(".nav-icons") ?? []
@@ -119,10 +123,8 @@ export default function Home() {
 
         POSITION_NODE_ARRAY.forEach((node)=>{
           //remove the px and just increment it by one to get necessary animation
-          console.log(node)
           let decision_parameter=Math.floor(Math.random()*4)
           let mover_decider=POSITION_ARRAY[decision_parameter];
-          console.log(mover_decider)      
 
           if (node.position == "top") {
             let top = parseInt(window.getComputedStyle(node.node).top);
@@ -191,7 +193,6 @@ export default function Home() {
 
   function navigationHandler(section:String){
 
-    console.log("hello")
 
     const observerCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach(entry => {
@@ -234,7 +235,6 @@ export default function Home() {
 
       },250)
     }else if(section==="contact"){
-      console.log("hey")
       setContact(true)
       setEducation(false)
       setSkills(false)
@@ -262,7 +262,7 @@ export default function Home() {
         />
       </div>
       <>
-          <main ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer">
+          <div ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer">
           <div className='mob-nav-container flex items-center justify-center bg-black w-full h-20 text-white'>
     
             <div className='flex items-start justify-end w-full text-white font-bold mr-5'><p>Portfolio.</p></div>
@@ -430,13 +430,12 @@ export default function Home() {
               }
 
           </div>
-        </main>
+        </div>
           <div className='nav-items-container'>
             <div className='flex items-center justify-center w-full h-full transition-visibility  '>
               <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
               <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
               <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
-    
             </div>
           </div>
         </>
