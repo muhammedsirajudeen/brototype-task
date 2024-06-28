@@ -66,9 +66,10 @@ body{
 }
 .image-container{
   border-radius: 30% 80% 30% 80%;
-  height: 20vh;
-  width: 40vw;
-  margin-top: 20px;
+  transform: rotate(25deg);
+  min-height: 200px;
+  min-width: 200px;
+  margin: 2rem;
 }
 .stardust{
   height: 2px;
@@ -101,7 +102,7 @@ body{
   width: 60vw;
   left: auto;
   bottom: 4vh;
-transition: all 2s;
+  transition: all 2s;
 }
 .information-container{
   height: 50vh;

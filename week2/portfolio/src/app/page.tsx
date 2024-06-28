@@ -42,10 +42,7 @@ export default function Home() {
 
   useEffect(()=>{
 
-    window.onscroll = function () {
-       window.scrollTo(0, 0); 
-      console.log("scrolled")
-      };
+
 
     let element=iconRef.current
     let iconelements=document.querySelectorAll(".nav-icons") ?? []
@@ -193,7 +190,7 @@ export default function Home() {
 
   function navigationHandler(section:String){
 
-
+    console.log("clicked")
     const observerCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -208,7 +205,7 @@ export default function Home() {
     const observerOptions: IntersectionObserverInit = {
       root: null, // Use the viewport as the root
       rootMargin: '0px',
-      threshold: 1 // Trigger when 10% of the element is visible
+      threshold: 0.2 // Trigger when 20% of element is visible thi
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
