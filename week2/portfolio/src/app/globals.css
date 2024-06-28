@@ -32,6 +32,10 @@ body{
   color: white;
   padding: 5px;
 }
+#black-icon{
+  scale: 0.8;
+  color: black;
+}
 
 
 .nav-items-container{
@@ -86,3 +90,13 @@ body{
   overflow-x: hidden;
   overflow-y: hidden;
 }
+.banner {
+  position: relative;
+  display: inline-block;
+  height: 5vh;
+  width: 60vw;
+  left: auto;
+  bottom: 4vh;
+  transition: all 3s;
+}
+

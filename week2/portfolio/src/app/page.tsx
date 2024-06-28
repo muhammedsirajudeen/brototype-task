@@ -30,6 +30,29 @@ export default function Home() {
  
 
   useEffect(()=>{
+    //using the intersection observer API
+    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add a class to start the animation
+          (entry.target as HTMLElement).style.width = '0px';
+          // Stop observing the element
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observerOptions: IntersectionObserverInit = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 1 // Trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    let banner=document.querySelector(".banner")
+    if(banner) observer.observe(banner) 
+
     let element=iconRef.current
     let iconelements=document.querySelectorAll(".nav-icons") ?? []
 
@@ -60,114 +83,114 @@ export default function Home() {
     //star dust code
 
 
-    function move(){
-      if(STAR_COUNT<100){
-        let stardust=document.createElement("div")
-        stardust.className="stardust"  
-        //here get top botom left and right random numbers and assign it while creating
-        let top=getRandomNumber()
-        let bottom=getRandomNumber()
-        let right=getRandomNumber()
-        let left=getRandomNumber()
+    // function move(){
+    //   if(STAR_COUNT<100){
+    //     let stardust=document.createElement("div")
+    //     stardust.className="stardust"  
+    //     //here get top botom left and right random numbers and assign it while creating
+    //     let top=getRandomNumber()
+    //     let bottom=getRandomNumber()
+    //     let right=getRandomNumber()
+    //     let left=getRandomNumber()
 
-        stardust.style.top=top.toString()+"vh";
-        stardust.style.bottom=bottom.toString()+"vh";
-        stardust.style.left=left.toString()+"vw";
-        stardust.style.right=right.toString()+"vw";
-
-
-        let parentcontainer=document.querySelector(".parentcontainer")
-        parentcontainer?.appendChild(stardust)
-        STAR_COUNT++;
-      }
-      else{
-        // setTimeout(()=>{
-        //   console.log("hit")
-        //   setLoading(false)
-        // },2000)
-        // cancelAnimationFrame(ANIMATION_ID)
-        // console.log("cancelled")
-        // dont forget to add logic to cancel the animation
-        let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
+    //     stardust.style.top=top.toString()+"vh";
+    //     stardust.style.bottom=bottom.toString()+"vh";
+    //     stardust.style.left=left.toString()+"vw";
+    //     stardust.style.right=right.toString()+"vw";
 
 
-        //assigning object with node and position
-        if(EXECUTION_PARAMETER===0){
-          stardustarray.forEach((node)=>{
-            let decider_parameter=Math.floor(Math.random()*4)
-            let position=POSITION_ARRAY[decider_parameter];
-            let position_object:position_object_type={
-              position:position,
-              node:node
-            }
-            POSITION_NODE_ARRAY.push(position_object)
-          })
-          EXECUTION_PARAMETER++
-        }
+    //     let parentcontainer=document.querySelector(".parentcontainer")
+    //     parentcontainer?.appendChild(stardust)
+    //     STAR_COUNT++;
+    //   }
+    //   else{
+    //     // setTimeout(()=>{
+    //     //   console.log("hit")
+    //     //   setLoading(false)
+    //     // },2000)
+    //     // cancelAnimationFrame(ANIMATION_ID)
+    //     // console.log("cancelled")
+    //     // dont forget to add logic to cancel the animation
+    //     let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
 
 
-        POSITION_NODE_ARRAY.forEach((node)=>{
-          //remove the px and just increment it by one to get necessary animation
-          console.log(node)
-          let decision_parameter=Math.floor(Math.random()*4)
-          let mover_decider=POSITION_ARRAY[decision_parameter];
-          console.log(mover_decider)      
+    //     //assigning object with node and position
+    //     if(EXECUTION_PARAMETER===0){
+    //       stardustarray.forEach((node)=>{
+    //         let decider_parameter=Math.floor(Math.random()*4)
+    //         let position=POSITION_ARRAY[decider_parameter];
+    //         let position_object:position_object_type={
+    //           position:position,
+    //           node:node
+    //         }
+    //         POSITION_NODE_ARRAY.push(position_object)
+    //       })
+    //       EXECUTION_PARAMETER++
+    //     }
 
-          if (node.position == "top") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1200) ? 0 : top 
-            top++;
-            node.node.style.top = top + "px";
-        } else if (node.position == "bottom") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1200) ? 0 : top 
 
-            top--;
-            node.node.style.top = top + "px";
-        } else if (node.position == "left") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
-            left++;
-            node.node.style.left = left + "px";
-        } else if (node.position == "right") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
+    //     POSITION_NODE_ARRAY.forEach((node)=>{
+    //       //remove the px and just increment it by one to get necessary animation
+    //       console.log(node)
+    //       let decision_parameter=Math.floor(Math.random()*4)
+    //       let mover_decider=POSITION_ARRAY[decision_parameter];
+    //       console.log(mover_decider)      
 
-            left--;
-            node.node.style.left = left + "px";
-        }
+    //       if (node.position == "top") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1200) ? 0 : top 
+    //         top++;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "bottom") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1200) ? 0 : top 
 
-          // setInterval(()=>{
-          // if(mover_decider==="top"){
-          //   let top=parseInt(window.getComputedStyle(node.node).top)
-          //   top++
-          //   node.node.style.top=top.toString()+"px"
-          // }else if(mover_decider=="bottom"){
-          //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
-          //   bottom++
-          //   node.node.style.bottom=bottom.toString()+"px"
+    //         top--;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "left") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
+    //         left++;
+    //         node.node.style.left = left + "px";
+    //     } else if (node.position == "right") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
 
-          // }
-          // else if(mover_decider=="left"){
-          //   let left=parseInt(window.getComputedStyle(node.node).left)
-          //   left++
-          //   node.node.style.bottom=left.toString()+"px"
+    //         left--;
+    //         node.node.style.left = left + "px";
+    //     }
+
+    //       // setInterval(()=>{
+    //       // if(mover_decider==="top"){
+    //       //   let top=parseInt(window.getComputedStyle(node.node).top)
+    //       //   top++
+    //       //   node.node.style.top=top.toString()+"px"
+    //       // }else if(mover_decider=="bottom"){
+    //       //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
+    //       //   bottom++
+    //       //   node.node.style.bottom=bottom.toString()+"px"
+
+    //       // }
+    //       // else if(mover_decider=="left"){
+    //       //   let left=parseInt(window.getComputedStyle(node.node).left)
+    //       //   left++
+    //       //   node.node.style.bottom=left.toString()+"px"
             
-          // }
-          // else if(mover_decider=="right"){
-          //   let right=parseInt(window.getComputedStyle(node.node).right)
-          //   right++
-          //   node.node.style.bottom=right.toString()+"px"
+    //       // }
+    //       // else if(mover_decider=="right"){
+    //       //   let right=parseInt(window.getComputedStyle(node.node).right)
+    //       //   right++
+    //       //   node.node.style.bottom=right.toString()+"px"
 
-          // }
-          // },3000)
+    //       // }
+    //       // },3000)
 
-        })
-      } 
-      ANIMATION_ID=requestAnimationFrame(move)
+    //     })
+    //   } 
+    //   ANIMATION_ID=requestAnimationFrame(move)
 
-    }
-    requestAnimationFrame(move)
+    // }
+    // requestAnimationFrame(move)
 
     setTimeout(()=>{
       if(parentcontainer.current && loadingcontainer.current ){
@@ -217,6 +240,57 @@ export default function Home() {
             </span>
             </nav>
           </div>
+          {/* here we switch the item  */}
+          <div className='flex justify-center items-center mt-5'>
+              {/* give overflow to this container */}
+              <div className='h-auto flex items-center flex-col justify-center overflow-y-scroll'>
+                <p className='font-bold mt-5 text-xl ' >EDUCATION</p>
+                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5'>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                    <p className='text-sm font-bold' >Bsc. Computer Science</p>              
+                  </div>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                    <p className='text-sm font-bold' >Calicut University</p>              
+                  </div>             
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                    <p className='text-sm font-bold' >Calicut</p>              
+                  </div> 
+                </div>      
+                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-10 '>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                    <p className='text-sm font-bold' >12th Grade</p>              
+                  </div>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                    <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                  </div>             
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                    <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                  </div> 
+                </div>
+                <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-10 '>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                    <p className='text-sm font-bold' >10th Grade</p>              
+                  </div>
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                    <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                  </div>             
+                  <div className='text-sm flex items-center justify-start w-full'>
+                    <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                    <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                  </div> 
+                </div>    
+                
+              </div>
+          </div>
+          <div className='banner bg-black'></div>
         </main>
           <div className='nav-items-container'>
             <div className='flex items-center justify-center w-full h-full transition-visibility  '>
@@ -225,7 +299,6 @@ export default function Home() {
               <span className="nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</span>
     
             </div>
-    
           </div>
         </>
     </>
