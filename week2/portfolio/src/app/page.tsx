@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Triangle } from 'react-loader-spinner';
 export default function Home() {
   let iconRef=useRef<HTMLSpanElement | null>(null);
@@ -13,6 +13,7 @@ export default function Home() {
   let contactbannercontainer=useRef<HTMLDivElement | null >(null);
 
   //state to display sections
+  let [services,setServices]=useState(true);
   let [education,setEducation]=useState<boolean>(false);
   let [skills,setSkills]=useState<boolean>(false);
   let [contact,setContact]=useState<boolean>(false);
@@ -53,10 +54,10 @@ export default function Home() {
 
           node.classList.remove("hiddenelement")
           node.classList.add("visible")
-          setTimeout(()=>{
-            node.classList.add("alter-position")
+          // setTimeout(()=>{
+          //   node.classList.add("alter-position")
 
-          },2000)
+          // },2000)
         })
       }
       element.onmouseout=()=>{
@@ -178,13 +179,13 @@ export default function Home() {
 
     }
     requestAnimationFrame(move)
-
+    // loading logic
     setTimeout(()=>{
       if(parentcontainer.current && loadingcontainer.current ){
         parentcontainer.current.style.visibility="visible"
         loadingcontainer.current.style.display="none"
       }
-    },3000)
+    },1500)
 
   },[])
 
@@ -213,6 +214,7 @@ export default function Home() {
 
     if(section==="education"){
       setEducation(true)
+      setServices(false)
       setContact(false)
       setSkills(false)
       //hacky code
@@ -224,6 +226,7 @@ export default function Home() {
     }
     else if(section==="skills"){
       setSkills(true)
+      setServices(false)
       setContact(false)
       setEducation(false)
       setTimeout(()=>{
@@ -233,6 +236,7 @@ export default function Home() {
       },250)
     }else if(section==="contact"){
       setContact(true)
+      setServices(false)
       setEducation(false)
       setSkills(false)
       setTimeout(()=>{
@@ -240,6 +244,13 @@ export default function Home() {
         if(contactbanner) observer.observe(contactbanner)
 
       },250)
+    }
+    else if(section === "services"){
+      setServices(true)
+      setContact(false)
+      setEducation(false)
+      setSkills(false)
+      
     }
   }
   
@@ -284,16 +295,74 @@ export default function Home() {
           </div>
           {/* here we switch the item  */}
           <div className='flex justify-center items-center mt-5'>
+
               {/* give overflow to this container */}
+              {services ?
+                    <div className=' flex items-center flex-col justify-center information-container'>
+                    <div className= 'text-center' >
+                      <p className='font-bold text-xl ' >SERVICES</p>
+    
+                    </div>
+                    <div className='banner bg-black' ref={educationbannercontainer} ></div>
+    
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 '>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                        <p className='text-sm font-bold' >Bsc. Computer Science</p>              
+                      </div>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                        <p className='text-sm font-bold' >Calicut University</p>              
+                      </div>             
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                        <p className='text-sm font-bold' >Calicut</p>              
+                      </div> 
+                    </div>      
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                        <p className='text-sm font-bold' >12th Grade</p>              
+                      </div>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                        <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                      </div>             
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                        <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                      </div> 
+                    </div>
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                        <p className='text-sm font-bold' >10th Grade</p>              
+                      </div>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                        <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                      </div>             
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                        <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                      </div> 
+                    </div>
+    
+                    
+            </div>
+             
+                        :
+                    <></>               
+              }
               {education ? 
-                    <div className='h-auto flex items-center flex-col justify-center information-container'>
+                    <div className=' flex items-center flex-col justify-center information-container'>
                             <div className= 'text-center' >
                               <p className='font-bold text-xl ' >EDUCATION</p>
             
                             </div>
                             <div className='banner bg-black' ref={educationbannercontainer} ></div>
             
-                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 '>
+                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 '>
                               <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >school</span>  
                                 <p className='text-sm font-bold' >Bsc. Computer Science</p>              
@@ -307,7 +376,7 @@ export default function Home() {
                                 <p className='text-sm font-bold' >Calicut</p>              
                               </div> 
                             </div>      
-                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5 '>
+                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
                               <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >school</span>  
                                 <p className='text-sm font-bold' >12th Grade</p>              
@@ -321,7 +390,7 @@ export default function Home() {
                                 <p className='text-sm font-bold' >Sreekrishnapuram</p>              
                               </div> 
                             </div>
-                            <div className=' shadow-2xl flex flex-col items-center justify-center w-60 mt-5 '>
+                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
                               <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >school</span>  
                                 <p className='text-sm font-bold' >10th Grade</p>              
@@ -342,13 +411,13 @@ export default function Home() {
                     <></>
               }
               {skills ?
-                    <div className='h-auto flex items-center flex-col justify-start information-container mt-3'>
+                    <div className=' flex items-center flex-col justify-start information-container mt-3'>
                       <div className= 'text-center m-0 ' >
-                        <p className='font-bold text-xl mt-3 ' >SKILLS & HOBBIES</p>
+                        <p className='font-bold text-lg mt-3 ' >SKILLS & HOBBIES</p>
                       </div>
                       <div className='banner bg-black' ref={skillsbannercontainer} ></div>
       
-                      <div className=' shadow-2xl flex flex-col items-center justify-start w-60 '>
+                      <div className=' shadow-lg flex flex-col items-center justify-start w-60 '>
                         <div className='text-sm flex items-center justify-start w-full'>
                           <div className='flex flex-col items-start justify-center w-full mt-3'>
                             <div className='flex justify-between w-full'>
@@ -397,13 +466,13 @@ export default function Home() {
 
               }
               {contact ? 
-                    <div className='h-auto flex items-center flex-col justify-start information-container mt-3'>
+                    <div className=' flex items-center flex-col justify-start information-container mt-3'>
                     <div className= 'text-center m-0 ' >
                       <p className='font-bold text-xl mt-3 ' >CONTACT ME</p>
                     </div>
                     <div className='banner bg-black' ref={contactbannercontainer}></div>
     
-                    <div className=' shadow-2xl flex flex-col items-start justify-start w-62 '>
+                    <div className=' shadow-lg flex flex-col items-start justify-start w-62 '>
                       <div className='flex items-center justify-start mt-30'>
                         <span className="material-symbols-outlined" id="black-icon" >call</span>
                         <span className='font-bold text-xs'>+917907140006</span>
@@ -429,14 +498,16 @@ export default function Home() {
           </div>
         </div>
           <div className='nav-items-container'>
-            <div className='flex items-center justify-center w-full h-full transition-visibility  '>
-              <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
-              <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon mt-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
-              <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon m-10 bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
+            <div className='flex items-center justify-evenly w-full h-full transition-visibility  '>
+              <button onClick={()=> navigationHandler("services") } className="icon3 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >home</button>
+              <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
+              <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
+              <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
+
             </div>
           </div>
         </>
-    </>
+        </>
 
 
 )
