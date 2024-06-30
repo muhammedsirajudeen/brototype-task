@@ -72,13 +72,13 @@ body{
   margin: 2rem;
 }
 .stardust{
-  height: 2px;
-  width: 2px;
+  height: 20px;
+  width: 20px;
   position: relative;
   bottom: 0;
   left: 0;
   background-color: black;
-  z-index: -1;
+  /* z-index: -1; */
   border-radius: 100%;
 }
 .loadingcontainer{
@@ -110,11 +110,13 @@ body{
   overflow: scroll;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
   margin-bottom:8vh;
 }
 .top-text{
   margin-top: 7vh;
+}
+#top-text{
+  margin-top: 2vh;
 }
 meter::-webkit-meter-optimum-value {
   background: black;
