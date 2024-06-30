@@ -23,6 +23,7 @@ body{
   border-top-right-radius: 20px;
   box-shadow: 1px 1px 4px;
   background-color: white;
+  z-index:1000;
 }
 .material-symbols-outlined {
   font-variation-settings:
@@ -113,7 +114,7 @@ body{
   margin-bottom:8vh;
 }
 .top-text{
-  margin-top: 7vh;
+  margin-top: 11vh;
 }
 #top-text{
   margin-top: 2vh;

@@ -321,7 +321,7 @@ export default function Home() {
                         <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
                       </div>              
                     </div>   
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 mb-10 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
                         <p className='text-sm font-bold' >Backend Development</p>              
@@ -331,7 +331,7 @@ export default function Home() {
                         <p className='text-xs font-bold' >Crafting complex scalable backend applications.</p>              
                       </div>              
                     </div>     
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
+                    {/* <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
                         <p className='text-sm font-bold' >Scalable Systems</p>              
@@ -341,7 +341,7 @@ export default function Home() {
                         <p className='text-xs font-bold' >Diagnosing and solving Issues of scalability
                         </p>              
                       </div>              
-                    </div>  
+                    </div>   */}
     
                     
             </div>
