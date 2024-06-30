@@ -321,12 +321,12 @@ export default function Home() {
                         <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
                       </div>              
                     </div>   
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 mb-10 '>
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3  '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
                         <p className='text-sm font-bold' >Backend Development</p>              
                       </div>
-                      <div className='text-sm flex items-center justify-start w-full'>
+                      <div className='text-sm flex items-center justify-start w-full' id='bottom-margin'>
                         <span className="material-symbols-outlined" id="black-icon" >info</span>                  
                         <p className='text-xs font-bold' >Crafting complex scalable backend applications.</p>              
                       </div>              
@@ -352,7 +352,7 @@ export default function Home() {
               {education ? 
                     <div className=' flex items-center flex-col justify-center information-container'>
                             <div className= 'text-center' >
-                              <p className='font-bold text-xl top-text' >EDUCATION</p>
+                              <p className='font-bold text-xl top-text' id='margin-top' >EDUCATION</p>
             
                             </div>
                             <div className='banner bg-black' ref={educationbannercontainer} ></div>
@@ -394,7 +394,7 @@ export default function Home() {
                                 <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
                                 <p className='text-sm font-bold' >St Dominics Convent School</p>              
                               </div>             
-                              <div className='text-sm flex items-center justify-start w-full'>
+                              <div className='text-sm flex items-center justify-start w-full' id='bottom-margin' >
                                 <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
                                 <p className='text-sm font-bold' >Sreekrishnapuram</p>              
                               </div> 
@@ -492,7 +492,7 @@ export default function Home() {
                             </div>
                             <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
                         </div>
-                        <div className='flex flex-col items-start justify-center w-full mt-3'>
+                        <div className='flex flex-col items-start justify-center w-full mt-3' id='bottom-margin' >
                             <div className='flex justify-between w-full'>
                               <span className='font font-bold text-sm'>REACT NATIVE</span>
                               <span className='font text-sm font-light'>75%</span>
