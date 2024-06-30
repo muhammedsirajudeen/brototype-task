@@ -54,10 +54,6 @@ export default function Home() {
 
           node.classList.remove("hiddenelement")
           node.classList.add("visible")
-          // setTimeout(()=>{
-          //   node.classList.add("alter-position")
-
-          // },2000)
         })
       }
       element.onmouseout=()=>{
@@ -73,112 +69,112 @@ export default function Home() {
     }
 
     //star dust code
-    function move(){
-      if(STAR_COUNT<100){
-        let stardust=document.createElement("div")
-        stardust.className="stardust"  
-        //here get top botom left and right random numbers and assign it while creating
-        let top=getRandomNumber()
-        let bottom=getRandomNumber()
-        let right=getRandomNumber()
-        let left=getRandomNumber()
+    // function move(){
+    //   if(STAR_COUNT<100){
+    //     let stardust=document.createElement("div")
+    //     stardust.className="stardust"  
+    //     //here get top botom left and right random numbers and assign it while creating
+    //     let top=getRandomNumber()
+    //     let bottom=getRandomNumber()
+    //     let right=getRandomNumber()
+    //     let left=getRandomNumber()
 
-        stardust.style.top=top.toString()+"vh";
-        stardust.style.bottom=bottom.toString()+"vh";
-        stardust.style.left=left.toString()+"vw";
-        stardust.style.right=right.toString()+"vw";
-
-
-        let parentcontainer=document.querySelector(".parentcontainer")
-        parentcontainer?.appendChild(stardust)
-        STAR_COUNT++;
-      }
-      else{
-        // setTimeout(()=>{
-        //   console.log("hit")
-        //   setLoading(false)
-        // },2000)
-        // cancelAnimationFrame(ANIMATION_ID)
-        // console.log("cancelled")
-        // dont forget to add logic to cancel the animation
-        let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
+    //     stardust.style.top=top.toString()+"vh";
+    //     stardust.style.bottom=bottom.toString()+"vh";
+    //     stardust.style.left=left.toString()+"vw";
+    //     stardust.style.right=right.toString()+"vw";
 
 
-        //assigning object with node and position
-        if(EXECUTION_PARAMETER===0){
-          stardustarray.forEach((node)=>{
-            let decider_parameter=Math.floor(Math.random()*4)
-            let position=POSITION_ARRAY[decider_parameter];
-            let position_object:position_object_type={
-              position:position,
-              node:node
-            }
-            POSITION_NODE_ARRAY.push(position_object)
-          })
-          EXECUTION_PARAMETER++
-        }
+    //     let parentcontainer=document.querySelector(".parentcontainer")
+    //     parentcontainer?.appendChild(stardust)
+    //     STAR_COUNT++;
+    //   }
+    //   else{
+    //     // setTimeout(()=>{
+    //     //   console.log("hit")
+    //     //   setLoading(false)
+    //     // },2000)
+    //     // cancelAnimationFrame(ANIMATION_ID)
+    //     // console.log("cancelled")
+    //     // dont forget to add logic to cancel the animation
+    //     let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
 
 
-        POSITION_NODE_ARRAY.forEach((node)=>{
-          //remove the px and just increment it by one to get necessary animation
-          let decision_parameter=Math.floor(Math.random()*4)
-          let mover_decider=POSITION_ARRAY[decision_parameter];
+    //     //assigning object with node and position
+    //     if(EXECUTION_PARAMETER===0){
+    //       stardustarray.forEach((node)=>{
+    //         let decider_parameter=Math.floor(Math.random()*4)
+    //         let position=POSITION_ARRAY[decider_parameter];
+    //         let position_object:position_object_type={
+    //           position:position,
+    //           node:node
+    //         }
+    //         POSITION_NODE_ARRAY.push(position_object)
+    //       })
+    //       EXECUTION_PARAMETER++
+    //     }
 
-          if (node.position == "top") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1200) ? 0 : top 
-            top++;
-            node.node.style.top = top + "px";
-        } else if (node.position == "bottom") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1200) ? 0 : top 
 
-            top--;
-            node.node.style.top = top + "px";
-        } else if (node.position == "left") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
-            left++;
-            node.node.style.left = left + "px";
-        } else if (node.position == "right") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
+    //     POSITION_NODE_ARRAY.forEach((node)=>{
+    //       //remove the px and just increment it by one to get necessary animation
+    //       let decision_parameter=Math.floor(Math.random()*4)
+    //       let mover_decider=POSITION_ARRAY[decision_parameter];
 
-            left--;
-            node.node.style.left = left + "px";
-        }
+    //       if (node.position == "top") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1200) ? 0 : top 
+    //         top++;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "bottom") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1200) ? 0 : top 
 
-          // setInterval(()=>{
-          // if(mover_decider==="top"){
-          //   let top=parseInt(window.getComputedStyle(node.node).top)
-          //   top++
-          //   node.node.style.top=top.toString()+"px"
-          // }else if(mover_decider=="bottom"){
-          //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
-          //   bottom++
-          //   node.node.style.bottom=bottom.toString()+"px"
+    //         top--;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "left") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
+    //         left++;
+    //         node.node.style.left = left + "px";
+    //     } else if (node.position == "right") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
 
-          // }
-          // else if(mover_decider=="left"){
-          //   let left=parseInt(window.getComputedStyle(node.node).left)
-          //   left++
-          //   node.node.style.bottom=left.toString()+"px"
+    //         left--;
+    //         node.node.style.left = left + "px";
+    //     }
+
+    //       // setInterval(()=>{
+    //       // if(mover_decider==="top"){
+    //       //   let top=parseInt(window.getComputedStyle(node.node).top)
+    //       //   top++
+    //       //   node.node.style.top=top.toString()+"px"
+    //       // }else if(mover_decider=="bottom"){
+    //       //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
+    //       //   bottom++
+    //       //   node.node.style.bottom=bottom.toString()+"px"
+
+    //       // }
+    //       // else if(mover_decider=="left"){
+    //       //   let left=parseInt(window.getComputedStyle(node.node).left)
+    //       //   left++
+    //       //   node.node.style.bottom=left.toString()+"px"
             
-          // }
-          // else if(mover_decider=="right"){
-          //   let right=parseInt(window.getComputedStyle(node.node).right)
-          //   right++
-          //   node.node.style.bottom=right.toString()+"px"
+    //       // }
+    //       // else if(mover_decider=="right"){
+    //       //   let right=parseInt(window.getComputedStyle(node.node).right)
+    //       //   right++
+    //       //   node.node.style.bottom=right.toString()+"px"
 
-          // }
-          // },3000)
+    //       // }
+    //       // },3000)
 
-        })
-      } 
-      ANIMATION_ID=requestAnimationFrame(move)
+    //     })
+    //   } 
+    //   ANIMATION_ID=requestAnimationFrame(move)
 
-    }
-    requestAnimationFrame(move)
+    // }
+    // requestAnimationFrame(move)
     // loading logic
     setTimeout(()=>{
       if(parentcontainer.current && loadingcontainer.current ){
@@ -196,7 +192,7 @@ export default function Home() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           // Add a class to start the animation
-          (entry.target as HTMLElement).style.width = '0px';
+          // (entry.target as HTMLElement).style.width = '0px';
           // Stop observing the element
           observer.unobserve(entry.target);
         }
@@ -300,53 +296,52 @@ export default function Home() {
               {services ?
                     <div className=' flex items-center flex-col justify-center information-container'>
                     <div className= 'text-center' >
-                      <p className='font-bold text-xl ' >SERVICES</p>
+                      <p className='font-bold text-xl top-text' >SERVICES</p>
     
                     </div>
-                    <div className='banner bg-black' ref={educationbannercontainer} ></div>
+                    <div className='banner bg-black h-20' ref={educationbannercontainer} ></div>
     
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 '>
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                        <p className='text-sm font-bold' >Bsc. Computer Science</p>              
+                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                        <p className='text-sm font-bold' >Web Development</p>              
                       </div>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                        <p className='text-sm font-bold' >Calicut University</p>              
-                      </div>             
+                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                        <p className='text-xs font-bold' >Craft Beautiful and Elegant Websites</p>              
+                      </div>              
+                    </div>  
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                        <p className='text-sm font-bold' >Calicut</p>              
-                      </div> 
-                    </div>      
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                        <p className='text-sm font-bold' >12th Grade</p>              
+                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                        <p className='text-sm font-bold' >App Development</p>              
                       </div>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                        <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                      </div>             
+                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                        <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
+                      </div>              
+                    </div>   
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                        <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                      </div> 
-                    </div>
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                        <p className='text-sm font-bold' >10th Grade</p>              
+                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                        <p className='text-sm font-bold' >Backend Development</p>              
                       </div>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                        <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                      </div>             
+                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                        <p className='text-xs font-bold' >Crafting complex scalable backend applications.</p>              
+                      </div>              
+                    </div>     
+                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                        <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                      </div> 
-                    </div>
+                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                        <p className='text-sm font-bold' >Scalable Systems</p>              
+                      </div>
+                      <div className='text-sm flex items-center justify-start w-full'>
+                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                        <p className='text-xs font-bold' >Diagnosing and solving Issues of scalability
+                        </p>              
+                      </div>              
+                    </div>  
     
                     
             </div>
@@ -357,7 +352,7 @@ export default function Home() {
               {education ? 
                     <div className=' flex items-center flex-col justify-center information-container'>
                             <div className= 'text-center' >
-                              <p className='font-bold text-xl ' >EDUCATION</p>
+                              <p className='font-bold text-xl top-text' >EDUCATION</p>
             
                             </div>
                             <div className='banner bg-black' ref={educationbannercontainer} ></div>
@@ -413,7 +408,7 @@ export default function Home() {
               {skills ?
                     <div className=' flex items-center flex-col justify-start information-container mt-3'>
                       <div className= 'text-center m-0 ' >
-                        <p className='font-bold text-lg mt-3 ' >SKILLS & HOBBIES</p>
+                        <p className='font-bold text-lg mt-3 top-text' >SKILLS & HOBBIES</p>
                       </div>
                       <div className='banner bg-black' ref={skillsbannercontainer} ></div>
       
@@ -468,7 +463,7 @@ export default function Home() {
               {contact ? 
                     <div className=' flex items-center flex-col justify-start information-container mt-3'>
                     <div className= 'text-center m-0 ' >
-                      <p className='font-bold text-xl mt-3 ' >CONTACT ME</p>
+                      <p className='font-bold text-xl mt-3 top-text' >CONTACT ME</p>
                     </div>
                     <div className='banner bg-black' ref={contactbannercontainer}></div>
     

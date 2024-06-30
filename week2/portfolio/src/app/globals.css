@@ -97,16 +97,24 @@ body{
 }
 .banner {
   position: relative;
-  display: inline-block;
   height: 5vh;
   width: 60vw;
   left: auto;
-  bottom: 4vh;
+  bottom:5vh;
   transition: all 2s;
+  display: none;
+  /* for now dont display it think of a solution and then display it */
 }
 .information-container{
-  height: 50vh;
+  height: 40vh;
   overflow: scroll;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin-bottom:8vh;
+}
+.top-text{
+  margin-top: 7vh;
 }
 meter::-webkit-meter-optimum-value {
   background: black;
