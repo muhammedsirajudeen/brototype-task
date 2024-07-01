@@ -365,15 +365,15 @@ export default function Home() {
                 enquiry ? 
                 <div className='flex flex-col items-center justify-center mt-40  w-max ' ref={observercontainer} onClick={clickHandler}  >
                   <span className="material-symbols-outlined transformer" id='animation-icon' >keyboard_double_arrow_down</span>  
-                  <p className='font font-bold text-sm' >ENQUIRE NOW</p>
+                  <p className='font font-bold text-sm mb-10 p-5' >ENQUIRE NOW</p>
                 </div>
                 :
                 <></>
               }
               {
                 form ? 
-                <div className='flex flex-col items-center justify-center shadow-xl mt-0 p-5'>
-                    <div className='flex items-center justify-between'>
+                <div className='flex flex-col items-center justify-center shadow-xl mt-0 p-5 mb-10 scrollable-container'>
+                    <div className='flex items-center justify-between mt-32'>
                       <p className='font font-bold text-sm m-5' >ENQUIRE NOW</p>
                       <button onClick={closeHandler} className='bg-black flex items-center justify-center rounded-xl'>
                       <span className="material-symbols-outlined">close</span>  
@@ -390,7 +390,7 @@ export default function Home() {
                     <div className=' text-red-700 text-xs p-0 m-0'> {numberalert} </div>
                     <textarea id='name' value={description} onChange={(e)=>setDescription(e.target.value)}  name='description' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Description of the requirements of the work' />
                     <div className=' text-red-700 text-xs p-0 m-0'> {descriptionalert}</div>
-                    <button type='submit' value='submit'  className='bg-black border-hidden text-white flex items-center justify-center ml-52d mt-5  rounded-full h-10 w-auto p-5'>
+                    <button type='submit' value='submit'  className='bg-black border-hidden text-white flex items-center justify-center ml-52d mt-5  rounded-full h-10 w-auto p-5 mb-10'>
                       <span className="material-symbols-outlined" id='light-icon'   >send</span>  
                     </button>
 
@@ -570,7 +570,7 @@ export default function Home() {
                       </div>
                       <div className='banner bg-black' ref={skillsbannercontainer} ></div>
       
-                      <div className=' shadow-lg flex flex-col items-center justify-start w-60 '>
+                      <div className=' shadow-lg flex flex-col items-center justify-start w-60 mb-14 '>
                         <div className='text-sm flex items-center justify-start w-full'>
                           <div className='flex flex-col items-start justify-center w-full mt-3'>
                             <div className='flex justify-start items-center w-full'>

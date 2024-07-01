@@ -167,7 +167,10 @@ meter::-webkit-meter-optimum-value {
   bottom: 10vh;
   animation: iconanimator 0.5s ease-in 1s infinite alternate;
 }
-
+.scrollable-container{
+  overflow-y: scroll;
+  height: 40vh;
+}
 @keyframes iconanimator {
   0% {
     padding: inherit;
