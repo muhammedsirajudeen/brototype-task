@@ -57,7 +57,6 @@ body{
 }
 .hiddenelement{
   opacity: 0%;
-
 }
 .nav-icon{
   transition: all 0.2s;
@@ -128,6 +127,24 @@ body{
 meter::-webkit-meter-optimum-value {
   background: black;
 }
+.transformer{
+  scale: 2;
+  color: black;
+  margin: 5vh;
+  rotate: 180deg;
+}
+#light-icon{
+  font-weight: lighter;
+}
+.container-none{
+  display: none;
+}
+.container-visible{
+  display: flex;
+}
+.back-container{
+  visibility: hidden;
+}
 
 /* For laptops and large devices */
 @media (min-width: 1024px) {
@@ -140,5 +157,22 @@ meter::-webkit-meter-optimum-value {
 @media (max-width: 1023px) {
   .parentcontainer {
     overflow: hidden; /* or overflow-y: scroll; to show vertical scrollbar only */
+  }
+}
+
+
+#animation-icon {
+  position: absolute;
+  left: auto;
+  bottom: 10vh;
+  animation: iconanimator 0.5s ease-in 1s infinite alternate;
+}
+
+@keyframes iconanimator {
+  0% {
+    padding: inherit;
+  }
+  100% {
+    padding: 1vh;
   }
 }

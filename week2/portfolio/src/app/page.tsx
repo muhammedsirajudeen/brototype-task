@@ -1,7 +1,9 @@
 "use client"
 import Image from 'next/image'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { FormEvent, FormEventHandler, Suspense, useEffect, useRef, useState } from 'react'
 import { Triangle } from 'react-loader-spinner';
+import validator from '@/helper/validator';
+import axios from 'axios';
 export default function Home() {
   let iconRef=useRef<HTMLSpanElement | null>(null);
   let parentcontainer=useRef<HTMLDivElement | null>(null);
@@ -11,13 +13,30 @@ export default function Home() {
   let educationbannercontainer=useRef<HTMLDivElement | null>(null);
   let skillsbannercontainer=useRef<HTMLDivElement | null>(null);
   let contactbannercontainer=useRef<HTMLDivElement | null >(null);
+  let observercontainer=useRef<HTMLDivElement | null >(null);
+  let navparent=useRef<HTMLDivElement | null >(null);
+  let backcontainer=useRef<HTMLDivElement | null >(null);
+
+  //individuls alert
+  let [namealert,setNamealert]=useState<string>("")
+  let [emailalert,setEmailalert]=useState<string>("")
+  let [numberalert,setNumberalert]=useState<string>("")
+  let [descriptionalert,setDescriptionalert]=useState<string>("")
+
 
   //state to display sections
-  let [services,setServices]=useState(true);
+  let [services,setServices]=useState(false);
   let [education,setEducation]=useState<boolean>(false);
   let [skills,setSkills]=useState<boolean>(false);
   let [contact,setContact]=useState<boolean>(false);
+  let [enquiry,setEnquiry]=useState(true);
+  let [form,setForm]=useState(false)
 
+  //use state for forms
+  let [name,setName]=useState<string>("")
+  let [email,setEmail]=useState<string>("")
+  let [number,setNumber]=useState<string>("")
+  let [description,setDescription]=useState<string>("")
 
   let wavy=false;
   let EXECUTION_PARAMETER=0
@@ -38,31 +57,42 @@ export default function Home() {
 
 
 
-
  
 
   useEffect(()=>{
 
-
+    
 
     let element=iconRef.current
     let iconelements=document.querySelectorAll(".nav-icons") ?? []
-
+    let navigationparent=navparent.current
+    
     if(element){
       element.onmouseover=()=>{
+
+
         iconelements.forEach((node)=>{
 
           node.classList.remove("hiddenelement")
           node.classList.add("visible")
         })
+        navigationparent?.classList.remove("container-none")
+        navigationparent?.classList.add("container-visible")
       }
       element.onmouseout=()=>{
+
         iconelements.forEach((node)=>{
           node.classList.remove("alter-position")
 
           node.classList.remove("visible")
           node.classList.add("hiddenelement")
         })
+        setTimeout(()=>{
+          navigationparent?.classList.remove("container-visible")
+
+          navigationparent?.classList.add("container-none")
+        },200)
+
       }
 
     
@@ -180,14 +210,17 @@ export default function Home() {
       if(parentcontainer.current && loadingcontainer.current ){
         parentcontainer.current.style.visibility="visible"
         loadingcontainer.current.style.display="none"
+        if(backcontainer.current){
+          backcontainer.current.style.visibility="visible"
+        }
       }
     },1500)
 
   },[])
 
   function navigationHandler(section:String){
+    setEnquiry(false)
 
-    console.log("clicked")
     const observerCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -249,6 +282,41 @@ export default function Home() {
       
     }
   }
+  function clickHandler(){
+    setForm(true)
+    setEnquiry(false)
+  }
+  function submissionHandler(event:FormEvent){
+    //form submission logic here
+    let alertname=validator.nameValidator(name)
+    let alertemail=validator.emailValidator(email)
+    let alertnumber=validator.numberValidator(number)
+    let alertdescription=validator.nameValidator(description)
+    setNamealert(alertname)
+    setEmailalert(alertemail)
+    setNumberalert(alertnumber)
+    setDescriptionalert(alertdescription)
+    if(alertname.length!==0 && alertemail.length!==0 && alertnumber.length!==0 && alertdescription.length!==0 ){
+      event.preventDefault()
+    }
+    
+  }
+  function closeHandler(){
+    setEnquiry(true)
+    setForm(false)
+  }
+  function formnavHandler(){
+    setEnquiry(true)
+    setSkills(false)
+    setContact(false)
+    setEducation(false)
+    setServices(false)
+    setForm(false)
+
+
+  }
+
+
   
   
   return (
@@ -293,14 +361,54 @@ export default function Home() {
           <div className='flex justify-center items-center mt-5'>
 
               {/* give overflow to this container */}
+              {
+                enquiry ? 
+                <div className='flex flex-col items-center justify-center mt-40  w-max ' ref={observercontainer} onClick={clickHandler}  >
+                  <span className="material-symbols-outlined transformer" id='animation-icon' >keyboard_double_arrow_down</span>  
+                  <p className='font font-bold text-sm' >ENQUIRE NOW</p>
+                </div>
+                :
+                <></>
+              }
+              {
+                form ? 
+                <div className='flex flex-col items-center justify-center shadow-xl mt-0 p-5'>
+                    <div className='flex items-center justify-between'>
+                      <p className='font font-bold text-sm m-5' >ENQUIRE NOW</p>
+                      <button onClick={closeHandler} className='bg-black flex items-center justify-center rounded-xl'>
+                      <span className="material-symbols-outlined">close</span>  
+
+                      </button>
+                    </div>                    
+                    {/* <label htmlFor="name" className='font-bold text-sm p-0 m-' >Name</label> */}
+                    <form onSubmit={submissionHandler} method='POST' action="https://script.google.com/macros/s/AKfycbzp3oRYau4HvjrWXA_NlkLhcywcSYL20Hx7eonlhyRpbC-INKmY55yHZMCRQIL27H5TOw/exec" >
+                    <input type='text' value={name} onChange={(e)=>setName(e.target.value)} name='name'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3 '  placeholder='Full Name' />
+                    <div className=' text-red-700 text-xs p-0 m-0'> {namealert} </div>
+                    <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} name='email'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Email Address' />
+                    <div className=' text-red-700 text-xs p-0 m-0'> {emailalert} </div>
+                    <input type='number' value={number} onChange={(e)=>setNumber(e.target.value)} name='number'  className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Mobile Number' />
+                    <div className=' text-red-700 text-xs p-0 m-0'> {numberalert} </div>
+                    <textarea id='name' value={description} onChange={(e)=>setDescription(e.target.value)}  name='description' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Description of the requirements of the work' />
+                    <div className=' text-red-700 text-xs p-0 m-0'> {descriptionalert}</div>
+                    <button type='submit' value='submit'  className='bg-black border-hidden text-white flex items-center justify-center ml-52d mt-5  rounded-full h-10 w-auto p-5'>
+                      <span className="material-symbols-outlined" id='light-icon'   >send</span>  
+                    </button>
+
+                    </form>
+
+                </div> 
+                  :
+                  <></>
+              }
               {services ?
+
                     <div className=' flex items-center flex-col justify-center information-container'>
                     <div className= 'text-center' >
                       <p className='font-bold text-xl top-text' >SERVICES</p>
     
                     </div>
                     <div className='banner bg-black h-20' ref={educationbannercontainer} ></div>
-    
+                    <div className='flex flex-col items-center justify-center'>
                     <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
@@ -330,7 +438,9 @@ export default function Home() {
                         <span className="material-symbols-outlined" id="black-icon" >info</span>                  
                         <p className='text-xs font-bold' >Crafting complex scalable backend applications.</p>              
                       </div>              
-                    </div>     
+                    </div> 
+                    </div>
+    
                     {/* <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
@@ -357,6 +467,7 @@ export default function Home() {
                             </div>
                             <div className='banner bg-black' ref={educationbannercontainer} ></div>
             
+                            <div className='flex flex-col items-center justify-center'>
                             <div className=' shadow-lg flex flex-col items-center justify-center w-60 '>
                               <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >school</span>  
@@ -398,9 +509,8 @@ export default function Home() {
                                 <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
                                 <p className='text-sm font-bold' >Sreekrishnapuram</p>              
                               </div> 
+                            </div>  
                             </div>
-            
-                            
                     </div>
                     :
                     <></>
@@ -463,42 +573,26 @@ export default function Home() {
                       <div className=' shadow-lg flex flex-col items-center justify-start w-60 '>
                         <div className='text-sm flex items-center justify-start w-full'>
                           <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>JS</span>
-                              <span className='font text-sm font-light'>90%</span>
+                            <div className='flex justify-start items-center w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >book_4</span>                  
+                              <span className='font font-bold text-sm'>Reading</span>
                             </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
                           </div>
 
                           </div>
                           <div className='flex flex-col items-start justify-center w-full mt-3'>
-                              <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>PYTHON</span>
-                                <span className='font text-sm font-light'>95%</span>
-                              </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
+                            <div className='flex justify-start items-center w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >two_wheeler</span>                  
+                                <span className='font font-bold text-sm'>Riding</span>
+                            </div>
                           </div>
                         <div className='flex flex-col items-start justify-center w-full'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>MERN</span>
-                              <span className='font text-sm font-light'>95%</span>
+                            <div className='flex justify-start items-center w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >hiking</span>                  
+                                <span className='font font-bold text-sm'>Hiking</span>
                             </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
                         </div>
-                        <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>DJANGO</span>
-                              <span className='font text-sm font-light'>65%</span>
-                            </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
-                        </div>
-                        <div className='flex flex-col items-start justify-center w-full mt-3' id='bottom-margin' >
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>REACT NATIVE</span>
-                              <span className='font text-sm font-light'>75%</span>
-                            </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
-                        </div>
+
 
 
                       </div>   
@@ -541,8 +635,15 @@ export default function Home() {
 
           </div>
         </div>
-          <div className='nav-items-container'>
-            <div className='flex items-center justify-evenly w-full h-full transition-visibility  '>
+          <div className='w-full absolute top-32 left-0 back-container ' ref={backcontainer} >
+            <div className='flex items-center justify-end w-full'>
+              <span className='bg-black flex items-center justify-center mr-10 p-2 rounded-full'>
+                <span className="material-symbols-outlined" onClick={formnavHandler} >question_mark</span>
+              </span>
+            </div>
+          </div>
+          <div className='nav-items-container container-none nav-parent' ref={navparent}>
+            <div className='flex items-center justify-evenly w-full h-full  '  >
               <button onClick={()=> navigationHandler("services") } className="icon3 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >home</button>
               <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
               <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
@@ -550,6 +651,7 @@ export default function Home() {
 
             </div>
           </div>
+
         </>
         </>
 
