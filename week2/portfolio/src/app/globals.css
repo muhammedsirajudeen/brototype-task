@@ -164,7 +164,7 @@ meter::-webkit-meter-optimum-value {
 #animation-icon {
   position: absolute;
   left: auto;
-  bottom: 10vh;
+  bottom: 15vh;
   animation: iconanimator 0.5s ease-in 1s infinite alternate;
 }
 .scrollable-container{
