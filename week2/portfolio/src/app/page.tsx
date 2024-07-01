@@ -365,7 +365,7 @@ export default function Home() {
                 enquiry ? 
                 <div className='flex flex-col items-center justify-center mt-40  w-max ' ref={observercontainer} onClick={clickHandler}  >
                   <span className="material-symbols-outlined transformer" id='animation-icon' >keyboard_double_arrow_down</span>  
-                  <p className='font font-bold text-sm mb-10 p-5' >ENQUIRE NOW</p>
+                  <p className='font font-bold text-sm p-5' >ENQUIRE NOW</p>
                 </div>
                 :
                 <></>
