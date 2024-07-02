@@ -76,7 +76,7 @@ body{
 .stardust{
   height: 3px;
   width: 3px;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   background-color: black;
@@ -169,6 +169,19 @@ meter::-webkit-meter-optimum-value {
     display: none;
   }
 
+  .margin-bottom{
+    margin-bottom: 11vh;
+  }
+  .margin-bottom-extra{
+    margin-bottom: 15vh;
+  }
+  #margin-top{
+    margin-top: 30vh;
+  }
+  #margin-top-mobile{
+    margin-top: 3vh;
+  }
+
 
 }
 .scrollable-container{
@@ -203,6 +216,7 @@ meter::-webkit-meter-optimum-value {
   #margin-top{
     margin-top: 3vh;
   }
+  
 }
 
 
