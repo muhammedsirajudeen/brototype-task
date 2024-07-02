@@ -99,112 +99,112 @@ export default function Home() {
     }
 
     //star dust code
-    // function move(){
-    //   if(STAR_COUNT<100){
-    //     let stardust=document.createElement("div")
-    //     stardust.className="stardust"  
-    //     //here get top botom left and right random numbers and assign it while creating
-    //     let top=getRandomNumber()
-    //     let bottom=getRandomNumber()
-    //     let right=getRandomNumber()
-    //     let left=getRandomNumber()
+    function move(){
+      if(STAR_COUNT<100){
+        let stardust=document.createElement("div")
+        stardust.className="stardust"  
+        //here get top botom left and right random numbers and assign it while creating
+        let top=getRandomNumber()
+        let bottom=getRandomNumber()
+        let right=getRandomNumber()
+        let left=getRandomNumber()
 
-    //     stardust.style.top=top.toString()+"vh";
-    //     stardust.style.bottom=bottom.toString()+"vh";
-    //     stardust.style.left=left.toString()+"vw";
-    //     stardust.style.right=right.toString()+"vw";
-
-
-    //     let parentcontainer=document.querySelector(".parentcontainer")
-    //     parentcontainer?.appendChild(stardust)
-    //     STAR_COUNT++;
-    //   }
-    //   else{
-    //     // setTimeout(()=>{
-    //     //   console.log("hit")
-    //     //   setLoading(false)
-    //     // },2000)
-    //     // cancelAnimationFrame(ANIMATION_ID)
-    //     // console.log("cancelled")
-    //     // dont forget to add logic to cancel the animation
-    //     let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
+        stardust.style.top=top.toString()+"vh";
+        stardust.style.bottom=bottom.toString()+"vh";
+        stardust.style.left=left.toString()+"vw";
+        stardust.style.right=right.toString()+"vw";
 
 
-    //     //assigning object with node and position
-    //     if(EXECUTION_PARAMETER===0){
-    //       stardustarray.forEach((node)=>{
-    //         let decider_parameter=Math.floor(Math.random()*4)
-    //         let position=POSITION_ARRAY[decider_parameter];
-    //         let position_object:position_object_type={
-    //           position:position,
-    //           node:node
-    //         }
-    //         POSITION_NODE_ARRAY.push(position_object)
-    //       })
-    //       EXECUTION_PARAMETER++
-    //     }
+        let parentcontainer=document.querySelector(".parentcontainer")
+        parentcontainer?.appendChild(stardust)
+        STAR_COUNT++;
+      }
+      else{
+        // setTimeout(()=>{
+        //   console.log("hit")
+        //   setLoading(false)
+        // },2000)
+        // cancelAnimationFrame(ANIMATION_ID)
+        // console.log("cancelled")
+        // dont forget to add logic to cancel the animation
+        let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
 
 
-    //     POSITION_NODE_ARRAY.forEach((node)=>{
-    //       //remove the px and just increment it by one to get necessary animation
-    //       let decision_parameter=Math.floor(Math.random()*4)
-    //       let mover_decider=POSITION_ARRAY[decision_parameter];
+        //assigning object with node and position
+        if(EXECUTION_PARAMETER===0){
+          stardustarray.forEach((node)=>{
+            let decider_parameter=Math.floor(Math.random()*4)
+            let position=POSITION_ARRAY[decider_parameter];
+            let position_object:position_object_type={
+              position:position,
+              node:node
+            }
+            POSITION_NODE_ARRAY.push(position_object)
+          })
+          EXECUTION_PARAMETER++
+        }
 
-    //       if (node.position == "top") {
-    //         let top = parseInt(window.getComputedStyle(node.node).top);
-    //         top=(top>1200) ? 0 : top 
-    //         top++;
-    //         node.node.style.top = top + "px";
-    //     } else if (node.position == "bottom") {
-    //         let top = parseInt(window.getComputedStyle(node.node).top);
-    //         top=(top>1200) ? 0 : top 
 
-    //         top--;
-    //         node.node.style.top = top + "px";
-    //     } else if (node.position == "left") {
-    //         let left = parseInt(window.getComputedStyle(node.node).left);
-    //         left=(left>1200)? 0 :left
-    //         left++;
-    //         node.node.style.left = left + "px";
-    //     } else if (node.position == "right") {
-    //         let left = parseInt(window.getComputedStyle(node.node).left);
-    //         left=(left>1200)? 0 :left
+        POSITION_NODE_ARRAY.forEach((node)=>{
+          //remove the px and just increment it by one to get necessary animation
+          let decision_parameter=Math.floor(Math.random()*4)
+          let mover_decider=POSITION_ARRAY[decision_parameter];
 
-    //         left--;
-    //         node.node.style.left = left + "px";
-    //     }
+          if (node.position == "top") {
+            let top = parseInt(window.getComputedStyle(node.node).top);
+            top=(top>1000) ? 0 : top 
+            top++;
+            node.node.style.top = top + "px";
+        } else if (node.position == "bottom") {
+            let top = parseInt(window.getComputedStyle(node.node).top);
+            top=(top>1200) ? 0 : top 
 
-    //       // setInterval(()=>{
-    //       // if(mover_decider==="top"){
-    //       //   let top=parseInt(window.getComputedStyle(node.node).top)
-    //       //   top++
-    //       //   node.node.style.top=top.toString()+"px"
-    //       // }else if(mover_decider=="bottom"){
-    //       //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
-    //       //   bottom++
-    //       //   node.node.style.bottom=bottom.toString()+"px"
+            top--;
+            node.node.style.top = top + "px";
+        } else if (node.position == "left") {
+            let left = parseInt(window.getComputedStyle(node.node).left);
+            left=(left>1200)? 0 :left
+            left++;
+            node.node.style.left = left + "px";
+        } else if (node.position == "right") {
+            let left = parseInt(window.getComputedStyle(node.node).left);
+            left=(left>1200)? 0 :left
 
-    //       // }
-    //       // else if(mover_decider=="left"){
-    //       //   let left=parseInt(window.getComputedStyle(node.node).left)
-    //       //   left++
-    //       //   node.node.style.bottom=left.toString()+"px"
+            left--;
+            node.node.style.left = left + "px";
+        }
+
+          // setInterval(()=>{
+          // if(mover_decider==="top"){
+          //   let top=parseInt(window.getComputedStyle(node.node).top)
+          //   top++
+          //   node.node.style.top=top.toString()+"px"
+          // }else if(mover_decider=="bottom"){
+          //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
+          //   bottom++
+          //   node.node.style.bottom=bottom.toString()+"px"
+
+          // }
+          // else if(mover_decider=="left"){
+          //   let left=parseInt(window.getComputedStyle(node.node).left)
+          //   left++
+          //   node.node.style.bottom=left.toString()+"px"
             
-    //       // }
-    //       // else if(mover_decider=="right"){
-    //       //   let right=parseInt(window.getComputedStyle(node.node).right)
-    //       //   right++
-    //       //   node.node.style.bottom=right.toString()+"px"
+          // }
+          // else if(mover_decider=="right"){
+          //   let right=parseInt(window.getComputedStyle(node.node).right)
+          //   right++
+          //   node.node.style.bottom=right.toString()+"px"
 
-    //       // }
-    //       // },3000)
+          // }
+          // },3000)
 
-    //     })
-    //   } 
-    //   ANIMATION_ID=requestAnimationFrame(move)
+        })
+      } 
+      ANIMATION_ID=requestAnimationFrame(move)
 
-    // }
-    // requestAnimationFrame(move)
+    }
+    requestAnimationFrame(move)
     // loading logic
     setTimeout(()=>{
       if(parentcontainer.current && loadingcontainer.current ){
@@ -233,7 +233,7 @@ export default function Home() {
     };
 
     const observerOptions: IntersectionObserverInit = {
-      root: null, // Use the viewport as the root
+      root: null, // Use the viewport as the rootfpare
       rootMargin: '0px',
       threshold: 0.2 // Trigger when 20% of element is visible thi
     };
@@ -315,6 +315,7 @@ export default function Home() {
 
 
   }
+  
 
 
   
@@ -334,10 +335,19 @@ export default function Home() {
         />
       </div>
       <>
-          <div ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer">
-          <div className='mob-nav-container flex items-center justify-center bg-black w-full h-20 text-white'>
-    
-            <div className='flex items-start justify-end w-full text-white font-bold mr-5'><p>Portfolio.</p></div>
+          <div ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer overflow-x-hidden overflow-y-hidden ">
+          <div className='mob-nav-container flex items-center justify-between bg-black w-full h-20 text-white'>
+            <div className='flex items-center justify-start w-full font-bold text-sm  laptop-container'>
+              <a onClick={()=> navigationHandler("services")} href='#'  className=' text-white m-5 '>Home.</a>
+              <a onClick={()=> navigationHandler("education")} href='#' className=' text-white m-5 '>Education.</a>
+              <a onClick={()=> navigationHandler("skills")} href='#' className=' text-white m-5 '>Skills.</a>
+              <a onClick={()=> navigationHandler("contact")} href='#' className=' text-white m-5 '>Contact.</a>
+
+
+
+
+            </div>
+            <span className='flex items-start justify-end  text-white font-bold m-5'><p>Portfolio.</p></span>
     
           </div>
     
@@ -408,18 +418,18 @@ export default function Home() {
     
                     </div>
                     <div className='banner bg-black h-20' ref={educationbannercontainer} ></div>
-                    <div className='flex flex-col items-center justify-center'>
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className='flex flex-col items-center justify-center container-row'>
+                    <div className=' shadow-lg  lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
-                        <p className='text-sm font-bold' >Web Development</p>              
+                        <p className='text-sm font-bold' >App Development</p>              
                       </div>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Craft Beautiful and Elegant Websites</p>              
+                        <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
                       </div>              
                     </div>  
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
                         <p className='text-sm font-bold' >App Development</p>              
@@ -429,16 +439,16 @@ export default function Home() {
                         <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
                       </div>              
                     </div>   
-                    <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3  '>
+                    <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
                       <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >code</span>  
                         <p className='text-sm font-bold' >Backend Development</p>              
                       </div>
-                      <div className='text-sm flex items-center justify-start w-full' id='bottom-margin'>
+                      <div className='text-sm flex items-center justify-start w-full'>
                         <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Crafting complex scalable backend applications.</p>              
+                        <p className='text-xs font-bold' >Craft Efficient and Scalable Backend Applications</p>              
                       </div>              
-                    </div> 
+                    </div>  
                     </div>
     
                     {/* <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
@@ -467,8 +477,8 @@ export default function Home() {
                             </div>
                             <div className='banner bg-black' ref={educationbannercontainer} ></div>
             
-                            <div className='flex flex-col items-center justify-center'>
-                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 '>
+                            <div className='flex flex-col items-center justify-center container-row ' >
+                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5'>
                               <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >school</span>  
                                 <p className='text-sm font-bold' >Bsc. Computer Science</p>              
@@ -505,7 +515,7 @@ export default function Home() {
                                 <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
                                 <p className='text-sm font-bold' >St Dominics Convent School</p>              
                               </div>             
-                              <div className='text-sm flex items-center justify-start w-full' id='bottom-margin' >
+                              <div className='text-sm flex items-center justify-start w-full'>
                                 <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
                                 <p className='text-sm font-bold' >Sreekrishnapuram</p>              
                               </div> 
@@ -517,85 +527,96 @@ export default function Home() {
               }
               {skills ?
                     <div className=' flex items-center flex-col justify-start information-container mt-3'>
-                      <div className= 'text-center m-0 ' >
-                        <p className='font-bold text-lg mt-3 top-text' id='top-text'  >SKILLS</p>
-                      </div>
-                      <div className='banner bg-black' ref={skillsbannercontainer} ></div>
-      
-                      <div className=' shadow-lg flex flex-col items-center justify-start w-60 '>
-                        <div className='text-sm flex items-center justify-start w-full'>
-                          <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>JS</span>
-                              <span className='font text-sm font-light'>90%</span>
+                      <div className='lg:flex lg:items-start lg:justify-start '>
+                      <div className='flex flex-col lg:items-start lg:justify-start'>
+                        <div className= 'text-center m-0 ' >
+                          <p className='font-bold text-lg  top-text' id='top-text  '  >SKILLS</p>
+                        </div>
+                        <div className='banner bg-black' ref={skillsbannercontainer} ></div>
+                        <div className=' shadow-lg flex flex-col items-center justify-start w-60  '>
+                          <div className='text-sm flex items-center justify-start w-full mt-3'>
+                            <div className='flex flex-col items-start justify-center w-full '>
+                              <div className='flex justify-between w-full'>
+                                <span className='font font-bold text-sm'>JS</span>
+                                <span className='font text-sm font-light'>90%</span>
+                              </div>
+                              <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
                             </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
-                          </div>
 
+                            </div>
+                            <div className='flex flex-col items-start justify-center w-full mt-3'>
+                                <div className='flex justify-between w-full'>
+                                  <span className='font font-bold text-sm'>PYTHON</span>
+                                  <span className='font text-sm font-light'>95%</span>
+                                </div>
+                                <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
+                            </div>
+                          <div className='flex flex-col items-start justify-center w-full'>
+                              <div className='flex justify-between w-full'>
+                                <span className='font font-bold text-sm'>MERN</span>
+                                <span className='font text-sm font-light'>95%</span>
+                              </div>
+                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
                           </div>
                           <div className='flex flex-col items-start justify-center w-full mt-3'>
                               <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>PYTHON</span>
-                                <span className='font text-sm font-light'>95%</span>
+                                <span className='font font-bold text-sm'>DJANGO</span>
+                                <span className='font text-sm font-light'>65%</span>
                               </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
+                              <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
                           </div>
-                        <div className='flex flex-col items-start justify-center w-full'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>MERN</span>
-                              <span className='font text-sm font-light'>95%</span>
-                            </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
-                        </div>
-                        <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>DJANGO</span>
-                              <span className='font text-sm font-light'>65%</span>
-                            </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
-                        </div>
-                        <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-between w-full'>
-                              <span className='font font-bold text-sm'>REACT NATIVE</span>
-                              <span className='font text-sm font-light'>75%</span>
-                            </div>
-                            <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
-                        </div>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
+                              <div className='flex justify-between w-full'>
+                                <span className='font font-bold text-sm'>REACT NATIVE</span>
+                                <span className='font text-sm font-light'>75%</span>
+                              </div>
+                              <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
+                          </div>
 
 
-                      </div>   
-                      {/* give details about hobbies here  */}
-                      <div className= 'text-center m-0 ' >
-                        <p className='font-bold text-lg mt-3 top-text' id='top-text' >HOBBIES</p>
+                        </div>   
                       </div>
-                      <div className='banner bg-black' ref={skillsbannercontainer} ></div>
-      
-                      <div className=' shadow-lg flex flex-col items-center justify-start w-60 mb-14 '>
-                        <div className='text-sm flex items-center justify-start w-full'>
-                          <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-start items-center w-full'>
-                              <span className="material-symbols-outlined" id="black-icon" >book_4</span>                  
-                              <span className='font font-bold text-sm'>Reading</span>
-                            </div>
-                          </div>
 
-                          </div>
-                          <div className='flex flex-col items-start justify-center w-full mt-3'>
-                            <div className='flex justify-start items-center w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >two_wheeler</span>                  
-                                <span className='font font-bold text-sm'>Riding</span>
-                            </div>
-                          </div>
-                        <div className='flex flex-col items-start justify-center w-full'>
-                            <div className='flex justify-start items-center w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >hiking</span>                  
-                                <span className='font font-bold text-sm'>Hiking</span>
-                            </div>
+                      
+                      {/* give details about hobbies here  */}
+
+                      <div className='flex flex-col lg:ml-20 lg:items-start lg:justify-start '>
+                        <div className= 'text-center m-0 ' >
+                        <p className='font-bold text-lg  top-text' id='top-text  '  >HOBBIES</p>
                         </div>
+                        <div className='banner bg-black' ref={skillsbannercontainer} ></div>
+        
+                        <div className=' shadow-lg flex flex-col items-center justify-start w-60 mb-14  '>
+                          <div className='text-sm flex items-center justify-start w-full'>
+                            <div className='flex flex-col items-start justify-center w-full mt-3'>
+                              <div className='flex justify-start items-center w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >book_4</span>                  
+                                <span className='font font-bold text-sm'>Reading</span>
+                              </div>
+                            </div>
+
+                            </div>
+                            <div className='flex flex-col items-start justify-center w-full mt-3'>
+                              <div className='flex justify-start items-center w-full'>
+                                  <span className="material-symbols-outlined" id="black-icon" >two_wheeler</span>                  
+                                  <span className='font font-bold text-sm'>Riding</span>
+                              </div>
+                            </div>
+                          <div className='flex flex-col items-start justify-center w-full'>
+                              <div className='flex justify-start items-center w-full'>
+                                  <span className="material-symbols-outlined" id="black-icon" >hiking</span>                  
+                                  <span className='font font-bold text-sm'>Hiking</span>
+                              </div>
+                          </div>
 
 
 
-                      </div>   
+
+                        </div>
+                      </div>
+
+                      </div>
+
                       {/* give details about hobbies here  */}
 
                     </div>

@@ -7,9 +7,11 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+
 body{
   height: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
 
 }
 
@@ -72,13 +74,13 @@ body{
   margin: 2rem;
 }
 .stardust{
-  height: 20px;
-  width: 20px;
-  position: relative;
+  height: 3px;
+  width: 3px;
+  position: absolute;
   bottom: 0;
   left: 0;
   background-color: black;
-  /* z-index: -1; */
+  z-index: -1000;
   border-radius: 100%;
 }
 .loadingcontainer{
@@ -86,10 +88,12 @@ body{
 }
 .parentcontainer{
   visibility: hidden;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  /* overflow-y: hidden;
+  overflow-x: hidden; */
   height: 100vh;
   width: 100vw;
+  clip-path: inset(0 0 0 0); /* This ensures that any overflow is clipped */
+
 }
 .loadingcontainer{
   overflow-x: hidden;
@@ -148,15 +152,56 @@ meter::-webkit-meter-optimum-value {
 
 /* For laptops and large devices */
 @media (min-width: 1024px) {
-  .parentcontainer {
-    overflow: hidden;
-  }
+
 }
+/* .laptop-container{
+  width: 20vw;
+} */
 
 /* For mobile phones */
 @media (max-width: 1023px) {
-  .parentcontainer {
-    overflow: hidden; /* or overflow-y: scroll; to show vertical scrollbar only */
+  /* .parentcontainer {
+    overflow-x: hidden; 
+
+    overflow-y: hidden; 
+  }   */
+  .laptop-container{
+    display: none;
+  }
+
+
+}
+.scrollable-container{
+  overflow-y: scroll;
+  height: 40vh;
+}
+@media (min-width: 1023px){
+  /* .parentcontainer {
+    overflow: hidden;
+  } */
+  .scrollable-container{
+    overflow-y: hidden;
+    height: 50vh;
+    margin-top: -10vh;
+  }
+  .information-container{
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: auto;
+    /* flex-direction: row; */
+    margin-top: 0;
+  }
+  .top-text{
+    margin-top: 3vh;
+  }
+  #top-text{
+    margin-top: 0;
+  }
+  .container-row{
+    flex-direction: row;
+  }
+  #margin-top{
+    margin-top: 3vh;
   }
 }
 
@@ -167,10 +212,7 @@ meter::-webkit-meter-optimum-value {
   bottom: 15vh;
   animation: iconanimator 0.5s ease-in 1s infinite alternate;
 }
-.scrollable-container{
-  overflow-y: scroll;
-  height: 40vh;
-}
+
 @keyframes iconanimator {
   0% {
     padding: inherit;
