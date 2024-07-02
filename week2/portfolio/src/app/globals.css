@@ -15,7 +15,6 @@ body{
 
 }
 
-
 .bottom-tab-container{
   position: absolute;
   bottom: 0;
@@ -67,12 +66,21 @@ body{
   margin-bottom: 80px;
 }
 .image-container{
-  border-radius: 30% 80% 30% 80%;
+  border-radius: 100%;
   transform: rotate(25deg);
   min-height: 200px;
   min-width: 200px;
   margin: 2rem;
 }
+#image-container-first{
+  rotate: -25deg;
+  border-radius: 100%;
+  height: 190px;
+  width: 190px;
+  /* margin-top: 2vh;
+  margin-left: 2vw; */
+}
+
 .stardust{
   height: 3px;
   width: 3px;

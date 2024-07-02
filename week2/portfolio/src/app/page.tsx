@@ -3,6 +3,13 @@ import Image from 'next/image'
 import { FormEvent, FormEventHandler, Suspense, useEffect, useRef, useState } from 'react'
 import { Triangle } from 'react-loader-spinner';
 import validator from '@/helper/validator';
+
+//importing images
+import GithubImage from "../../public/github.png"
+import LinkedIn from "../../public/linkedin.png"
+import Instagram from "../../public/instagram.png"
+import Siraj from "../../public/siraj1.jpeg"
+
 import axios from 'axios';
 export default function Home() {
   let iconRef=useRef<HTMLSpanElement | null>(null);
@@ -246,6 +253,7 @@ export default function Home() {
       setServices(false)
       setContact(false)
       setSkills(false)
+      setForm(false)
       //hacky code
       setTimeout(()=>{
         let banner=educationbannercontainer.current
@@ -258,6 +266,8 @@ export default function Home() {
       setServices(false)
       setContact(false)
       setEducation(false)
+      setForm(false)
+
       setTimeout(()=>{
         let skillbanner=skillsbannercontainer.current
         if(skillbanner) observer.observe(skillbanner)
@@ -268,6 +278,8 @@ export default function Home() {
       setServices(false)
       setEducation(false)
       setSkills(false)
+      setForm(false)
+
       setTimeout(()=>{
         let contactbanner=contactbannercontainer.current
         if(contactbanner) observer.observe(contactbanner)
@@ -279,6 +291,8 @@ export default function Home() {
       setContact(false)
       setEducation(false)
       setSkills(false)
+      setForm(false)
+
       
     }
   }
@@ -351,7 +365,8 @@ export default function Home() {
     
           </div>
     
-          <div className=' bg-black  image-container'>
+          <div className=' bg-black  image-container flex items-center justify-center '>
+            <Image src={Siraj} alt='profile-image' height={100} width={100} id='image-container-first' /> 
           </div>
     
           <div className='flex w-full justify-center'>
@@ -627,7 +642,7 @@ export default function Home() {
               {contact ? 
                     <div className=' flex items-center flex-col justify-start information-container mt-3'>
                     <div className= 'text-center m-0 ' >
-                      <p className='font-bold text-xl mt-15 top-text'id='top-text ' >CONTACT ME</p>
+                      <p className='font-bold text-xl mt-3' >CONTACT ME</p>
                     </div>
                     <div className='banner bg-black' ref={contactbannercontainer}></div>
     
@@ -644,9 +659,13 @@ export default function Home() {
                         <span className="material-symbols-outlined" id="black-icon" >home</span>
                         <span className='font-bold text-xs'>Paduvil(H) Karimpuzha Palakkad <br/>679513 </span>
                       </div>
+                    </div>  
 
-
-                    </div>   
+                    <div className='flex items-center justify-evenly mt-10 w-full' >
+                      <a href='https://github.com/muhammedsirajudeen' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={GithubImage} className='social-icon' alt='github'    /></a>  
+                      <a href='https://in.linkedin.com/in/muhammed-sirajudeen-10a679217' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={LinkedIn} className='social-icon' alt='linkedin'    /></a>  
+                      <a href='https://www.instagram.com/siraju__sj?igsh=MTY3NDNnazI3d2JzdA==' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={Instagram} className='social-icon' alt='instagram'    /></a>  
+                    </div> 
                     {/* give details about hobbies here  */}
                     </div>
                     :
