@@ -76,6 +76,7 @@ body{
 .stardust{
   height: 3px;
   width: 3px;
+  scale: 1.5;
   position: relative;
   bottom: 0;
   left: 0;
@@ -180,6 +181,9 @@ meter::-webkit-meter-optimum-value {
   }
   #margin-top-mobile{
     margin-top: 3vh;
+  }
+  .margin-top{
+    margin-top: 5vh;
   }
 
 
