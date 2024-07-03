@@ -23,12 +23,17 @@ export default function Home() {
   let observercontainer=useRef<HTMLDivElement | null >(null);
   let navparent=useRef<HTMLDivElement | null >(null);
   let backcontainer=useRef<HTMLDivElement | null >(null);
+  let formcontainer=useRef<HTMLFormElement | null >(null);
 
   //individuls alert
   let [namealert,setNamealert]=useState<string>("")
   let [emailalert,setEmailalert]=useState<string>("")
   let [numberalert,setNumberalert]=useState<string>("")
   let [descriptionalert,setDescriptionalert]=useState<string>("")
+  let [buttonstate,setButtonstate]=useState<boolean>(false)
+  let [responseloader,setResponseloader]=useState<boolean>(false)
+  
+  //buttonstate
 
 
   //state to display sections
@@ -300,8 +305,14 @@ export default function Home() {
     setForm(true)
     setEnquiry(false)
   }
-  function submissionHandler(event:FormEvent){
+  async function submissionHandler(event:FormEvent){
+
     //form submission logic here
+    event.preventDefault()
+    //loading logic
+
+
+    setButtonstate(true)
     let alertname=validator.nameValidator(name)
     let alertemail=validator.emailValidator(email)
     let alertnumber=validator.numberValidator(number)
@@ -310,8 +321,51 @@ export default function Home() {
     setEmailalert(alertemail)
     setNumberalert(alertnumber)
     setDescriptionalert(alertdescription)
-    if(alertname.length!==0 && alertemail.length!==0 && alertnumber.length!==0 && alertdescription.length!==0 ){
-      event.preventDefault()
+
+    if(alertname.length===0 && alertemail.length===0 && alertnumber.length===0 && alertdescription.length===0 ){
+      setResponseloader(true)
+      let formElement=document.querySelector("form") ?? undefined
+      const nameInput = (formElement?.querySelector("input[name='name']") as HTMLInputElement).value;
+      const emailInput=(formElement?.querySelector("input[name= 'email']") as HTMLInputElement).value;
+      const numberInput=(formElement?.querySelector("input[name='number' ]") as HTMLInputElement).value;
+      const descriptionInput=(formElement?.querySelector("textarea[name='description' ]") as HTMLInputElement).value;
+      console.log(nameInput,emailInput,numberInput,descriptionInput)
+      var formData = new FormData();
+      formData.append("name",nameInput)
+      formData.append("email",emailInput)
+      formData.append("number",numberInput)
+      formData.append("description",descriptionInput)
+
+      
+
+      try {
+          // Fetch API POST request
+          const response = await fetch("https://script.google.com/macros/s/AKfycbw4PwwNqJy25P4F2izPKgvU23iNDlQ1XUZh6e5wtUlieJhJ6QM4ctXBsFLQ2fnLN9QTrw/exec", {
+              method: "POST",
+              body: formData,
+        // mode:"no-cors"
+        
+          });
+
+          
+          if (response.ok) {
+              alert("Form submitted successfully");
+              // window.location.reload();
+              // You can redirect to another page using:
+              // window.location.href = "https://google.com";
+          } else {
+              throw new Error("Network response was not ok");
+          }
+          setButtonstate(false)
+
+      } catch (error) {
+          console.error("Error:", error);
+          alert("Something went wrong");
+      }
+      setResponseloader(false)
+
+    }else{
+      setButtonstate(false)
     }
     
   }
@@ -336,6 +390,23 @@ export default function Home() {
   
   return (
     <>
+    {responseloader ?
+      <div ref={loadingcontainer} className='loadingcontainer w-full min-h-max flex items-center justify-center'>
+      <Triangle
+        visible={true}
+        height="80"
+        width="80"
+        color="black"
+        ariaLabel="triangle-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+      />
+    </div>
+   
+      :
+      <></>
+
+    }
 
       <div ref={loadingcontainer} className='loadingcontainer w-full min-h-max flex items-center justify-center'>
         <Triangle
@@ -348,352 +419,354 @@ export default function Home() {
           wrapperClass=""
         />
       </div>
-      <>
-          <div ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer overflow-x-hidden overflow-y-hidden ">
-          <div className='mob-nav-container flex items-center justify-between bg-black w-full h-20 text-white'>
-            <div className='flex items-center justify-start w-full font-bold text-sm  laptop-container'>
-              <a onClick={()=> navigationHandler("services")} href='#'  className=' text-white m-5 '>Home.</a>
-              <a onClick={()=> navigationHandler("education")} href='#' className=' text-white m-5 '>Education.</a>
-              <a onClick={()=> navigationHandler("skills")} href='#' className=' text-white m-5 '>Skills.</a>
-              <a onClick={()=> navigationHandler("contact")} href='#' className=' text-white m-5 '>Contact.</a>
+      
+        <>
+        <div ref={parentcontainer} className="flex min-h-screen flex-col items-center justify-start parentcontainer overflow-x-hidden overflow-y-hidden ">
+        <div className={` ${responseloader ? "visibility-hidden" : " " } mob-nav-container flex items-center justify-between bg-black w-full h-20 text-white`}>
+          <div className='flex items-center justify-start w-full font-bold text-sm  laptop-container'>
+            <a onClick={()=> navigationHandler("services")} href='#'  className=' text-white m-5 '>Home.</a>
+            <a onClick={()=> navigationHandler("education")} href='#' className=' text-white m-5 '>Education.</a>
+            <a onClick={()=> navigationHandler("skills")} href='#' className=' text-white m-5 '>Skills.</a>
+            <a onClick={()=> navigationHandler("contact")} href='#' className=' text-white m-5 '>Contact.</a>
 
 
 
 
-            </div>
-            <span className='flex items-start justify-end  text-white font-bold m-5'><p>Portfolio.</p></span>
-    
           </div>
-    
-          <div className=' bg-black  image-container flex items-center justify-center '>
-            <Image src={Siraj} alt='profile-image' height={100} width={100} id='image-container-first' /> 
-          </div>
-    
-          <div className='flex w-full justify-center'>
-            <p className=' font-bold mt-5 text-xl '>MUHAMMED SIRAJUDEEN.</p>
-          </div>
-    
-          <div className=' text-xs w-full flex justify-center '><p className=' w-72' >An avid  <span className='font-bold'>Full Stack Web and Mobile Developer</span> who is interested in crafting <span className='font-bold'>scalable applications</span> </p> </div>
-    
-          <div className='bottom-tab-container lg:hidden'>
-            <nav className='flex items-center justify-center w-full h-full'>
-            <span ref={iconRef} className="material-symbols-outlined options black ">
-            drag_indicator
-            </span>
-            </nav>
-          </div>
-          {/* here we switch the item  */}
-          <div className='flex justify-center items-center mt-5'>
+          <span className='flex items-start justify-end  text-white font-bold m-5'><p>Portfolio.</p></span>
+  
+        </div>
+  
+        <div className=' bg-black  image-container flex items-center justify-center '>
+          <Image src={Siraj} alt='profile-image' height={100} width={100} id='image-container-first' unoptimized /> 
+        </div>
+  
+        <div className='flex w-full justify-center'>
+          <p className=' font-bold mt-5 text-xl '>MUHAMMED SIRAJUDEEN.</p>
+        </div>
+        <div className=' text-xs w-full flex justify-center '><p className=' w-72' >An avid  <span className='font-bold'>Full Stack Web and Mobile Developer</span> who is interested in crafting <span className='font-bold'>scalable applications</span> </p> </div>
+  
+        <div className='bottom-tab-container lg:hidden'>
+          <nav className='flex items-center justify-center w-full h-full'>
+          <span ref={iconRef} className="material-symbols-outlined options black ">
+          drag_indicator
+          </span>
+          </nav>
+        </div>
+        {/* here we switch the item  */}
+        <div className='flex justify-center items-center mt-5'>
 
-              {/* give overflow to this container */}
-              {
-                enquiry ? 
-                <div className='flex flex-col items-center justify-center mt-40  w-max ' ref={observercontainer} onClick={clickHandler}  >
-                  <span className="material-symbols-outlined transformer" id='animation-icon' >keyboard_double_arrow_down</span>  
-                  <p className='font font-bold text-sm p-5 mb-10' >ENQUIRE NOW</p>
-                </div>
+            {/* give overflow to this container */}
+            {
+              enquiry ? 
+              <div className='flex flex-col items-center justify-center mt-40  w-max ' ref={observercontainer} onClick={clickHandler}  >
+                <span className="material-symbols-outlined transformer" id='animation-icon' >keyboard_double_arrow_down</span>  
+                <p className='font font-bold text-sm' id='text-margin'  >ENQUIRE NOW</p>
+              </div>
+              :
+              <></>
+            }
+            {
+              form ? 
+              <div className='flex flex-col items-center justify-center shadow-xl mt-0 p-5 mb-10 scrollable-container' id='extra-height' >
+                  <div className='flex items-center justify-between mt-32' id='less-margin' >
+                    <p className='font font-bold text-sm m-5' >ENQUIRE NOW</p>
+                    <button onClick={closeHandler} className='bg-black flex items-center justify-center rounded-xl'>
+                    <span className="material-symbols-outlined">close</span>  
+
+                    </button>
+                  </div>                    
+                  {/* <label htmlFor="name" className='font-bold text-sm p-0 m-' >Name</label> */}
+                  <form onSubmit={submissionHandler} method='POST' ref={formcontainer}  >
+                  <input type='text' value={name} onChange={(e)=>setName(e.target.value)} name='name'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3 '  placeholder='Full Name' />
+                  <div className=' text-red-700 text-xs p-0 m-0'> {namealert} </div>
+                  <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} name='email'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Email Address' />
+                  <div className=' text-red-700 text-xs p-0 m-0'> {emailalert} </div>
+                  <input type='number' value={number} onChange={(e)=>setNumber(e.target.value)} name='number'  className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Mobile Number' />
+                  <div className=' text-red-700 text-xs p-0 m-0'> {numberalert} </div>
+                  <textarea id='description' value={description} onChange={(e)=>setDescription(e.target.value)}  name='description' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Description of the requirements of the work' />
+                  <div className=' text-red-700 text-xs p-0 m-0'> {descriptionalert}</div>
+                  <button  disabled={buttonstate} type='submit' value='submit'  className={` ${buttonstate ? "disabled-button" : ""} bg-black border-hidden text-white flex items-center justify-center ml-52d mt-5  rounded-full h-10 w-auto p-5 mb-10`}>
+                    <span className="material-symbols-outlined" id='light-icon'   >send</span>  
+                  </button>
+
+                  </form>
+
+              </div> 
                 :
                 <></>
-              }
-              {
-                form ? 
-                <div className='flex flex-col items-center justify-center shadow-xl mt-0 p-5 mb-10 scrollable-container'>
-                    <div className='flex items-center justify-between mt-32'>
-                      <p className='font font-bold text-sm m-5' >ENQUIRE NOW</p>
-                      <button onClick={closeHandler} className='bg-black flex items-center justify-center rounded-xl'>
-                      <span className="material-symbols-outlined">close</span>  
+            }
+            {services ?
 
-                      </button>
-                    </div>                    
-                    {/* <label htmlFor="name" className='font-bold text-sm p-0 m-' >Name</label> */}
-                    <form onSubmit={submissionHandler} method='POST' action="https://script.google.com/macros/s/AKfycbzp3oRYau4HvjrWXA_NlkLhcywcSYL20Hx7eonlhyRpbC-INKmY55yHZMCRQIL27H5TOw/exec" >
-                    <input type='text' value={name} onChange={(e)=>setName(e.target.value)} name='name'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3 '  placeholder='Full Name' />
-                    <div className=' text-red-700 text-xs p-0 m-0'> {namealert} </div>
-                    <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} name='email'  id='name' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Email Address' />
-                    <div className=' text-red-700 text-xs p-0 m-0'> {emailalert} </div>
-                    <input type='number' value={number} onChange={(e)=>setNumber(e.target.value)} name='number'  className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Mobile Number' />
-                    <div className=' text-red-700 text-xs p-0 m-0'> {numberalert} </div>
-                    <textarea id='name' value={description} onChange={(e)=>setDescription(e.target.value)}  name='description' className=' border border-black w-72 mt-5 placeholder:text-gray-600 placeholder:text-xs placeholder:p-3' placeholder='Description of the requirements of the work' />
-                    <div className=' text-red-700 text-xs p-0 m-0'> {descriptionalert}</div>
-                    <button type='submit' value='submit'  className='bg-black border-hidden text-white flex items-center justify-center ml-52d mt-5  rounded-full h-10 w-auto p-5 mb-10'>
-                      <span className="material-symbols-outlined" id='light-icon'   >send</span>  
-                    </button>
-
-                    </form>
-
-                </div> 
+                  <div className=' flex items-center flex-col justify-center information-container'>
+                  <div className= 'text-center' >
+                    <p className='font-bold text-xl top-text ' id='margin-top'  >SERVICES</p>
+  
+                  </div>
+                  <div className='banner bg-black h-20' ref={educationbannercontainer} ></div>
+                  <div className='flex flex-col items-center justify-center container-row'>
+                  <div className=' shadow-lg  lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                      <p className='text-sm font-bold' >Web Development</p>              
+                    </div>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                      <p className='text-xs font-bold' >Efficient Eye Catching Websites</p>              
+                    </div>              
+                  </div>  
+                  <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                      <p className='text-sm font-bold' >App Development</p>              
+                    </div>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                      <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
+                    </div>              
+                  </div>   
+                  <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 margin-bottom'>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                      <p className='text-sm font-bold' >Backend Development</p>              
+                    </div>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                      <p className='text-xs font-bold' >Craft Efficient and Scalable Backend Applications</p>              
+                    </div>              
+                  </div>  
+                  </div>
+  
+                  {/* <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>  
+                      <p className='text-sm font-bold' >Scalable Systems</p>              
+                    </div>
+                    <div className='text-sm flex items-center justify-start w-full'>
+                      <span className="material-symbols-outlined" id="black-icon" >info</span>                  
+                      <p className='text-xs font-bold' >Diagnosing and solving Issues of scalability
+                      </p>              
+                    </div>              
+                  </div>   */}
+  
+                  
+          </div>
+           
+                      :
+                  <></>               
+            }
+            {education ? 
+                  <div className=' flex items-center flex-col justify-center information-container'>
+                          <div className= 'text-center' >
+                            <p className='font-bold text-xl top-text' id='margin-top' >EDUCATION</p>
+          
+                          </div>
+                          <div className='banner bg-black' ref={educationbannercontainer} ></div>
+          
+                          <div className='flex flex-col items-center justify-center container-row ' >
+                          <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5'>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                              <p className='text-sm font-bold' >Bsc. Computer Science</p>              
+                            </div>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                              <p className='text-sm font-bold' >Calicut University</p>              
+                            </div>             
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                              <p className='text-sm font-bold' >Calicut</p>              
+                            </div> 
+                          </div>      
+                          <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                              <p className='text-sm font-bold' >12th Grade</p>              
+                            </div>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                              <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                            </div>             
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                              <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                            </div> 
+                          </div>
+                          <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 margin-bottom '>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >school</span>  
+                              <p className='text-sm font-bold' >10th Grade</p>              
+                            </div>
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
+                              <p className='text-sm font-bold' >St Dominics Convent School</p>              
+                            </div>             
+                            <div className='text-sm flex items-center justify-start w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
+                              <p className='text-sm font-bold' >Sreekrishnapuram</p>              
+                            </div> 
+                          </div>  
+                          </div>
+                  </div>
                   :
                   <></>
-              }
-              {services ?
+            }
+            {skills ?
+                  <div className=' flex items-center flex-col justify-start information-container mt-3'>
+                    <div className='lg:flex lg:items-start lg:justify-start '>
+                    <div className='flex flex-col lg:items-start lg:justify-start'>
+                      <div className= 'text-center m-0 ' >
+                        <p className='font-bold text-lg  ' id='skill-margin  '  >SKILLS</p>
+                      </div>
+                      <div className='banner bg-black' ref={skillsbannercontainer} ></div>
+                      <div className=' shadow-lg flex flex-col items-center justify-start w-60  '>
+                        <div className='text-sm flex items-center justify-start w-full mt-3'>
+                          <div className='flex flex-col items-start justify-center w-full '>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>JS</span>
+                              <span className='font text-sm font-light'>90%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
+                          </div>
 
-                    <div className=' flex items-center flex-col justify-center information-container'>
-                    <div className= 'text-center' >
-                      <p className='font-bold text-xl top-text ' id='margin-top'  >SERVICES</p>
-    
-                    </div>
-                    <div className='banner bg-black h-20' ref={educationbannercontainer} ></div>
-                    <div className='flex flex-col items-center justify-center container-row'>
-                    <div className=' shadow-lg  lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
-                        <p className='text-sm font-bold' >Web Development</p>              
-                      </div>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Efficient Eye Catching Websites</p>              
-                      </div>              
-                    </div>  
-                    <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 '>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
-                        <p className='text-sm font-bold' >App Development</p>              
-                      </div>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Craft Beautiful and Elegant Mobile Applications</p>              
-                      </div>              
-                    </div>   
-                    <div className=' shadow-lg lg:mt-10 flex flex-col items-center justify-center w-60 p-3 margin-bottom'>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
-                        <p className='text-sm font-bold' >Backend Development</p>              
-                      </div>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Craft Efficient and Scalable Backend Applications</p>              
-                      </div>              
-                    </div>  
-                    </div>
-    
-                    {/* <div className=' shadow-lg flex flex-col items-center justify-center w-60 p-3 '>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >code</span>  
-                        <p className='text-sm font-bold' >Scalable Systems</p>              
-                      </div>
-                      <div className='text-sm flex items-center justify-start w-full'>
-                        <span className="material-symbols-outlined" id="black-icon" >info</span>                  
-                        <p className='text-xs font-bold' >Diagnosing and solving Issues of scalability
-                        </p>              
-                      </div>              
-                    </div>   */}
-    
-                    
-            </div>
-             
-                        :
-                    <></>               
-              }
-              {education ? 
-                    <div className=' flex items-center flex-col justify-center information-container'>
-                            <div className= 'text-center' >
-                              <p className='font-bold text-xl top-text' id='margin-top' >EDUCATION</p>
-            
-                            </div>
-                            <div className='banner bg-black' ref={educationbannercontainer} ></div>
-            
-                            <div className='flex flex-col items-center justify-center container-row ' >
-                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5'>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                                <p className='text-sm font-bold' >Bsc. Computer Science</p>              
-                              </div>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                                <p className='text-sm font-bold' >Calicut University</p>              
-                              </div>             
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                                <p className='text-sm font-bold' >Calicut</p>              
-                              </div> 
-                            </div>      
-                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 '>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                                <p className='text-sm font-bold' >12th Grade</p>              
-                              </div>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                                <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                              </div>             
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                                <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                              </div> 
-                            </div>
-                            <div className=' shadow-lg flex flex-col items-center justify-center w-60 mt-5 margin-bottom '>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >school</span>  
-                                <p className='text-sm font-bold' >10th Grade</p>              
-                              </div>
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >apartment</span>                  
-                                <p className='text-sm font-bold' >St Dominics Convent School</p>              
-                              </div>             
-                              <div className='text-sm flex items-center justify-start w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >location_on</span>                  
-                                <p className='text-sm font-bold' >Sreekrishnapuram</p>              
-                              </div> 
-                            </div>  
-                            </div>
-                    </div>
-                    :
-                    <></>
-              }
-              {skills ?
-                    <div className=' flex items-center flex-col justify-start information-container mt-3'>
-                      <div className='lg:flex lg:items-start lg:justify-start '>
-                      <div className='flex flex-col lg:items-start lg:justify-start'>
-                        <div className= 'text-center m-0 ' >
-                          <p className='font-bold text-lg  ' id='skill-margin  '  >SKILLS</p>
-                        </div>
-                        <div className='banner bg-black' ref={skillsbannercontainer} ></div>
-                        <div className=' shadow-lg flex flex-col items-center justify-start w-60  '>
-                          <div className='text-sm flex items-center justify-start w-full mt-3'>
-                            <div className='flex flex-col items-start justify-center w-full '>
+                          </div>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
                               <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>JS</span>
-                                <span className='font text-sm font-light'>90%</span>
-                              </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={90} color='black '></meter>
-                            </div>
-
-                            </div>
-                            <div className='flex flex-col items-start justify-center w-full mt-3'>
-                                <div className='flex justify-between w-full'>
-                                  <span className='font font-bold text-sm'>PYTHON</span>
-                                  <span className='font text-sm font-light'>95%</span>
-                                </div>
-                                <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
-                            </div>
-                          <div className='flex flex-col items-start justify-center w-full'>
-                              <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>MERN</span>
+                                <span className='font font-bold text-sm'>PYTHON</span>
                                 <span className='font text-sm font-light'>95%</span>
                               </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
+                              <meter className='h-5 w-full' max={100} min={0} value={95} color='black '></meter>
                           </div>
-                          <div className='flex flex-col items-start justify-center w-full mt-3'>
-                              <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>DJANGO</span>
-                                <span className='font text-sm font-light'>65%</span>
-                              </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
-                          </div>
-                          <div className='flex flex-col items-start justify-center w-full mt-3'>
-                              <div className='flex justify-between w-full'>
-                                <span className='font font-bold text-sm'>REACT NATIVE</span>
-                                <span className='font text-sm font-light'>75%</span>
-                              </div>
-                              <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
-                          </div>
-
-
-                        </div>   
-                      </div>
-
-                      
-                      {/* give details about hobbies here  */}
-
-                      <div className='flex flex-col lg:ml-20 lg:items-start lg:justify-start '>
-                        <div className= 'text-center m-0 ' >
-                        <p className='font-bold text-lg ' id='margin-top-mobile'   >HOBBIES</p>
+                        <div className='flex flex-col items-start justify-center w-full'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>MERN</span>
+                              <span className='font text-sm font-light'>95%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={95} color='black'></meter>
                         </div>
-                        <div className='banner bg-black' ref={skillsbannercontainer} ></div>
-        
-                        <div className=' shadow-lg flex flex-col items-center justify-start w-60  '>
-                          <div className='text-sm flex items-center justify-start w-full'>
-                            <div className='flex flex-col items-start justify-center w-full mt-3'>
-                              <div className='flex justify-start items-center w-full'>
-                                <span className="material-symbols-outlined" id="black-icon" >book_4</span>                  
-                                <span className='font font-bold text-sm'>Reading</span>
-                              </div>
+                        <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>DJANGO</span>
+                              <span className='font text-sm font-light'>65%</span>
                             </div>
-
-                            </div>
-                            <div className='flex flex-col items-start justify-center w-full mt-3'>
-                              <div className='flex justify-start items-center w-full'>
-                                  <span className="material-symbols-outlined" id="black-icon" >two_wheeler</span>                  
-                                  <span className='font font-bold text-sm'>Riding</span>
-                              </div>
-                            </div>
-                          <div className='flex flex-col items-start justify-center w-full mb-5 margin-bottom-extra '>
-                              <div className='flex justify-start items-center w-full'>
-                                  <span className="material-symbols-outlined" id="black-icon" >hiking</span>                  
-                                  <span className='font font-bold text-sm'>Hiking</span>
-                              </div>
-                          </div>
-
-
-
-
+                            <meter className='h-5 w-full' max={100} min={0} value={65} color='black'></meter>
                         </div>
-                      </div>
+                        <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-between w-full'>
+                              <span className='font font-bold text-sm'>REACT NATIVE</span>
+                              <span className='font text-sm font-light'>75%</span>
+                            </div>
+                            <meter className='h-5 w-full' max={100} min={0} value={75} color='black'></meter>
+                        </div>
 
-                      </div>
 
-                      {/* give details about hobbies here  */}
-
+                      </div>   
                     </div>
-                    :
-                <></> 
 
-              }
-              {contact ? 
-                    <div className=' flex items-center flex-col justify-start information-container mt-3'>
-                    <div className= 'text-center m-0 ' >
-                      <p className='font-bold text-xl mt-3' >CONTACT ME</p>
-                    </div>
-                    <div className='banner bg-black' ref={contactbannercontainer}></div>
-    
-                    <div className=' shadow-lg flex flex-col items-start justify-start w-62 '>
-                      <div className='flex items-center justify-start mt-30'>
-                        <span className="material-symbols-outlined" id="black-icon" >call</span>
-                        <span className='font-bold text-xs'>+917907140006</span>
-                      </div>
-                      <div className='flex items-center justify-start mt-30'>
-                        <span className="material-symbols-outlined" id="black-icon" >mail</span>
-                        <span className='font-bold text-xs'>muhammedsirajudeen29@gmail.com</span>
-                      </div>
-                      <div className='flex items-center justify-start mt-30'>
-                        <span className="material-symbols-outlined" id="black-icon" >home</span>
-                        <span className='font-bold text-xs'>Paduvil(H) Karimpuzha Palakkad <br/>679513 </span>
-                      </div>
-                    </div>  
-
-                    <div className='flex items-center justify-evenly mt-10 w-full' >
-                      <a href='https://github.com/muhammedsirajudeen' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={GithubImage} className='social-icon' alt='github'    /></a>  
-                      <a href='https://in.linkedin.com/in/muhammed-sirajudeen-10a679217' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={LinkedIn} className='social-icon' alt='linkedin'    /></a>  
-                      <a href='https://www.instagram.com/siraju__sj?igsh=MTY3NDNnazI3d2JzdA==' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={Instagram} className='social-icon' alt='instagram'    /></a>  
-                    </div> 
+                    
                     {/* give details about hobbies here  */}
-                    </div>
-                    :
 
-                    <></>
-              }
+                    <div className='flex flex-col lg:ml-20 lg:items-start lg:justify-start '>
+                      <div className= 'text-center m-0 ' >
+                      <p className='font-bold text-lg ' id='margin-top-mobile'   >HOBBIES</p>
+                      </div>
+                      <div className='banner bg-black' ref={skillsbannercontainer} ></div>
+      
+                      <div className=' shadow-lg flex flex-col items-center justify-start w-60  '>
+                        <div className='text-sm flex items-center justify-start w-full'>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-start items-center w-full'>
+                              <span className="material-symbols-outlined" id="black-icon" >book_4</span>                  
+                              <span className='font font-bold text-sm'>Reading</span>
+                            </div>
+                          </div>
+
+                          </div>
+                          <div className='flex flex-col items-start justify-center w-full mt-3'>
+                            <div className='flex justify-start items-center w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >two_wheeler</span>                  
+                                <span className='font font-bold text-sm'>Riding</span>
+                            </div>
+                          </div>
+                        <div className='flex flex-col items-start justify-center w-full mb-5 margin-bottom-extra '>
+                            <div className='flex justify-start items-center w-full'>
+                                <span className="material-symbols-outlined" id="black-icon" >hiking</span>                  
+                                <span className='font font-bold text-sm'>Hiking</span>
+                            </div>
+                        </div>
+
+
+
+
+                      </div>
+                    </div>
+
+                    </div>
+
+                    {/* give details about hobbies here  */}
+
+                  </div>
+                  :
+              <></> 
+
+            }
+            {contact ? 
+                  <div className=' flex items-center flex-col justify-start information-container mt-3'>
+                  <div className= 'text-center m-0 ' >
+                    <p className='font-bold text-xl mt-3' >CONTACT ME</p>
+                  </div>
+                  <div className='banner bg-black' ref={contactbannercontainer}></div>
+  
+                  <div className=' shadow-lg flex flex-col items-start justify-start w-62 '>
+                    <div className='flex items-center justify-start mt-30'>
+                      <span className="material-symbols-outlined" id="black-icon" >call</span>
+                      <span className='font-bold text-xs'>+917907140006</span>
+                    </div>
+                    <div className='flex items-center justify-start mt-30'>
+                      <span className="material-symbols-outlined" id="black-icon" >mail</span>
+                      <span className='font-bold text-xs'>muhammedsirajudeen29@gmail.com</span>
+                    </div>
+                    <div className='flex items-center justify-start mt-30'>
+                      <span className="material-symbols-outlined" id="black-icon" >home</span>
+                      <span className='font-bold text-xs'>Paduvil(H) Karimpuzha Palakkad <br/>679513 </span>
+                    </div>
+                  </div>  
+
+                  <div className='flex items-center justify-evenly mt-10 w-full' >
+                    <a href='https://github.com/muhammedsirajudeen' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={GithubImage} className='social-icon' alt='github'    /></a>  
+                    <a href='https://in.linkedin.com/in/muhammed-sirajudeen-10a679217' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={LinkedIn} className='social-icon' alt='linkedin'    /></a>  
+                    <a href='https://www.instagram.com/siraju__sj?igsh=MTY3NDNnazI3d2JzdA==' className='bg-black h-10 w-10 p-2 rounded-full'  ><Image src={Instagram} className='social-icon' alt='instagram'    /></a>  
+                  </div> 
+                  {/* give details about hobbies here  */}
+                  </div>
+                  :
+
+                  <></>
+            }
+
+        </div>
+      </div>
+        <div className={` ${responseloader ? "visibility-hidden" : " " } w-full absolute top-32 left-0 back-container `} ref={backcontainer} >
+          <div className='flex items-center justify-end w-full'>
+            <span className={`${responseloader ? "visibility-hidden" : " " } bg-black flex items-center justify-center mr-10 p-2 rounded-full`}>
+              <span className="material-symbols-outlined" onClick={formnavHandler} >question_mark</span>
+            </span>
+          </div>
+        </div>
+        <div className='nav-items-container container-none nav-parent' ref={navparent}>
+          <div className='flex items-center justify-evenly w-full h-full  '  >
+            <button onClick={()=> navigationHandler("services") } className="icon3 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >home</button>
+            <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
+            <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
+            <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
 
           </div>
         </div>
-          <div className='w-full absolute top-32 left-0 back-container ' ref={backcontainer} >
-            <div className='flex items-center justify-end w-full'>
-              <span className='bg-black flex items-center justify-center mr-10 p-2 rounded-full'>
-                <span className="material-symbols-outlined" onClick={formnavHandler} >question_mark</span>
-              </span>
-            </div>
-          </div>
-          <div className='nav-items-container container-none nav-parent' ref={navparent}>
-            <div className='flex items-center justify-evenly w-full h-full  '  >
-              <button onClick={()=> navigationHandler("services") } className="icon3 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >home</button>
-              <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
-              <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
-              <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
 
-            </div>
-          </div>
+      </>
+      
 
-        </>
-        </>
+  </>
 
 
 )

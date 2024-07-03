@@ -14,6 +14,9 @@ body{
   overflow-x: hidden;
 
 }
+.visibility-hidden{
+  visibility: hidden;
+}
 
 .bottom-tab-container{
   position: absolute;
@@ -77,8 +80,13 @@ body{
   border-radius: 100%;
   height: 190px;
   width: 190px;
+  object-fit: cover;
+  object-position: middle;
   /* margin-top: 2vh;
   margin-left: 2vw; */
+}
+.disabled-button{
+  background-color: gray;
 }
 
 .stardust{
@@ -193,6 +201,9 @@ meter::-webkit-meter-optimum-value {
   .margin-top{
     margin-top: 5vh;
   }
+  .information-container{
+    overflow-y: scroll;
+  }
 
 
 }
@@ -208,6 +219,12 @@ meter::-webkit-meter-optimum-value {
     overflow-y: hidden;
     height: 50vh;
     margin-top: -10vh;
+  }
+  #extra-height{
+    height: 60vh;
+  }
+  #less-margin{
+    margin-top: 5vh !important;
   }
   .information-container{
     overflow-y: hidden;
