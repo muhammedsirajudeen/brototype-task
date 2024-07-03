@@ -305,8 +305,8 @@ export default function Home() {
     setForm(true)
     setEnquiry(false)
   }
-  async function submissionHandler(event:FormEvent){
-
+  async function submissionHandler(event: FormEvent<HTMLFormElement>){
+    let formData=new FormData(event.currentTarget)
     //form submission logic here
     event.preventDefault()
     //loading logic
@@ -324,23 +324,23 @@ export default function Home() {
 
     if(alertname.length===0 && alertemail.length===0 && alertnumber.length===0 && alertdescription.length===0 ){
       setResponseloader(true)
-      let formElement=document.querySelector("form") ?? undefined
-      const nameInput = (formElement?.querySelector("input[name='name']") as HTMLInputElement).value;
-      const emailInput=(formElement?.querySelector("input[name= 'email']") as HTMLInputElement).value;
-      const numberInput=(formElement?.querySelector("input[name='number' ]") as HTMLInputElement).value;
-      const descriptionInput=(formElement?.querySelector("textarea[name='description' ]") as HTMLInputElement).value;
-      console.log(nameInput,emailInput,numberInput,descriptionInput)
-      var formData = new FormData();
-      formData.append("name",nameInput)
-      formData.append("email",emailInput)
-      formData.append("number",numberInput)
-      formData.append("description",descriptionInput)
+      // let formElement=document.querySelector("form") ?? undefined
+      // const nameInput = (formElement?.querySelector("input[name='name']") as HTMLInputElement).value;
+      // const emailInput=(formElement?.querySelector("input[name= 'email']") as HTMLInputElement).value;
+      // const numberInput=(formElement?.querySelector("input[name='number' ]") as HTMLInputElement).value;
+      // const descriptionInput=(formElement?.querySelector("textarea[name='description' ]") as HTMLInputElement).value;
+      // console.log(nameInput,emailInput,numberInput,descriptionInput)
+      // var formData = new FormData();
+      // formData.append("name",nameInput)
+      // formData.append("email",emailInput)
+      // formData.append("number",numberInput)
+      // formData.append("description",descriptionInput)
 
       
 
       try {
           // Fetch API POST request
-          const response = await fetch("https://script.google.com/macros/s/AKfycbw4PwwNqJy25P4F2izPKgvU23iNDlQ1XUZh6e5wtUlieJhJ6QM4ctXBsFLQ2fnLN9QTrw/exec", {
+          const response = await fetch("https://script.google.com/macros/s/AKfycbyuOqF_cCeBHeZPAB9WxlF-4ZJPb7os7FAHEz46-Yn5dXVXFhe9tq60U3bSNj6tzJ8AyQ/exec", {
               method: "POST",
               body: formData,
         // mode:"no-cors"
@@ -353,11 +353,10 @@ export default function Home() {
               // window.location.reload();
               // You can redirect to another page using:
               // window.location.href = "https://google.com";
-              (formElement?.querySelector("input[name='name']") as HTMLInputElement).value="";
-              (formElement?.querySelector("input[name= 'email']") as HTMLInputElement).value="";
-              (formElement?.querySelector("input[name='number' ]") as HTMLInputElement).value="";
-              
-              (formElement?.querySelector("textarea[name='description' ]") as HTMLInputElement).value="";
+              setName("")
+              setNumber("")
+              setDescription("")
+              setEmail("")
           } else {
               throw new Error("Network response was not ok");
           }
