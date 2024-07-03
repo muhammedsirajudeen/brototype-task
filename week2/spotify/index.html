@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <script src="./script/script.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="./icons/spotify.png" type="image/png">
+
+
+    <title>Spotify</title>
+</head>
+<body id="black" >
+    <div class="maincontainer container-fluid">
+        <div class="leftsubcontainer">
+            <div class="leftcontainer container-fluid">
+                <div class="iconcontainer d-flex flex-row justify-content-center align-items-center mb-2 mt-3" >  
+                    <img src="./icons/spotify.png" class="icons"  >
+                    <h3 class="top-left-text normal-size-text  my-auto font-weight-bold"  >Spotify</h3>
+
+                </div>
+                <div class="iconcontainer d-flex flex-row justify-content-center align-items-center mb-2" >  
+                    <img src="./icons/home.png" class="icons " >
+                    <h3 class="top-left-text small-size-text  my-auto" >Home</h3>
+
+                </div>
+                <div class="iconcontainer d-flex flex-row justify-content-center align-items-center" >  
+                    <img src="./icons/search.png" class="icons my-auto" >
+                    <h3 class="top-left-text small-size-text my-auto" >Search</h3>
+
+                </div>
+             </div>
+
+             <div class="leftbottomcontainer">
+                <div class="iconcontainer d-flex justify-content-center align-items-center" id="left-shift"  >  
+                    <img src="./icons/library.png" class="icons" >
+                    <h3 class="top-left-text grey my-auto " id="bold" >Your Library</h3>
+
+                </div>
+                <div class="leftbottomsubcontainer">
+                    <h3 class="bottom-left-text" >Create Your First Playlist</h3>
+                    <h3 class="bottom-left-text small mt-10 mb-10 " >We'll help you</h3>
+                    <button class="create small p-2">Create playlist</button>
+
+                </div>
+                <div class="leftbottomsubcontainer">
+                    <h3 class="bottom-left-text" >Lets find some podcast to follow</h3>
+                    <h3 class="bottom-left-text small mt-10 mb-10 " >We'll keep you updated on new episodes</h3>
+                    <button class="create small p-2 ">Browse podcasts</button>
+
+                </div>
+                <div class="tiny-bottom-container">
+                    <div class="first-row">
+                        <p class="tinytext" >Legal</p>
+                        <p class="tinytext" >Safety & Privacy center</p>
+                        <p class="tinytext" >Privacy Policy</p>
+                        <p class="tinytext" >Cookies</p>
+
+                    </div>
+                    
+                    <div class="first-row">
+                        <p class="tinytext" >About ads</p>
+                        <p class="tinytext" >Accessibility</p>
+                        
+                    </div>
+                    <div class="first-row">
+                        <p class="tinytext" >Cookies</p>
+                        
+                    </div>
+
+                    <button class="language-container d-flex justify-content-center align-items-center "> 
+                        <img src="./icons/internet.png" class="icons my-auto " >
+                        <h3 class="top-left-text small-size-text my-auto" >English</h3>
+        
+                     </button>
+
+                </div>
+             </div>
+             
+        </div>
+        <div class="rightcontainer">
+            <div class="top-right-container">
+                <!-- add left and right curoor kinda button here -->
+                 <div class="left-arrow-container">
+                    <img src="./icons/leftarrow.png" class="icon" >
+                 </div>
+                <div class="auth-container">
+                    <button class="signup">Sign Up</button>
+                    <button class="login">Login</button>
+                    
+                </div>
+            </div>
+
+            <div class="mobile-navigation-container">
+                <div class="mobile-navigation-sub-container">
+                    <img src="./icons/spotify.png" class="icon" >
+                    <div class="mob-nav-icon">
+                        <img src="./icons/search.png" class="nav-icon">
+                        <button class="open-text">
+                            Open app
+                        </button>
+                        <img src="./icons/hamburger.png" class="nav-icon">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-right-container">
+                <div class="text-container sm:mt-10 " id="artist" >
+                    <h3 class="top-right-text""  >Popular Artists</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+
+                <div class="artistmaincontainer">
+                    <div class="artistcontainer" id="artistone" >
+                        <img src="./arijith.jpeg" class="albumimage"  id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Arijith Singh</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./pritam.jpg" class="albumimage" id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Pritam</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./rahman.jpeg" class="albumimage" id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Rahman</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./anirudh.jpeg.jpeg" class="albumimage" id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Anirudh Ravichander</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./vishal.jpeg" class="albumimage" id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Vishal Mishra</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./sachin.jpeg" class="albumimage"  id="artistimage" >
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+                        <p class="artist-text">Sachin Jigar</p>
+                        <p class="artist-text  " id="artist-sub-text" >Artist</p>
+
+                    </div>
+                </div>
+                <div class="text-container">
+                    <h3 class="top-right-text" >Popular Albums</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
+                <div class="artistmaincontainer">
+                    <div class="artistcontainer">
+                        <img src="./album/lovehoteljpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Love Hotel</p>
+                        <p class="album-text" id="album-sub-text"  >left over max</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./movie/animal.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Animal</p>
+                        <p class="album-text" id="album-sub-text"  >animal song playlist</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./movie/raja.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Ek tha Raja</p>
+                        <p class="album-text" id="album-sub-text"  >timeless classic song</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./movie/moose.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">MooseTape</p>
+                        <p class="album-text" id="album-sub-text">Sidhu Moosa Wala</p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <img src="./movie/ashique2.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Ashique 2</p>
+                        <p class="album-text" id="album-sub-text"  >Arijith Singh</p>
+
+                    </div>                    
+                </div>
+                <div class="text-container">
+                    <h3 class="top-right-text" >Featured Charts</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
+                <div class="artistmaincontainer">
+                    <div class="artistcontainer" id="color-container" >
+                        <div class="color-container">
+                            <p class="color-text">TOP SONGS GLOBAL</p>
+                        </div>
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Top Songs </p>
+                        <p class="album-text" id="album-sub-text"  >Your weekly playlist of songs that have<br> been played the most... </p>
+
+                    </div>
+                    <div class="artistcontainer" id="color-container" >
+                        <div class="color-container" id="second"  >
+                            <p class="color-text" >TOP SONGS</p>
+                        </div>
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Top Hits</p>
+                        <p class="album-text" id="album-sub-text"  >Your weekly playlist of songs that have<br> been played the most...</p>
+
+                    </div>
+                    <div class="artistcontainer" id="color-container">
+                        <div class="color-container" id="third" >
+                            <p class="color-text" >WEEKLY HITS</p>
+                        </div>
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Weekly Hits</p>
+                        <p class="album-text" id="album-sub-text"  >The songs that have been<br> played the most in the week  ... </p>
+
+                    </div>
+                    <div class="artistcontainer">
+                        <div class="color-container" id="fourth" >
+                            <p class="color-text" >MOST LISTENED</p>
+                        </div>
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Most Listened</p>
+                        <p class="album-text" id="album-sub-text"  >The songs that have been<br> played the most in the week  ... </p>
+
+                    </div>                  
+                </div>
+                <div class="text-container">
+                    <h3 class="top-right-text" >Trending Episodes</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
+                <div class="albumcontainer">
+                    <div class="albumsubcontainer">
+                        <img src="./episodes/balaji.webp" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Rj Balaji</p>
+                        <p class="album-text" id="album-sub-text"  >podcast of balaji</p>
+
+                    </div>
+
+                    <div class="albumsubcontainer">
+                        <img src="./episodes/rotten.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Rotten</p>
+                        <p class="album-text" id="album-sub-text"  >#73 rotten</p>
+
+                    </div>
+                    <div class="albumsubcontainer">
+                        <img src="./episodes/anubis.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Anubis Death</p>
+                        <p class="album-text" id="album-sub-text"  >spooky stories here</p>
+
+                    </div>
+                    <div class="albumsubcontainer">
+                        <img src="./episodes/mahabaratha.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Mahabaratha</p>
+                        <p class="album-text" id="album-sub-text"  >Experience the grandeur</p>
+
+                    </div> 
+                    <div class="albumsubcontainer">
+                        <img src="./episodes/rain.jpeg" class="albumimage">
+                        <div class="playbutton" id="playone" >
+                            <img src="./icons/play.png" class="playimage" >
+                        </div>
+
+                        <p class="album-text">Rain Playlist</p>
+                        <p class="album-text" id="album-sub-text"  >Enjoy the murmuring of the rain</p>
+
+                    </div>                    
+                </div>
+
+                <div class="bottom-text-container">
+                    <div class="text-sub-container">
+                        <h3 class="bottom-text">Company</h3>
+                        <h3 class="bottom-text" id="alternate" >About</h3>
+                        <h3 class="bottom-text" id="alternate" >Jobs</h3>
+                        <h3 class="bottom-text" id="alternate" >For the Records</h3>
+
+
+                    </div>
+                    <div class="text-sub-container">
+                        <h3 class="bottom-text">Communitites</h3>
+                        <h3 class="bottom-text" id="alternate" >For Artists</h3>
+                        <h3 class="bottom-text" id="alternate" >For Developers</h3>
+                        <h3 class="bottom-text" id="alternate" >Advertising </h3>
+                        <h3 class="bottom-text" id="alternate" >Investors </h3>
+                        <h3 class="bottom-text" id="alternate" >Vendors </h3>
+                    </div>
+                    <div class="text-sub-container">
+                        <h3 class="bottom-text">Useful Links</h3>
+                        <h3 class="bottom-text" id="alternate" >Support</h3>
+                        <h3 class="bottom-text" id="alternate" >Free Mobile App</h3>
+
+
+                    </div>
+                    <div class="text-sub-container">
+                        <h3 class="bottom-text">Spotify Plans</h3>
+                        <h3 class="bottom-text" id="alternate" >Premium Individual</h3>
+                        <h3 class="bottom-text" id="alternate" >Premium Duo</h3>
+                        <h3 class="bottom-text" id="alternate" >Premium Family</h3>
+                        <h3 class="bottom-text" id="alternate" >Premium Student</h3>
+                        <h3 class="bottom-text" id="alternate" >Spotify Free</h3>
+
+
+                    </div>
+
+                    <div class="social-media-container">
+                        <div class="social">
+                            <img  class="socialimage" src="./icons/instagram.png">
+                        </div>
+                        <div class="social">
+                            <img class="socialimage" src="./icons/twitter.png" >
+                        </div>
+                        <div class="social">
+                            <img class="socialimage" src="./icons/facebook.png">
+                        </div>
+
+                    </div>
+
+                    <div class="horizontal-line"></div>
+
+                    <div class="tiny-bottom-container" id="mobile" >
+                        <div class="first-row">
+                            <p class="tinytext  text-nowrap" >Legal</p>
+                            <p class="tinytext  text-nowrap " >Safety & Privacy center</p>
+                            <p class="tinytext  text-nowrap" >Privacy Policy</p>
+                            <p class="tinytext  text-nowrap" >Cookies</p>
+    
+                        </div>
+                        
+                        <div class="first-row">
+                            <p class="tinytext small" >About ads</p>
+                            <p class="tinytext small" >Accessibility</p>
+                            
+                        </div>
+                        <div class="first-row">
+                            <p class="tinytext small" >Cookies</p>
+                            
+                        </div>
+    
+                        <button class="language-container d-flex justify-content-center align-items-center "> 
+                            <img src="./icons/internet.png" class="icons  my-auto" >
+                            <h3 class="top-left-text small-size-text my-auto" >English</h3>
+            
+                         </button>
+    
+                    </div>
+                    
+                </div>
+                <hr>
+
+                <p  id="mobile-text" class="copyright-text" >Copyright Spotify@2024</p>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bottom-tab-container">
+        <div class="bottom-tab-sub-container">
+            <div class="para-container">
+                <p class="large-text" >Preview of Spotify<br>Signup to get Unlimited Access to songs and podcasts and many more</p>
+            </div>
+            <button class="login" id="loginbutton" >Sign Up For Free</button>
+
+        </div>
+
+    </div>
+</body>
+</html>

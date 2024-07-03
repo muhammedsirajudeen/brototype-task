@@ -1,0 +1,730 @@
+body{
+    display: flex !important;
+    background-color: black !important;
+    font-family: sans-serif !important;
+    overflow-x: hidden !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    overflow-y: hidden !important;
+}
+/* #black{
+    background-color: black;
+    --bs-gutter-x:0;
+    --bs-gutter-y:0;
+    font-family: sans-serif;
+} */
+
+.maincontainer{
+    width: 100%;
+    display: flex;
+}
+
+.leftcontainer {
+    width: 400px ;
+    height: 180px ;
+    border-radius: 10px ;
+    margin-left: 10px ;
+    margin-top: 10px ;
+    background-color: rgb(75, 75, 75,0.2) ;
+    display: flex ;
+    justify-content: start ;
+    align-items: start ;
+    flex-direction: column ;
+    
+}
+.leftbottomcontainer{
+    background-color: rgb(75, 75, 75,0.2);
+    border-radius: 10px;
+    width: 400px;
+    height: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.top-left-text{
+    color: white;
+    opacity: 1;
+    margin-left: 10px;
+}
+.top-left-text-grey{
+    font-weight: 900 !important;
+}
+#bold{
+    font-weight: 900 !important;
+}
+.bottom-left-text{
+    color: white;
+    opacity: 1;
+    font-size: 2vh;
+    margin-top: 1vh;
+    font-weight: 900;
+}
+.leftbottomsubcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(75, 75, 75,0.4);
+    width: 380px;
+    height: 150px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 2px;
+
+}
+.small{
+    font-size: 15px;
+}
+.create{
+    background-color: white;
+    border-style: hidden;
+    color: black;
+    border-radius: 30px;
+    padding: 8px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+.tiny-bottom-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.first-row{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+.tinytext{
+    font-size: smaller !important;
+    color: grey;
+    margin: 5px;
+}
+.language-container{
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: white;
+    background-color: rgb(75, 75, 75,0.1);
+    color: white;
+    font-size: 10px;
+    font-weight: bolder;
+    width:120px;
+    height: 45px;
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rightcontainer{
+    width: 80%;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90vh;
+}
+.top-right-container{
+    display: flex;
+    height:60px;
+    width: 100%;
+    background-color:  rgb(75, 75, 75,0.2) ;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.auth-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly
+}
+.signup{
+    margin: 10px;
+    width: 70px;
+    color: gray;
+    background-color: rgb(75, 75, 75,0.1);
+    border-style: hidden;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+.login{
+    border-style: hidden;
+    padding: 15px;
+    border-radius: 30px;
+    width: 90px;
+    font-weight: bolder;
+    font-size: 16px;
+}
+.bottom-right-container{
+    background-color: rgb(75, 75, 75,0.4);
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    z-index: 1000;
+}
+.top-right-text{
+    color: white;
+    font-size: x-large;
+    margin-left: 10px;
+    margin-top: 2vh;
+    font-weight: 900;
+}
+.artistmaincontainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+.artistcontainer{
+    width: 200px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+}
+.artistimage{
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+}
+.artist-text{
+    font-size: 16px;
+    color: white;
+    font-weight: bolder;
+    margin-right: 30px;
+}
+#artist-sub-text{
+    font-size: smaller;
+    color: gray;
+}
+
+.albumcontainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+
+}
+.albumsubcontainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+.albumimage{
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+}
+.album-text{
+    font-size: large;
+    color: white;
+    font-weight: bolder;
+    margin-left: 20px;
+}
+#album-sub-text{
+    font-size: smaller;
+    color: gray;
+    margin-left: 20px;
+}
+.color-container{
+    height: 170px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: indianred;
+}
+.color-text{
+    font-size: 40px;
+    color: white;
+    font-weight: 900;
+}
+#second{
+    background-color: blueviolet;
+}
+#third{
+    background-color: lightgreen;
+}
+#fourth{
+    background-color: brown;
+}
+.bottom-text-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    width: 100%;
+    margin: 20px;
+}
+
+.text-sub-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.bottom-text{
+    font-size: small;
+    font-weight: 900;
+    color: white;
+}
+
+#alternate{
+    color: gray;
+    font-size: smaller;
+}
+hr{
+    width: 80%;
+    background-color: gray;
+    color: gray;
+}
+.copyright-text{
+    color: gray;
+    margin-left: 10px;
+    font-size: small;
+}
+
+.artistcontainer:hover{
+    background-color: rgb(75, 75, 75,0.4);
+    
+}
+.albumsubcontainer:hover{
+    background-color: rgb(75, 75, 75,0.4);
+}
+.artistcontainer:hover .playbutton{
+    visibility: visible;
+}
+.albumsubcontainer:hover .playbutton{
+    visibility: visible;
+}
+
+a{
+    text-decoration: none;
+}
+.social-media-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+.social{
+    height: 40px;
+    width: 40px;
+    background-color: rgb(75, 75, 75,0.4);
+    margin: 10px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.socialimage{
+    height: 30px;
+    width: 30px;
+}
+.playbutton{
+    background-color: rgb(27, 167, 27);
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    position: relative;
+    margin-top: -20px;
+    margin-left: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+.playimage{
+    height: 30px;
+    width: 30px;
+}
+.icons{
+    height: 25px;
+    width: 25px;
+    margin-left: 10px;
+}
+.iconcontainer{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: 500 !important;
+}
+.grey{
+    color: gray;
+    font-size: 17px;
+}
+#left-shift{
+    margin-right: 180px;
+}
+
+.normal-size-text{
+    font-size: 17px;
+    font-weight: 900;
+}
+.small-size-text{
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.bottom-tab-container{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    height: 60px;
+    background: rgb(255,101,179);
+    background: linear-gradient(90deg, rgba(255,101,179,1) 2%, rgba(44,138,186,1) 32%, rgba(47,134,182,1) 94%, rgba(63,56,110,1) 100%, rgba(64,49,103,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.para-container{
+    display: flex;
+    font-size: smaller;
+    font-weight: bold;
+    height: 90px;
+    color: white;
+}
+.large-text{
+    font-size: small;
+  
+
+}
+.bottom-tab-sub-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#loginbutton{
+    margin-right: 30px;
+    font-size: small;
+    position: relative;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mobile-navigation-container{
+    display: none;
+}
+.left-arrow-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1vw;
+    background-color: black;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    border-radius: 100%;
+}
+#mobile{
+    visibility: hidden;
+}
+.text-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+#head-text{
+    font-size: medium;
+    color: gray;
+    margin-right: 10px;
+}
+#full{
+    height: 100% !important;
+    width: 100% !important;
+}
+.mt-10{
+    margin-top: 2vh;
+}
+.mb-10{
+    margin-bottom: 3vh;
+}
+
+@media only screen and (max-width:900px)  {
+
+    body{
+        overflow-y: hidden;
+        
+    }
+    .rightcontainer{
+        overflow-y: scroll;
+        height: 95vh;
+        overflow-x: hidden;
+        width: 50%;
+
+    }
+    .leftsubcontainer{
+        height: 95vh;
+        width: 50vw;
+    }
+    .top-right-text{
+        font-size: 17px;
+    }
+    .artistcontainer{
+        margin-left: 0px;
+    }
+    .albumimage{
+        height: 100px;
+        width: 100px;
+    }
+    .artistimage{
+        height: 150px;
+        width: 150px;
+    }
+    .albumimage{
+        height: 150px;
+        width: 150px;
+        border-radius: 10px;
+        margin: 20px;
+    }
+    .color-container{
+        border-radius: 0px;
+        width: 150px;
+        height: 150px;
+        margin: 20px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 10px;
+    }
+    .color-text{
+        font-size: 20px;
+    }
+    .leftbottomcontainer{
+        background-color: rgb(75, 75, 75,0.2);
+        border-radius: 10px;
+        width: 400px;
+        height: auto;
+        margin-left: 10px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+        height: 77vh;
+        z-index: -1000;
+    }
+    .tiny-bottom-container{
+        margin-top: 25vh;
+    }
+    .album-text{
+        margin-top: 5px;
+    }
+
+
+    
+}
+
+@media only screen and (max-width: 600px) {
+    body{
+        background-color: rgb(14, 14, 14) !important;
+        overflow-x: hidden;
+    }
+    .rightcontainer{
+        width: 100%;
+    }
+    .leftsubcontainer{
+        display: none;
+    }
+    .artistcontainer{
+        margin-top: -10px;
+        margin: 7px;
+        justify-content: start;
+        height: 175px;
+
+    }
+    .top-right-container{
+        display: none;
+    }
+    .bottom-right-container{
+        background-color: inherit;
+    }
+    .mobile-navigation-container{
+        position: fixed;
+        display: inline;
+        width: 100%;
+        height: 60px;
+        background-color: black;
+        top: 0;
+        left: 0;
+    }
+    .icon{
+        height: 40px;
+        width: 40px;
+    }
+    .mobile-navigation-sub-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+    .open-text{
+        background-color: white;
+        padding: 2px;
+        height: 30px;
+        width: 90px;
+        border-style: hidden;
+        border-radius: 30px;
+        font-weight: 900;
+    }
+    .mob-nav-icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+
+    }
+    
+    .nav-icon{
+        height: 25px;
+        width: 25px;
+        margin: 20px;
+    }
+    .top-right-text{
+        font-size: 20px;
+    }
+    .artistimage{
+        height: 20vh;
+        width: 35vw;
+        border-radius: 0px;
+    }
+    .artistmaincontainer{
+        overflow-x: scroll;
+        width: 90vw;
+    }
+    #artist-sub-text{
+        display: none;
+    }
+    .artist-text{
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        margin-top: -10px;
+        font-size: 15px;
+    }
+    .albumcontainer{
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 90vw; 
+
+    }
+    .albumsubcontainer{
+        justify-content: start;
+        height: 175px;
+        margin: 7px;
+    }
+    .albumimage{
+        height: 20vh;
+        width: 20vw;
+        scale: 1.5;
+        /* scale: 1.5; */
+        border-radius: 0px;
+        box-sizing: border-box;
+    }
+    #album-sub-text{
+        display: none;
+    }
+    .album-text{
+        font-weight: 400;
+        font-size: 15px;
+    }
+    .color-container{
+        border-radius: 0px;
+        /* width: 10rem; */
+        /* margin: 7px; */
+        margin: 7px;
+
+        padding: 0px;
+    }
+    .color-text{
+        font-size: 15px;
+    }
+    .bottom-text-container{
+        flex-direction: column;
+        margin: 0;
+        margin-top: 20px;
+    }
+    .horizontal-line{
+        width: 100%;
+        font-weight: lighter;
+        font-size: 0.5px;
+        height: 1px;
+        background-color: rgb(71, 71, 71);
+    }
+    #mobile{
+        visibility: visible;
+    }
+    hr{
+        display: none;
+    }
+    #mobile-text{
+        display: none;
+    }
+    #head-text{
+        display: none;
+    }
+    #artist{
+        margin-top: 5vh;
+    }
+    .text-container{
+        margin-top: 2vh;
+    }
+    .bottom-tab-container{
+        display: none;
+    }
+    .color-container{
+        margin: 7px;
+        height: 100px;
+        width: 105px;
+        scale: 1.2;
+    }
+    #artistimage{
+        height: 75px;
+        width: 75px;
+        scale: 1.65;
+    }
+    #color-container{
+        width: 40vw;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+    }
+
+
+
+
+}
+
+@media only screen and (max-width: 800px){
+    .leftbottomcontainer{
+        /* display: none; */
+        width: 100%;
+    }
+    .leftbottomsubcontainer{
+        width: 95%;
+    }
+}
