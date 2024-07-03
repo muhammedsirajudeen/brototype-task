@@ -353,6 +353,11 @@ export default function Home() {
               // window.location.reload();
               // You can redirect to another page using:
               // window.location.href = "https://google.com";
+              (formElement?.querySelector("input[name='name']") as HTMLInputElement).value="";
+              (formElement?.querySelector("input[name= 'email']") as HTMLInputElement).value="";
+              (formElement?.querySelector("input[name='number' ]") as HTMLInputElement).value="";
+              
+              (formElement?.querySelector("textarea[name='description' ]") as HTMLInputElement).value="";
           } else {
               throw new Error("Network response was not ok");
           }
