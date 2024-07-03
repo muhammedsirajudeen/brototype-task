@@ -1,7 +1,32 @@
-let artistcontainer=document.querySelectorAll(".artistcontainer")
-let playbutton=document.querySelector(".playbutton")
+let sidenavbutton=document.querySelector(".sidenav-button")
+let sidebarcontainer=document.querySelector(".sidebar-container")
+let sidebarflex=document.querySelector(".sidebar-flex")
+let clicked=false
+function opener(){
+    
+    console.log("clicked")
+    sidebarcontainer.style.width="100vw"
+    sidebarflex.style.display="flex"
+}
+sidenavbutton.onclick=()=>{
+    opener()
+}
 
-console.log(artistcontainer)
+function closer(){
+    sidebarcontainer.style.width="0vw"
+    sidebarflex.style.display="none"
+}
+let sidenavbuttonclose=document.querySelector(".sidenav-button-close")
+sidenavbuttonclose.onclick=()=>{
+    closer()
 
-let visible=false
+}
 
+//make it toggling class
+
+let anchor=document.querySelectorAll("a")
+anchor.forEach((element)=>{
+        element.addEventListener("click",()=>{
+            closer()
+        })
+})
