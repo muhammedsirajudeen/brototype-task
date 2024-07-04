@@ -314,6 +314,7 @@ export default function Home() {
       setEducation(false)
       setSkills(false)
       setForm(false)
+      setEnquiry(false)
     }
   }
   function clickHandler(){
@@ -399,6 +400,7 @@ export default function Home() {
     setEducation(false)
     setServices(false)
     setForm(false)
+    SetProjects(false)
 
 
   }
