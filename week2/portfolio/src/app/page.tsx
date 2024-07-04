@@ -43,6 +43,7 @@ export default function Home() {
   let [contact,setContact]=useState<boolean>(false);
   let [enquiry,setEnquiry]=useState(true);
   let [form,setForm]=useState(false)
+  let [projects,SetProjects]=useState(false);
 
   //use state for forms
   let [name,setName]=useState<string>("")
@@ -111,112 +112,112 @@ export default function Home() {
     }
 
     //star dust code
-    function move(){
-      if(STAR_COUNT<100){
-        let stardust=document.createElement("div")
-        stardust.className="stardust"  
-        //here get top botom left and right random numbers and assign it while creating
-        let top=getRandomNumber()
-        let bottom=getRandomNumber()
-        let right=getRandomNumber()
-        let left=getRandomNumber()
+    // function move(){
+    //   if(STAR_COUNT<100){
+    //     let stardust=document.createElement("div")
+    //     stardust.className="stardust"  
+    //     //here get top botom left and right random numbers and assign it while creating
+    //     let top=getRandomNumber()
+    //     let bottom=getRandomNumber()
+    //     let right=getRandomNumber()
+    //     let left=getRandomNumber()
 
-        stardust.style.top=top.toString()+"vh";
-        stardust.style.bottom=bottom.toString()+"vh";
-        stardust.style.left=left.toString()+"vw";
-        stardust.style.right=right.toString()+"vw";
-
-
-        let parentcontainer=document.querySelector(".parentcontainer")
-        parentcontainer?.appendChild(stardust)
-        STAR_COUNT++;
-      }
-      else{
-        // setTimeout(()=>{
-        //   console.log("hit")
-        //   setLoading(false)
-        // },2000)
-        // cancelAnimationFrame(ANIMATION_ID)
-        // console.log("cancelled")
-        // dont forget to add logic to cancel the animation
-        let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
+    //     stardust.style.top=top.toString()+"vh";
+    //     stardust.style.bottom=bottom.toString()+"vh";
+    //     stardust.style.left=left.toString()+"vw";
+    //     stardust.style.right=right.toString()+"vw";
 
 
-        //assigning object with node and position
-        if(EXECUTION_PARAMETER===0){
-          stardustarray.forEach((node)=>{
-            let decider_parameter=Math.floor(Math.random()*4)
-            let position=POSITION_ARRAY[decider_parameter];
-            let position_object:position_object_type={
-              position:position,
-              node:node
-            }
-            POSITION_NODE_ARRAY.push(position_object)
-          })
-          EXECUTION_PARAMETER++
-        }
+    //     let parentcontainer=document.querySelector(".parentcontainer")
+    //     parentcontainer?.appendChild(stardust)
+    //     STAR_COUNT++;
+    //   }
+    //   else{
+    //     // setTimeout(()=>{
+    //     //   console.log("hit")
+    //     //   setLoading(false)
+    //     // },2000)
+    //     // cancelAnimationFrame(ANIMATION_ID)
+    //     // console.log("cancelled")
+    //     // dont forget to add logic to cancel the animation
+    //     let stardustarray=document.querySelectorAll<HTMLElement>(".stardust")
 
 
-        POSITION_NODE_ARRAY.forEach((node)=>{
-          //remove the px and just increment it by one to get necessary animation
-          let decision_parameter=Math.floor(Math.random()*4)
-          let mover_decider=POSITION_ARRAY[decision_parameter];
+    //     //assigning object with node and position
+    //     if(EXECUTION_PARAMETER===0){
+    //       stardustarray.forEach((node)=>{
+    //         let decider_parameter=Math.floor(Math.random()*4)
+    //         let position=POSITION_ARRAY[decider_parameter];
+    //         let position_object:position_object_type={
+    //           position:position,
+    //           node:node
+    //         }
+    //         POSITION_NODE_ARRAY.push(position_object)
+    //       })
+    //       EXECUTION_PARAMETER++
+    //     }
 
-          if (node.position == "top") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1000) ? 0 : top 
-            top++;
-            node.node.style.top = top + "px";
-        } else if (node.position == "bottom") {
-            let top = parseInt(window.getComputedStyle(node.node).top);
-            top=(top>1200) ? 0 : top 
 
-            top--;
-            node.node.style.top = top + "px";
-        } else if (node.position == "left") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
-            left++;
-            node.node.style.left = left + "px";
-        } else if (node.position == "right") {
-            let left = parseInt(window.getComputedStyle(node.node).left);
-            left=(left>1200)? 0 :left
+    //     POSITION_NODE_ARRAY.forEach((node)=>{
+    //       //remove the px and just increment it by one to get necessary animation
+    //       let decision_parameter=Math.floor(Math.random()*4)
+    //       let mover_decider=POSITION_ARRAY[decision_parameter];
 
-            left--;
-            node.node.style.left = left + "px";
-        }
+    //       if (node.position == "top") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1000) ? 0 : top 
+    //         top++;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "bottom") {
+    //         let top = parseInt(window.getComputedStyle(node.node).top);
+    //         top=(top>1200) ? 0 : top 
 
-          // setInterval(()=>{
-          // if(mover_decider==="top"){
-          //   let top=parseInt(window.getComputedStyle(node.node).top)
-          //   top++
-          //   node.node.style.top=top.toString()+"px"
-          // }else if(mover_decider=="bottom"){
-          //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
-          //   bottom++
-          //   node.node.style.bottom=bottom.toString()+"px"
+    //         top--;
+    //         node.node.style.top = top + "px";
+    //     } else if (node.position == "left") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
+    //         left++;
+    //         node.node.style.left = left + "px";
+    //     } else if (node.position == "right") {
+    //         let left = parseInt(window.getComputedStyle(node.node).left);
+    //         left=(left>1200)? 0 :left
 
-          // }
-          // else if(mover_decider=="left"){
-          //   let left=parseInt(window.getComputedStyle(node.node).left)
-          //   left++
-          //   node.node.style.bottom=left.toString()+"px"
+    //         left--;
+    //         node.node.style.left = left + "px";
+    //     }
+
+    //       // setInterval(()=>{
+    //       // if(mover_decider==="top"){
+    //       //   let top=parseInt(window.getComputedStyle(node.node).top)
+    //       //   top++
+    //       //   node.node.style.top=top.toString()+"px"
+    //       // }else if(mover_decider=="bottom"){
+    //       //   let bottom=parseInt(window.getComputedStyle(node.node).bottom)
+    //       //   bottom++
+    //       //   node.node.style.bottom=bottom.toString()+"px"
+
+    //       // }
+    //       // else if(mover_decider=="left"){
+    //       //   let left=parseInt(window.getComputedStyle(node.node).left)
+    //       //   left++
+    //       //   node.node.style.bottom=left.toString()+"px"
             
-          // }
-          // else if(mover_decider=="right"){
-          //   let right=parseInt(window.getComputedStyle(node.node).right)
-          //   right++
-          //   node.node.style.bottom=right.toString()+"px"
+    //       // }
+    //       // else if(mover_decider=="right"){
+    //       //   let right=parseInt(window.getComputedStyle(node.node).right)
+    //       //   right++
+    //       //   node.node.style.bottom=right.toString()+"px"
 
-          // }
-          // },3000)
+    //       // }
+    //       // },3000)
 
-        })
-      } 
-      ANIMATION_ID=requestAnimationFrame(move)
+    //     })
+    //   } 
+    //   ANIMATION_ID=requestAnimationFrame(move)
 
-    }
-    requestAnimationFrame(move)
+    // }
+    // requestAnimationFrame(move)
     // loading logic
     setTimeout(()=>{
       if(parentcontainer.current && loadingcontainer.current ){
@@ -259,6 +260,8 @@ export default function Home() {
       setContact(false)
       setSkills(false)
       setForm(false)
+      SetProjects(false)
+
       //hacky code
       setTimeout(()=>{
         let banner=educationbannercontainer.current
@@ -272,6 +275,7 @@ export default function Home() {
       setContact(false)
       setEducation(false)
       setForm(false)
+      SetProjects(false)
 
       setTimeout(()=>{
         let skillbanner=skillsbannercontainer.current
@@ -284,6 +288,7 @@ export default function Home() {
       setEducation(false)
       setSkills(false)
       setForm(false)
+      SetProjects(false)
 
       setTimeout(()=>{
         let contactbanner=contactbannercontainer.current
@@ -297,8 +302,18 @@ export default function Home() {
       setEducation(false)
       setSkills(false)
       setForm(false)
+      SetProjects(false)
+
 
       
+    }
+    else if(section==="projects"){
+      SetProjects(true) 
+      setServices(false)
+      setContact(false)
+      setEducation(false)
+      setSkills(false)
+      setForm(false)
     }
   }
   function clickHandler(){
@@ -432,6 +447,7 @@ export default function Home() {
             <a onClick={()=> navigationHandler("education")} href='#' className=' text-white m-5 '>Education.</a>
             <a onClick={()=> navigationHandler("skills")} href='#' className=' text-white m-5 '>Skills.</a>
             <a onClick={()=> navigationHandler("contact")} href='#' className=' text-white m-5 '>Contact.</a>
+            <a onClick={()=> navigationHandler("projects")} href='#' className=' text-white m-5 '>Projects.</a>
 
 
 
@@ -747,6 +763,38 @@ export default function Home() {
 
                   <></>
             }
+            {
+              projects ? 
+                <div className='flex flex-col justify-center items-center'>
+                  <h1 className=' font-bold'>PROJECTS</h1>
+                  <div className=' shadow-lg flex flex-col items-start justify-center p-3'>
+                    <p className='font font-bold text-xs mt-5' >OPEN SOURCE LEARNING PLATFORM</p>
+                    <div className='flex items-center justify-center'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>
+                      <pre className='text-xs'>
+                        NEXTJS,EXPRESS,AWS,DOCKER
+                      </pre>
+
+                    </div>
+                    <div className='flex items-center justify-center'>
+                      <span className="material-symbols-outlined" id="black-icon" >code</span>
+                      <pre className='text-xs'>
+                        Has features ranging from Live Streaming and<br/> 
+                        chatting with mentors to uploading <br/>
+                        pre-recorded videos                         
+                      </pre>
+
+                    </div>
+                    <a href='https://github.com/muhammedsirajudeen/gtasandshorehackathon.git' className='bg-black h-10 w-10 p-2 rounded-full m-auto mt-5'  ><Image src={GithubImage} className='social-icon' alt='github'    /></a>  
+
+                   
+                    {/* <Image src={} */}
+                  </div>
+
+                </div>
+              :
+              <></>
+            }
 
         </div>
       </div>
@@ -763,6 +811,7 @@ export default function Home() {
             <button onClick={()=> navigationHandler("education") } className="icon1 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >info_i</button>
             <button onClick={()=> navigationHandler("skills")} className="icon2 nav-icon  bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "   >favorite</button>
             <button onClick={()=> navigationHandler("contact") } className="icon3 nav-icon bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >person</button>
+            <button onClick={()=> navigationHandler("projects") } className="icon3 nav-icon bg-black rounded-full shadow-lg  scale-100 material-symbols-outlined nav-icons flex items-center justify-center hiddenelement "  >trophy</button>
 
           </div>
         </div>
