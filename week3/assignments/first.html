@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container-flex{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+        #button{
+            border-style: hidden;
+            background-color: blue;
+            color: white;
+            font-family: white;
+            margin-top: 2vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-flex">
+        <h1>FORM</h1>
+        <input type="text" id="user" placeholder="enter char">
+        <button id="button">button</button>
+        <p class="output-text" ></p>
+    </div>
+    <script>
+        let button=document.querySelector("#button")
+        let output=document.querySelector(".output-text")
+        let input=document.querySelector("input")
+        button.onclick=()=>{
+            output.textContent=input.value
+        }
+    </script>
+</body>
+</html>
