@@ -1,0 +1,42 @@
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    
+}
+#button{
+    margin-left: 10vw;
+}
+
+/* #button{
+    width: 10vh;
+} */
+#image{
+    height: 90vh;
+    object-fit: cover;
+    object-position: center;
+}
+#black{
+    color: black !important;
+    background-color: rgb(0, 0, 0,1) !important;
+    opacity: 1 !important;
+    border-radius: 100%;
+}
+
+.heading-text{
+    color: white;
+}
+.item{
+    text-align: center;
+    vertical-align: middle;
+}
+#end{
+    position: relative;
+    margin-left: auto;
+}
+#margin-right{
+    margin-right: 1vw;
+}
+#mt{
+    margin-top: 20vh;
+}

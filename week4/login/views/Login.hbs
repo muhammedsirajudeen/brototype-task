@@ -1,0 +1,31 @@
+<div class="container-fluid d-flex justify-content-center align-items-center" id="mt">
+    <form method="POST" >
+        <div class="form-group m-2">
+            <label for="exampleInputEmail1">Email address</label>
+            <input name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group m-2">
+            <label for="exampleInputPassword1">Password</label>
+            <input name="password" required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="container-fluid m-2 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary m-2">Submit</button>
+        </div>
+    </form>
+</div>
+<script>
+function validator(email,password){
+    console.log(email,password)
+    //validate here 
+    return true
+}
+function submitHandler(e){
+    e.preventDefault()
+    let formData=new FormData(e.target)
+    let flag=validator(formData.get("email"),formData.get("password"))
+    console.log(flag)
+    //send this to the server now and its over
+}
+document.querySelector("form").addEventListener("submit",submitHandler)
+</script>
