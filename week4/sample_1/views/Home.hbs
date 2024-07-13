@@ -1,0 +1,17 @@
+<div class="container-fluid m-3">
+  <div class="row ">
+    {{#each productListing }}
+      <div class="col gy-3 d-flex justify-content-center">
+        <div class="card" style="width: 18rem; height:30rem;">
+          <img id="image" class="card-img-top image-fluid " src="{{imageUrl}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"> {{name}} </h5>
+            <p class="card-text">{{description}}</p>
+            <a id="margin" href="{{imageUrl}}" class="btn btn-dark">${{price}}</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
+  </div>
+</div>
