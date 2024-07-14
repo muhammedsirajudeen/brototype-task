@@ -1,7 +1,27 @@
 const express=require("express")
+const placeListing=require('../placeLister')
+
 const router=express.Router()
 
-const placeListing=require('../placeLister')
+const user={
+    username:'sirajudeen',
+    password:'sirajudeen'
+}
+
+router.post('/auth',(req,res)=>{
+    try{
+        let {username,password}=req.body
+        if(username === user.username && password === user.password ){
+            res.json({message:"success"})
+        }else{
+            res.json({message:"invalid credentials"})
+        }
+    
+    }catch(error){
+        console.log(error)
+        res.json({message:"failure"})
+    }
+})
 
 //if session redirect to home
 router.get('/',(req,res)=>{
@@ -17,8 +37,6 @@ router.get('/home',(req,res)=>{
     )
 })
 
-router.post('/auth',(req,res)=>{
-    //get post data here
-})
+
 
 module.exports=router
