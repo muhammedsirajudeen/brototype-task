@@ -63,3 +63,6 @@ form{
     border-style: hidden;
     border-radius: 5px;
 }
+#loginAlert{
+    visibility: hidden;
+}

@@ -10,7 +10,20 @@
       </li>
     </ul>
     <span class="navbar-text" id="end">
-     <button id="margin-right" class="btn btn-success">state</button>
+     <button   id="margin-right" class="btn btn-success">{{#if authenticated}} Signout {{else}} Signin {{/if}}  </button>
     </span>
   </div>
 </nav>
+
+<script>
+  let button=document.querySelector("#margin-right")
+  button.addEventListener("click",async ()=>{
+    let data=await (await fetch("/signout")).json()
+    if(data.message==="success"){
+      window.location.href="/"
+    }else{
+      alert("signout failed")
+    }
+  } )
+  
+</script>

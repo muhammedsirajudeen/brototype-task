@@ -1,6 +1,9 @@
 const express=require("express")
 const path=require("path")
 const bodyParser = require('body-parser');
+const session=require("express-session")
+require('dotenv').config();
+
 
 const {engine} = require('express-handlebars');
 
@@ -15,7 +18,15 @@ const PORT=3000
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(express.static('public'))
+app.use(session(
+    {
+        secret:process.env.SECRET_KEY,
+        resave:true,
+        saveUninitialized:true
+    }
+))
 app.use('/',authRouter)
+
 //set formdata handler logic here
 
 
