@@ -22,7 +22,10 @@ app.use(session(
     {
         secret:process.env.SECRET_KEY,
         resave:true,
-        saveUninitialized:true
+        saveUninitialized:true,
+        cookie: {
+            maxAge: 30 * 24 * 60 * 60 * 1000 // 1 month in milliseconds
+        }
     }
 ))
 app.use('/',authRouter)

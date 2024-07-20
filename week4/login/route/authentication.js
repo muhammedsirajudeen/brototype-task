@@ -43,7 +43,8 @@ router.get('/home',(req,res)=>{
         res.render("Home",
             {
                 placeListing:placeListing,
-                authenticated:true
+                authenticated:true,
+                username:req.session.username
             }
         )
     }else{
