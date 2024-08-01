@@ -8,7 +8,9 @@ const user = {
   password: "sirajudeen",
 };
 
+//TODO: dont forget here use a factor function and make the code more modular its a must 
 const authMiddleware = (req, res, next) => {
+
   if (req.session?.username) {
     next();
   } else {
@@ -19,20 +21,7 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-router.post("/auth", (req, res) => {
-  try {
-    let { username, password } = req.body;
-    if (username === user.username && password === user.password) {
-      req.session.username = username;
-      res.json({ message: "success" });
-    } else {
-      res.json({ message: "invalid credentials" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.json({ message: "failure" });
-  }
-});
+
 
 //if session redirect to home
 router.get("/", authMiddleware, (req, res) => {
@@ -60,6 +49,10 @@ router.get("/authenticator", (req, res) => {
   }
 });
 
+router.get('/signup',authMiddleware,(req,res,next)=>{
+  res.render('pages/Signup')
+})
+
 router.get("/signout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -68,6 +61,21 @@ router.get("/signout", (req, res) => {
   });
   res.clearCookie("cookie.sid");
   res.json({ message: "success" });
+});
+
+router.post("/auth", (req, res) => {
+  try {
+    let { username, password } = req.body;
+    if (username === user.username && password === user.password) {
+      req.session.username = username;
+      res.json({ message: "success" });
+    } else {
+      res.json({ message: "invalid credentials" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "failure" });
+  }
 });
 
 module.exports = router;
