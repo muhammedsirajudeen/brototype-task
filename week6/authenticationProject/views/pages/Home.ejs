@@ -1,0 +1,31 @@
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <ol class="carousel-indicators">
+    <% placeListing.forEach((place, index)=> { %>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>"
+        class="<%= index === 0 ? 'active' : '' %>"></li>
+      <% }); %>
+  </ol>
+  <div class="carousel-inner">
+    <% placeListing.forEach((place)=> { %>
+      <div class="carousel-item <%= place.active ? 'active' : '' %>">
+        <img id="image" class="d-block w-100" src="<%= place.imgPlaceholder %>" alt="Slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h1>
+            <%= place.heading %>
+          </h1>
+          <h3>
+            <%= place.description %>
+          </h3>
+        </div>
+      </div>
+      <% }); %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+    <span id="black" class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+    <span id="black" class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>

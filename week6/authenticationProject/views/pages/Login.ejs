@@ -1,0 +1,105 @@
+<div class="container-fluid d-flex justify-content-center align-items-center" id="mt">
+    <form method="POST">
+        <div class="form-group m-2">
+            <label for="exampleInputEmail1">Username</label>
+            <input name="username" required type="text" class="form-control" id="InputEmail"
+                aria-describedby="emailHelp" placeholder="Enter username">
+            <p id="usernameAlert" class="red">placeholder text</p>
+        </div>
+        <div class="form-group m-2">
+            <label for="exampleInputPassword1">Password</label>
+            <input name="password" required type="password" class="form-control" id="InputPassword"
+                placeholder="Enter password">
+            <p id="passwordAlert" class="red">placeholder text</p>
+        </div>
+        <div class="container-fluid m-2 d-flex flex-column justify-content-center align-items-center">
+            <p id="loginAlert" class="red text-center">placeholder text</p>
+            <button id="custom-button" type="submit" class="btn btn-primary m-2">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script defer>
+
+
+    async function authValidator() {
+        let response = await (await fetch('/authenticator')).json();
+        if (response.message === "success") {
+            window.location.href = "/home";
+        }
+    }
+    authValidator();
+
+    function validator(username, password) {
+        let usernameAlert = document.querySelector("#usernameAlert");
+        let passwordAlert = document.querySelector("#passwordAlert");
+        let usernameInput = document.querySelector("#InputEmail");
+        let passwordInput = document.querySelector("#InputPassword");
+
+        let flag = true;
+        const regex = /^[a-zA-Z0-9@_]*$/;
+
+        usernameAlert.style.visibility = "hidden";
+        passwordAlert.style.visibility = "hidden";
+
+        if ((username.replace(/\s/g, "")).length === 0) {
+            usernameAlert.textContent = "The username can't be empty";
+            usernameAlert.style.visibility = "visible";
+            usernameInput.value = "";
+            flag = false;
+        } else if (username.length < 8) {
+            usernameAlert.textContent = "The username can't be less than 8 characters";
+            usernameAlert.style.visibility = "visible";
+            flag = false;
+        } else if (!(regex.test(username))) {
+            usernameAlert.textContent = "Can only contain @ or _ as special characters";
+            usernameAlert.style.visibility = "visible";
+            flag = false;
+        }
+        if ((password.replace(/\s/g, "")).length === 0) {
+            passwordAlert.textContent = "The password can't be empty";
+            passwordAlert.style.visibility = "visible";
+            passwordInput.value = "";
+            flag = false;
+        } else if (password.length < 8) {
+            passwordAlert.textContent = "The password can't be less than 8 characters";
+            passwordAlert.style.visibility = "visible";
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    async function submitHandler(e) {
+        let button = document.querySelector("#custom-button");
+        button.disabled = true;
+        e.preventDefault();
+        let formData = new FormData(e.target);
+        const formBody = new URLSearchParams(formData).toString();
+
+        let flag = validator(formData.get("username"), formData.get("password"));
+        // Send this to the server now and it's over
+        if (flag) {
+            let response = await (await fetch("/auth", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'  // Set Content-Type for URL-encoded data
+                },
+                body: formBody,
+            })).json();
+
+            if (response.message === "success") {
+                window.location.href = "/home";
+                window.localStorage.setItem("authstatus", true);
+            } else {
+                // Give a modal here
+                let loginAlert = document.querySelector("#loginAlert");
+                loginAlert.textContent = "Incorrect username or password";
+                loginAlert.style.visibility = "visible";
+            }
+        }
+        button.disabled = false;
+    }
+
+    document.querySelector("form").addEventListener("submit", submitHandler);
+</script>
