@@ -84,3 +84,75 @@ form{
     width: 100%;
     margin-top: 5vh;
 }
+.main-container-dashboard{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    flex-direction: column !important;
+
+}
+.main-container-nav{
+    display: flex !important;
+    height: 40px !important;
+    width: 80% !important;
+    /* background-color: black !important; */
+    margin-top: 10px;
+    box-shadow: 1px 1px 3px;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+.search{
+    height: 70%;
+    margin-right: 1%;
+
+}
+.search::placeholder{
+    font-size: 11px;
+}
+h4{
+    margin-left: 10px;
+    margin-top: auto;
+}
+.user-container{
+    border-style: solid;
+    border-width: 1px;
+    height: 80vh;
+    overflow-y: scroll;
+
+    border-style: solid !important;
+    width: 80%;
+    border-width: 1px !important;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+.admin-heading{
+    font-size: 1.5vw;
+    font-weight: 900;
+    vertical-align: center;
+}
+.each-user-container{
+    min-height: 7.5vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    /* box-shadow: 1px 1px 2px; */
+}
+.end-container{
+    margin-top: 1vh;
+}
+img{
+    height: 2.5vh;
+    width: 1.5vw;
+}
+.icon-wrapper{
+    border-style: hidden;
+    background-color: white;
+
+}

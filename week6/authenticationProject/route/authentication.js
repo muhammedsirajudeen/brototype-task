@@ -3,14 +3,11 @@ const crypto = require("crypto");
 
 const placeListing = require("../placeLister");
 const userModel = require("../database/models/User");
-const authMiddleware=require("../database/helper/authMiddleware")
+const authMiddleware = require("../database/helper/authMiddleware");
 
 const sha512 = require("../database/helper/hasherFunction");
 
 const router = express.Router();
-
-
-
 
 //if session redirect to home
 router.get("/", authMiddleware("login"), (req, res) => {
@@ -55,21 +52,23 @@ router.get("/signout", (req, res) => {
   res.json({ message: "success" });
 });
 
-router.post("/auth",async (req, res) => {
+router.post("/auth", async (req, res) => {
   try {
     let { username, password } = req.body;
-    let hashedPassword=sha512(password)
-    let checkUser=await userModel.findOne({username:username})
-    if(!checkUser){
-      res.json({message:"user doesnt exist"})
-    }else{
-      if (username === checkUser.username && hashedPassword === checkUser.password) {
+    let hashedPassword = sha512(password);
+    let checkUser = await userModel.findOne({ username: username });
+    if (!checkUser) {
+      res.json({ message: "user doesnt exist" });
+    } else {
+      if (
+        username === checkUser.username &&
+        hashedPassword === checkUser.password
+      ) {
         req.session.username = username;
         res.json({ message: "success" });
       } else {
         res.json({ message: "invalid credentials" });
       }
-  
     }
   } catch (error) {
     console.log(error);
@@ -85,9 +84,12 @@ router.post("/register", async (req, res) => {
     if (user) {
       res.json({ message: "the username already exists" });
     } else {
-      let newUser = userModel({ username: username, password: sha512(password) });
+      let newUser = userModel({
+        username: username,
+        password: sha512(password),
+      });
       await newUser.save();
-      req.session.username=username
+      req.session.username = username;
       res.json({ message: "success" });
     }
   } catch (error) {
