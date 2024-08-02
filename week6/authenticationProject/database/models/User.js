@@ -8,8 +8,12 @@ if (mongoose.models && mongoose.models.User) {
       
       username:String,
       password:String,
-      authorization:String,
-      profileLink:String
+      authorization:{
+        type:String,
+        default:'user'
+      } ,
+      profileLink:String,
+
   })
 
   User = mongoose.model('User', userSchema);

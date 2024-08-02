@@ -22,6 +22,18 @@ const authMiddleware = (returner) => {
       }
     };
   }
+  else if(returner==="admin"){
+    return (req, res, next) => {
+      if (req.session?.username) {
+        next();
+      } else {
+        res.render("pages/adminPages/adminLogin", {
+          authenticated: false,
+          username: null,
+        });
+      }
+    };
+  }
 };
 
 module.exports=authMiddleware
