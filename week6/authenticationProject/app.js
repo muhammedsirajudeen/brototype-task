@@ -2,11 +2,14 @@ const express = require("express");
 const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const authRouter = require("./route/authentication");
+const adminRouter = require("./route/adminAuth");
+const dbConnect = require("./database/helper/dbConnect");
 require("dotenv").config();
 
 const app = express();
 const PORT = 3000;
 
+dbConnect();
 app.use(expressLayouts);
 app.set("layout", "./layout/layout");
 app.set("view engine", "ejs");
@@ -21,8 +24,6 @@ app.use((req, res, next) => {
 });
 app.use(express.static("public"));
 
-
-
 app.use(
   session({
     secret: process.env.SECRET_KEY,
@@ -35,4 +36,11 @@ app.use(
 );
 
 app.use("/", authRouter);
+app.use("/admin", adminRouter);
+app.use((req, res, next) => {
+  res.render("pages/404", {
+    authenticated: req.session?.username ? true : false,
+    username: req.session?.username,
+  });
+});
 app.listen(PORT, () => console.log(`Running On Port ${PORT}`));

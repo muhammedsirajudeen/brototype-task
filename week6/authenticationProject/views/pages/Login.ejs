@@ -95,7 +95,7 @@
             } else {
                 // Give a modal here
                 let loginAlert = document.querySelector("#loginAlert");
-                loginAlert.textContent = "Incorrect username or password";
+                loginAlert.textContent = response.message;
                 loginAlert.style.visibility = "visible";
             }
         }

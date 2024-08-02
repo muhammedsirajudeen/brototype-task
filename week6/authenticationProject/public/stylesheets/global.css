@@ -46,6 +46,10 @@ body{
 #passwordAlert{
     visibility: hidden;
 }
+#confirmAlert{
+    visibility: hidden;
+    text-align: center;
+}
 form{
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
     padding: 5vh;
@@ -69,4 +73,14 @@ form{
 .text-container{
     width: 100%;
     text-align: center;
+}
+.margin-top{
+    margin-top: 30px !important;
+}
+.notfound-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5vh;
 }

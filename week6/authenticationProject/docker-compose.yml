@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: authentication_week6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=sirajudeen
+      - MONGO_INITDB_ROOT_PASSWORD=sirajudeen
+
+volumes:
+  mongo_data:

@@ -10,10 +10,14 @@
         <a class="nav-link" href="/home">Home</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/home"><b>
+        <a class="nav-link" href="#"><b>
             <%= username %>
           </b></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/signup"><%= authenticated ? '' : 'Register' %></a>
+      </li>
+
     </ul>
     <span class="navbar-text" id="end">
       <button id="margin-right" class="btn btn-success">

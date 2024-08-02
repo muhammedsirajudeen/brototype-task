@@ -1,30 +1,19 @@
 const express = require("express");
+const crypto = require("crypto");
+
 const placeListing = require("../placeLister");
+const userModel = require("../database/models/User");
+const authMiddleware=require("../database/helper/authMiddleware")
+
+const sha512 = require("../database/helper/hasherFunction");
 
 const router = express.Router();
 
-const user = {
-  username: "sirajudeen",
-  password: "sirajudeen",
-};
-
-//TODO: dont forget here use a factor function and make the code more modular its a must 
-const authMiddleware = (req, res, next) => {
-
-  if (req.session?.username) {
-    next();
-  } else {
-    res.render("pages/Login", {
-      authenticated: false,
-      username: null,
-    });
-  }
-};
 
 
 
 //if session redirect to home
-router.get("/", authMiddleware, (req, res) => {
+router.get("/", authMiddleware("login"), (req, res) => {
   res.render("pages/Login", {
     authenticated: false,
     username: null,
@@ -32,7 +21,7 @@ router.get("/", authMiddleware, (req, res) => {
 });
 
 //if no session redirect to login page
-router.get("/home", authMiddleware, (req, res) => {
+router.get("/home", authMiddleware("login"), (req, res) => {
   res.render("pages/Home", {
     placeListing: placeListing,
     authenticated: true,
@@ -49,28 +38,57 @@ router.get("/authenticator", (req, res) => {
   }
 });
 
-router.get('/signup',authMiddleware,(req,res,next)=>{
-  res.render('pages/Signup')
-})
+router.get("/signup", authMiddleware("signup"), (req, res, next) => {
+  res.render("pages/Signup", {
+    authenticated: false,
+    username: null,
+  });
+});
 
 router.get("/signout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log(err);
+  req.session.destroy((error) => {
+    if (error) {
+      console.log(error);
     }
   });
   res.clearCookie("cookie.sid");
   res.json({ message: "success" });
 });
 
-router.post("/auth", (req, res) => {
+router.post("/auth",async (req, res) => {
   try {
     let { username, password } = req.body;
-    if (username === user.username && password === user.password) {
-      req.session.username = username;
-      res.json({ message: "success" });
+    let hashedPassword=sha512(password)
+    let checkUser=await userModel.findOne({username:username})
+    if(!checkUser){
+      res.json({message:"user doesnt exist"})
+    }else{
+      if (username === checkUser.username && hashedPassword === checkUser.password) {
+        req.session.username = username;
+        res.json({ message: "success" });
+      } else {
+        res.json({ message: "invalid credentials" });
+      }
+  
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "failure" });
+  }
+});
+
+//only admin can add another admin dont forget to handle this
+router.post("/register", async (req, res) => {
+  let { username, password } = req.body;
+  try {
+    let user = await userModel.findOne({ username: username });
+    if (user) {
+      res.json({ message: "the username already exists" });
     } else {
-      res.json({ message: "invalid credentials" });
+      let newUser = userModel({ username: username, password: sha512(password) });
+      await newUser.save();
+      req.session.username=username
+      res.json({ message: "success" });
     }
   } catch (error) {
     console.log(error);
