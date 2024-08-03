@@ -12,8 +12,15 @@ const authMiddleware = (returner) => {
     };
   } else if (returner === "signup") {
     return (req, res, next) => {
+      if(req.session.authorization==="admin"){
+        console.log("clicked")
+        return res.render("pages/Signup", {
+          authenticated: false,
+          username: null,
+        });    
+      }
       if (req.session?.username) {
-        next();
+        res.redirect("/home");
       } else {
         res.render("pages/Signup", {
           authenticated: false,

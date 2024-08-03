@@ -156,3 +156,30 @@ img{
     background-color: white;
 
 }
+#editbutton{
+    padding: 5px;
+    background-color: rgb(7, 165, 7);
+    color: white;
+    border-style: none;
+}
+#deletebutton{
+    background-color: red;
+    padding: 7.5px;
+    color: white;
+    font-weight: 900;
+    border-style: none;
+}
+#createicon{
+    height: 30px;
+    width: 30px;
+
+}
+#createbutton{
+    background-color: white;
+    border-style: hidden;
+}
+#createbuttonsend{
+    border-style: hidden;
+    background-color: rgb(2, 176, 2);
+    color: white;
+}

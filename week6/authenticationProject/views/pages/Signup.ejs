@@ -2,7 +2,7 @@
     <form>
         <div class="form-group m-2">
             <div class="text-container">
-                <h3>SIGNUP</h3>
+                <h3>REGISTER</h3>
             </div>
             <label for="exampleInputEmail1">Username</label>
             <input name="username" required type="text" class="form-control" id="InputEmail"
@@ -34,13 +34,13 @@
 <script defer>
 
 
-    async function authValidator() {
-        let response = await (await fetch('/authenticator')).json();
-        if (response.message === "success") {
-            window.location.href = "/home";
-        }
-    }
-    authValidator();
+    // async function authValidator() {
+    //     let response = await (await fetch('/authenticator')).json();
+    //     if (response.message === "success") {
+    //         window.location.href = "/home";
+    //     }
+    // }
+    // authValidator();
 
     function validator(username, password, confirmpassword) {
         let usernameAlert = document.querySelector("#usernameAlert");
@@ -118,10 +118,12 @@
                 },
                 body: formBody,
             })).json();
-
+            console.log(response)
             if (response.message === "success") {
-                window.location.href = "/home";
-                window.localStorage.setItem("authstatus", true);
+                    window.location.href = "/home";
+                    // window.localStorage.setItem("authstatus", true);
+
+                
             } else {
                 // Give a modal here
                 let loginAlert = document.querySelector("#loginAlert");

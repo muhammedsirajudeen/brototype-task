@@ -1,6 +1,8 @@
 <div class="main-container-dashboard">
     <div class="main-container-nav">
+        <button id="createbutton" data-toggle="modal" data-target="#exampleModalCenterCreate"  ><img src="/images/createuser.png"  alt="createuser" /></button>
         <p class="admin-heading my-auto">ADMIN DASHBOARD</p>
+
         <input id="search" type="search" class="search" placeholder="search username ....">
     </div>
     <div class="user-container">
@@ -32,11 +34,11 @@
                         </b></p>
                 </div>
                 <div class="col-1">
-                    <button id="<%= user.username %>" class="edit icon-wrapper"><img
+                    <button id="<%= user.username %>" class="edit icon-wrapper" data-toggle="modal" data-target="#exampleModalCenter"   ><img
                             src="http://localhost:3000/images/edit.png" alt="edit"></button>
                 </div>
                 <div class="col-1">
-                    <button id="<%= user.username %>" class="delete icon-wrapper"><img
+                    <button id="<%= user.username %>" class="delete icon-wrapper" data-toggle="modal" data-target="#exampleModal" ><img
                             src="http://localhost:3000/images/delete.png" alt="edit" "></button>
                 </div>
             </div>
@@ -52,136 +54,260 @@
                                             <%= i %>
                                         </a></li>
                                     <% } %>
-                                <li class="page-item"><button onclick="backNavigator('forward')" class="page-link" href="#">Next</button></li>
+                                        <li class="page-item"><button onclick="backNavigator('forward')"
+                                                class="page-link" href="#">Next</button></li>
                             </ul>
                         </nav>
                 </div>
             </div>
+            <!-- Edit Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="edit-user-container d-flex flex-column justify-content-center align-items-center">
+                            <input class="m-3"  type="text" id="currentuser" value="" placeholder="enter the username" />
+                            <input class="m-3" type="text" id="currentpassword" value="" placeholder="enter the password"/>
+                            <button  type="button" id="editbutton"  class="m-3">Edit</button>
+                            <small><b><p id="editalert"></p></b></small>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--Delete Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        <p id="deleteusertext" ></p>
+                        <small><b><p id="deletealert"></p></b></small>
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="deletebutton" class="">Delete</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--create Modal -->
+            <div class="modal fade" id="exampleModalCenterCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="edit-user-container d-flex flex-column justify-content-center align-items-center">
+                            <input class="m-3"  type="text" id="createuser" value="" placeholder="enter the username" />
+                            <p id="usernameAlert" class="red">placeholder text</p>
+                            
+                            <input class="m-3" type="text" id="createpassword" value="" placeholder="enter the password"/>
+                            <p id="passwordAlert" class="red">placeholder text</p>
+
+                            <button  type="button" id="createbuttonsend"  class="m-3 createbutton">Create</button>
+                            <small><b><p id="createalert"></p></b></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
             <script>
-            function debounce(func, wait, immediate = false) {
-                let timeout;
+            function validator(username, password) {
+                let usernameAlert = document.querySelector("#usernameAlert");
+                let passwordAlert = document.querySelector("#passwordAlert");
+                let usernameInput = document.querySelector("#InputEmail");
+                let passwordInput = document.querySelector("#InputPassword");
 
-                return function(...args) {
-                    const context = this;
+                let flag = true;
+                const regex = /^[a-zA-Z0-9@_]*$/;
 
-                    // Determine if the function should be executed immediately
-                    const callNow = immediate && !timeout;
+                usernameAlert.style.visibility = "hidden";
+                passwordAlert.style.visibility = "hidden";
 
-                    // Clear the previous timeout
-                    clearTimeout(timeout);
+                if ((username.replace(/\s/g, "")).length === 0) {
+                    usernameAlert.textContent = "The username can't be empty";
+                    usernameAlert.style.visibility = "visible";
+                    usernameInput.value = "";
+                    flag = false;
+                } else if (username.length < 8) {
+                    usernameAlert.textContent = "The username can't be less than 8 characters";
+                    usernameAlert.style.visibility = "visible";
+                    flag = false;
+                } else if (!(regex.test(username))) {
+                    usernameAlert.textContent = "Can only contain @ or _ as special characters";
+                    usernameAlert.style.visibility = "visible";
+                    flag = false;
+                }
+                if ((password.replace(/\s/g, "")).length === 0) {
+                    passwordAlert.textContent = "The password can't be empty";
+                    passwordAlert.style.visibility = "visible";
+                    passwordInput.value = "";
+                    flag = false;
+                } else if (password.length < 8) {
+                    passwordAlert.textContent = "The password can't be less than 8 characters";
+                    passwordAlert.style.visibility = "visible";
+                    flag = false;
+                }
 
-                    // Set a new timeout
-                    timeout = setTimeout(() => {
-                        if (!immediate) {
+                return flag;
+            }
+                function debounce(func, wait, immediate = false) {
+                    let timeout;
+
+                    return function (...args) {
+                        const context = this;
+
+                        // Determine if the function should be executed immediately
+                        const callNow = immediate && !timeout;
+
+                        // Clear the previous timeout
+                        clearTimeout(timeout);
+
+                        // Set a new timeout
+                        timeout = setTimeout(() => {
+                            if (!immediate) {
+                                func.apply(context, args);
+                            }
+                            timeout = null;
+                        }, wait);
+
+                        // Execute the function immediately if 'immediate' is true
+                        if (callNow) {
                             func.apply(context, args);
                         }
-                        timeout = null;
-                    }, wait);
-
-                    // Execute the function immediately if 'immediate' is true
-                    if (callNow) {
-                        func.apply(context, args);
-                    }
-                };
-            }
+                    };
+                }
                 const handleInput = debounce(async (event) => {
-                    console.log("run")
-                    if(event.target.value.length===0){
+                    if (event.target.value.length === 0) {
                         window.location.reload()
                     }
                     //right now its server side after a while make it server
-                    let data=await (await fetch(`/admin/user?username=${event.target.value}`)).json()
-                    let userArray=data.userArray
-                    let parent=document.querySelector(".user-container")
-                    if(userArray.length===0){
+                    let data = await (await fetch(`/admin/users?username=${event.target.value}`)).json()
+                    let userArray = data.userArray
+                    let parent = document.querySelector(".user-container")
+                    if (userArray.length === 0) {
                         alert("no user found")
-                    }else{
-                        parent.innerHTML=''
+                    } else {
+                        parent.innerHTML = ''
 
                         userArray.forEach((user) => {
-                        
-                        let eachuser = document.createElement("div");
-                        eachuser.className = "each-user-container row";
 
-                        let usernamediv = document.createElement("div");
-                        usernamediv.className = "col-5";
+                            let eachuser = document.createElement("div");
+                            eachuser.className = "each-user-container row";
 
-                        let usernameptag = document.createElement("p");
-                        usernameptag.className = "my-auto";
-                        usernameptag.textContent = user.username;
-                        usernameptag.style.fontWeight = "900";
+                            let usernamediv = document.createElement("div");
+                            usernamediv.className = "col-5";
 
-                        let authdiv = document.createElement("div");
-                        authdiv.className = "col-5";
+                            let usernameptag = document.createElement("p");
+                            usernameptag.className = "my-auto";
+                            usernameptag.textContent = user.username;
+                            usernameptag.style.fontWeight = "900";
 
-                        let authptag = document.createElement("p");
-                        authptag.className = "my-auto";
-                        authptag.textContent = user.authorization;
-                        authptag.style.fontWeight = "900";
+                            let authdiv = document.createElement("div");
+                            authdiv.className = "col-5";
 
-                        let editdiv=document.createElement("div")
-                        editdiv.className="col-1"
+                            let authptag = document.createElement("p");
+                            authptag.className = "my-auto";
+                            authptag.textContent = user.authorization;
+                            authptag.style.fontWeight = "900";
 
-                        let button=document.createElement("button")
-                        button.id=user.username
-                        button.className="edit icon-wrapper"
+                            let editdiv = document.createElement("div")
+                            editdiv.className = "col-1"
 
-                        let image=document.createElement("img")
-                        image.src="http://localhost:3000/images/edit.png"
+                            let button = document.createElement("button")
+                            button.setAttribute("data-toggle","modal")
+                            button.setAttribute("data-target","#exampleModalCenter")
+                            button.id = user.username
+                            button.className = "edit icon-wrapper"
+                            button.addEventListener("click", async function (e) {
+                        //here add code for edit open a popup and then edit
+                                let data=await (await fetch(`/admin/user?username=${user.username}`)).json()
+                                let userdata=data.user
+                                console.log(data)
+                                window.currentuser=userdata.username
+                                window.currentpassword=userdata.password
+                                document.querySelector("#currentuser").value=userdata.username
+                                document.querySelector("#currentpassword").value=userdata.password
 
-                        button.appendChild(image)
+                            })
+                            let image = document.createElement("img")
+                            image.src = "http://localhost:3000/images/edit.png"
 
-
-                        let deletediv=document.createElement("div")
-                        deletediv.className="col-1"
-
-                        let deletebutton=document.createElement("button")
-                        deletebutton.id=user.username
-                        deletebutton.className="delete icon-wrapper"
-
-                        let deleteimage=document.createElement("img")
-                        deleteimage.src="http://localhost:3000/images/delete.png"
-
-                        deletebutton.appendChild(deleteimage)
-
+                            button.appendChild(image)
 
 
+                            let deletediv = document.createElement("div")
+                            deletediv.className = "col-1"
 
-                        usernamediv.appendChild(usernameptag);
-                        authdiv.appendChild(authptag);
-                        editdiv.appendChild(button)
-                        deletediv.appendChild(deletebutton)
+                            let deletebutton = document.createElement("button")
+                            deletebutton.setAttribute("data-toggle","modal")
+                            deletebutton.setAttribute("data-target","#exampleModal")
+                            deletebutton.addEventListener("click", function (e) {
+                                document.querySelector("#deleteusertext").innerHTML=`Do you wanna delete <b class="uniqueuser" id=${user.username} >${user.username}</b>`                        
+                            })
+                            deletebutton.id = user.username
+                            deletebutton.className = "delete icon-wrapper"
+
+                            let deleteimage = document.createElement("img")
+                            deleteimage.src = "http://localhost:3000/images/delete.png"
+
+                            deletebutton.appendChild(deleteimage)
 
 
-                        // Append usernamediv before authdiv to ensure correct order
-                        eachuser.appendChild(usernamediv);
-                        eachuser.appendChild(authdiv);
-                        eachuser.appendChild(editdiv)
-                        eachuser.appendChild(deletediv)
-                        parent.appendChild(eachuser);
-                    });
+
+
+                            usernamediv.appendChild(usernameptag);
+                            authdiv.appendChild(authptag);
+                            editdiv.appendChild(button)
+                            deletediv.appendChild(deletebutton)
+
+
+                            // Append usernamediv before authdiv to ensure correct order
+                            eachuser.appendChild(usernamediv);
+                            eachuser.appendChild(authdiv);
+                            eachuser.appendChild(editdiv)
+                            eachuser.appendChild(deletediv)
+                            parent.appendChild(eachuser);
+                        });
                     }
 
 
                     // window.location.href=`/admin/dashboard?username=${event.target.value}`
-                }, 1500);
-            
-                document.querySelector("#search").addEventListener("input",handleInput)
-  
+                }, 1250);
+
+                document.querySelector("#search").addEventListener("input", handleInput)
+
 
                 const pageCount = <%= parseInt(arrayLength) %>;
-                document.querySelectorAll(".edit").forEach((element) => {
-                    element.addEventListener("click", function (e) {
-                        //here add code for edit open a popup and then edit
-                        console.log(this.id)
-                    })
-                }
-                )
-                document.querySelectorAll(".delete").forEach((element) => {
-                    element.addEventListener("click", function (e) {
-                        console.log(this.id)
-                    })
-                })
+
+
                 function backNavigator(direction) {
                     const params = new URLSearchParams(window.location.search);
                     let page = parseInt(params.get('page'))
@@ -201,10 +327,99 @@
                                 window.location.href = `/admin/dashboard?page=${page + 1}`
                             }
                         }
-                    }else{
-                        window.location.href="/admin/dashboard?page=2"
+                    } else {
+                        window.location.href = "/admin/dashboard?page=2"
                     }
                 }
+
+                document.querySelectorAll(".edit").forEach((element) => {
+                    element.addEventListener("click", async function (e) {
+                        //here add code for edit open a popup and then edit
+                        let data=await (await fetch(`/admin/user?username=${this.id}`)).json()
+                        let user=data.user
+                        window.currentuser=user.username
+                        window.currentpassword=user.password
+                        document.querySelector("#currentuser").value=user.username
+                        document.querySelector("#currentpassword").value=user.password
+
+                    })
+                }
+                )
+                document.querySelectorAll(".delete").forEach((element) => {
+                    element.addEventListener("click", function (e) {
+                        document.querySelector("#deleteusertext").innerHTML=`Do you wanna delete <b class="uniqueuser" id=${this.id} >${this.id}</b>`
+                        
+                    })
+                })
+
+                //post data to server on pressing edit
+                document.querySelector("#editbutton").addEventListener("click",async ()=>{
+                    let username=document.querySelector("#currentuser").value
+                    let password=document.querySelector("#currentpassword").value
+                    let response=await (await fetch("users",
+                        {
+                            method:'PUT',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                            body:JSON.stringify({newusername:username,newpassword:password,username:window.currentuser,password:window.currentpassword})
+                        }
+                    )).json()
+                    console.log(response)
+                    if(response.message==="success"){
+                        document.querySelector("#editalert").textContent=response.message
+                        document.querySelector("#editalert").style.color="green"
+                        setTimeout(function (){window.location.reload()},1000)
+                    }else{
+                        document.querySelector("#editalert").textContent=response.message
+                        document.querySelector("#editalert").style.color="red"
+
+                    }
+                })
+
+                document.querySelector("#deletebutton").addEventListener("click",async function (){
+                    let username=document.querySelector(".uniqueuser").id
+                    let response=await (await fetch(`users?username=${username}`,{
+                        method:'DELETE'
+
+                    })).json()
+                    console.log(response)
+                    document.querySelector("#deletealert").textContent=response.message
+                    if(response.message==="success"){
+                        document.querySelector("#deletealert").style.color="green"
+                        setTimeout(()=>window.location.reload(),700)
+                    }else{
+                        document.querySelector("#deletealert").style.color="green"
+
+                    }
+                })
+
+                document.querySelector(".createbutton").addEventListener("click",async ()=>{
+                    let username=document.querySelector("#createuser").value
+                    let password=document.querySelector("#createpassword").value
+                    let flag=validator(username,password)
+                    if(flag){
+                        let response=await (await fetch("/register",{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({username:username,password:password})
+                    })).json()
+                    console.log(response)
+                    document.querySelector("#createalert").textContent=response.message
+                    if(response.message==="success"){
+                        document.querySelector("#createalert").style.color="green"
+                        setTimeout(()=>window.location.reload(),1000)
+                    }else{
+                        document.querySelector("#createalert").style.color="red"
+                    }
+
+                    }
+                })
+
+
+
 
 
             </script>

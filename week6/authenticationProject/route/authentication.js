@@ -89,7 +89,11 @@ router.post("/register", async (req, res) => {
         password: sha512(password),
       });
       await newUser.save();
+      if(req.session.authorization==="admin"){
+        return res.json({message:"success",role:"admin"})
+      }
       req.session.username = username;
+
       res.json({ message: "success" });
     }
   } catch (error) {
