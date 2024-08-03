@@ -38,7 +38,7 @@ app.use(
 app.use("/", authRouter);
 app.use("/admin", adminRouter);
 app.use((req, res, next) => {
-  res.render("pages/404", {
+  res.status(404).render("pages/404", {
     authenticated: req.session?.username ? true : false,
     username: req.session?.username,
   });

@@ -34,13 +34,13 @@
 <script defer>
 
 
-    // async function authValidator() {
-    //     let response = await (await fetch('/authenticator')).json();
-    //     if (response.message === "success") {
-    //         window.location.href = "/home";
-    //     }
-    // }
-    // authValidator();
+    async function authValidator() {
+        let response = await (await fetch('/authenticator')).json();
+        if (response.message === "success") {
+            window.location.href = "/home";
+        }
+    }
+    authValidator();
 
     function validator(username, password, confirmpassword) {
         let usernameAlert = document.querySelector("#usernameAlert");
