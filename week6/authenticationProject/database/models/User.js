@@ -13,6 +13,8 @@ if (mongoose.models && mongoose.models.User) {
         default:'user'
       } ,
       profileLink:String,
+      email:String,
+      place:String
 
   })
 

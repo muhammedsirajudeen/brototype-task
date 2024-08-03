@@ -78,7 +78,7 @@ router.post("/auth", async (req, res) => {
 
 //only admin can add another admin dont forget to handle this
 router.post("/register", async (req, res) => {
-  let { username, password } = req.body;
+  let { username, password , place ,email } = req.body;
   try {
     let user = await userModel.findOne({ username: username });
     if (user) {
@@ -87,6 +87,8 @@ router.post("/register", async (req, res) => {
       let newUser = userModel({
         username: username,
         password: sha512(password),
+        place : place,
+        email:email
       });
       await newUser.save();
       if(req.session.authorization==="admin"){

@@ -78,7 +78,9 @@
                                 class="edit-user-container d-flex flex-column justify-content-center align-items-center">
                                 <input class="m-3" type="text" id="currentuser" value=""
                                     placeholder="enter the username" />
-                                <input class="m-3" type="text" id="currentpassword" value=""
+                                    <input class="m-3" type="text" id="currentemail" value=""
+                                    placeholder="enter the password" />
+                                    <input class="m-3" type="text" id="currentplace" value=""
                                     placeholder="enter the password" />
                                 <button type="button" id="editbutton" class="m-3">Edit</button>
                                 <small><b>
@@ -134,13 +136,28 @@
                         <div class="modal-body">
                             <div
                                 class="edit-user-container d-flex flex-column justify-content-center align-items-center">
-                                <input class="m-3" type="text" id="createuser" value=""
-                                    placeholder="enter the username" />
-                                <p id="usernameAlert" class="red">placeholder text</p>
 
-                                <input class="m-3" type="text" id="createpassword" value=""
-                                    placeholder="enter the password" />
-                                <p id="passwordAlert" class="red">placeholder text</p>
+                                <input name="username" required type="text" class="form-control" id="createuser"
+                                aria-describedby="emailHelp" placeholder="Enter username">
+                            <p id="usernameAlert" class="red">placeholder text</p>
+
+                            <input type="email" name="email"  required class="form-control" id="createemail"
+                                placeholder="Enter email">
+                            <p id="EmailAlert" class="red"></p>
+
+                            <input name="place" required type="text" class="form-control" id="createplace"
+                                placeholder="Enter place">
+                            <p id="PlaceAlert" class="red"></p>
+
+                            <input name="password" required type="password" class="form-control" id="createpassword"
+                            placeholder="Enter password">
+                            <p id="passwordAlert" class="red"></p>
+
+                            <input name="confirmpassword" required type="password" class="form-control" id="createconfirmpassword"
+                            placeholder="Enter password">
+            
+                            <p id="confirmpasswordAlert" class="red"></p>
+                            <p id="confirmAlert" class="red"></p>
 
                                 <button type="button" id="createbuttonsend" class="m-3 createbutton">Create</button>
                                 <small><b>
@@ -156,8 +173,97 @@
                 </div>
             </div>
             <script  type="module" >
-                import validator from "/script/validator.js"
+                // import validator from "/script/validator.js"
+                function validator(username, password, confirmpassword,email,place) {
+                    let usernameAlert = document.querySelector("#usernameAlert");
+                    let passwordAlert = document.querySelector("#passwordAlert");
+                    let confirmPasswordAlert = document.querySelector("#confirmAlert")
+                    let EmailAlert=document.querySelector("#EmailAlert")
+                    let PlaceAlert=document.querySelector("#PlaceAlert")
+                    console.log(confirmPasswordAlert)
+                    let usernameInput = document.querySelector("#createuser");
+                    let passwordInput = document.querySelector("#createpassword");
+                    let confirmPasswordInput = document.querySelector("#createconfirmpasword")
+                    let emailInput=document.querySelector("#createemail")
+                    let placeInput=document.querySelector("#createplace")
+                    let flag = true;
+                    const regex = /^[a-zA-Z0-9@_]*$/;
+                    const Emailregex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
+                    usernameAlert.style.visibility = "hidden";
+                    passwordAlert.style.visibility = "hidden";
+
+                    if ((username.replace(/\s/g, "")).length === 0) {
+                        usernameAlert.textContent = "The username can't be empty";
+                        usernameAlert.style.visibility = "visible";
+                        usernameInput.value = "";
+                        flag = false;
+                    } else if (username.length < 8) {
+                        usernameAlert.textContent = "The username can't be less than 8 characters";
+                        usernameAlert.style.visibility = "visible";
+                        flag = false;
+                    } else if (!(regex.test(username))) {
+                        usernameAlert.textContent = "Can only contain @ or _ as special characters";
+                        usernameAlert.style.visibility = "visible";
+                        flag = false;
+                    }
+                    if (password === confirmpassword) {
+
+                        confirmPasswordAlert.textContent = "The passwords match";
+                        confirmPasswordAlert.style.color = "green"
+                        confirmPasswordAlert.style.visibility = "visible";
+
+                        // flag = false;
+                    } else {
+                        confirmpasswordAlert.textContent = "The passwords doesnt match";
+                        confirmpasswordAlert.style.visibility = "visible";
+                        flag = false
+                    }
+
+                    if ((password.replace(/\s/g, "")).length === 0) {
+                        passwordAlert.textContent = "The password can't be empty";
+                        passwordAlert.style.visibility = "visible";
+                        passwordInput.value = "";
+                        flag = false;
+                    } else if (password.length < 8) {
+                        passwordAlert.textContent = "The password can't be less than 8 characters";
+                        passwordAlert.style.visibility = "visible";
+                        flag = false;
+                    }
+                    //for email
+                    if ((email.replace(/\s/g, "")).length === 0) {
+                        EmailAlert.textContent = "The username can't be empty";
+                        EmailAlert.style.visibility = "visible";
+                        emailInput.value = "";
+                        flag = false;
+                    }//else if(!(regex.test(email))){
+                    //     EmailAlert.textContent = "the email contain special characters";
+                    //     EmailAlert.style.visibility = "visible";
+                    //     flag = false;
+
+                    // }
+                    //  else if ((Emailregex.test(username))) {
+                    //     EmailAlert.textContent = "should be a email";
+                    //     EmailAlert.style.visibility = "visible";
+                    //     flag = false;
+                    // }
+                    if ((place.replace(/\s/g, "")).length === 0) {
+                        PlaceAlert.textContent = "The place can't be empty";
+                        PlaceAlert.style.visibility = "visible";
+                        placeInput.value = "";
+                        flag = false;
+                    
+                    } else if (!(regex.test(username))) {
+                        PlaceAlert.textContent = "Can only contain @ or _ as special characters";
+                        PlaceAlert.style.visibility = "visible";
+                        flag = false;
+                    }
+
+
+
+
+                    return flag;
+                }
                 // function validators(username, password) {
                 //     let usernameAlert = document.querySelector("#usernameAlert");
                 //     let passwordAlert = document.querySelector("#passwordAlert");
@@ -357,9 +463,11 @@
                         let data = await (await fetch(`/admin/user?username=${this.id}`)).json()
                         let user = data.user
                         window.currentuser = user.username
-                        window.currentpassword = user.password
+                        window.place=user.place
+                        window.email=user.email
                         document.querySelector("#currentuser").value = user.username
-                        document.querySelector("#currentpassword").value = user.password
+                        document.querySelector("#currentemail").value=user.email
+                        document.querySelector("#currentplace").value = user.place
 
                     })
                 }
@@ -374,14 +482,16 @@
                 //post data to server on pressing edit
                 document.querySelector("#editbutton").addEventListener("click", async () => {
                     let username = document.querySelector("#currentuser").value
-                    let password = document.querySelector("#currentpassword").value
+                    let email = document.querySelector("#currentemail").value
+                    let place = document.querySelector("#currentplace").value
+
                     let response = await (await fetch("users",
                         {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ newusername: username, newpassword: password, username: window.currentuser, password: window.currentpassword })
+                            body: JSON.stringify({ newusername: username, username: window.currentuser, email:window.email , currentemail:email , place:window.place , currentplace:place })
                         }
                     )).json()
                     console.log(response)
@@ -416,14 +526,19 @@
                 document.querySelector(".createbutton").addEventListener("click", async () => {
                     let username = document.querySelector("#createuser").value
                     let password = document.querySelector("#createpassword").value
-                    let flag = validator(username, password)
+                    let confirmpassword=document.querySelector("#createconfirmpassword").value
+                    let place = document.querySelector("#createplace").value
+                    let email = document.querySelector("#createemail").value
+                    console.log(place)
+
+                    let flag = validator(username, password,confirmpassword,email,place)
                     if (flag) {
                         let response = await (await fetch("/register", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ username: username, password: password })
+                            body: JSON.stringify({ username: username, password: password,place:place,email:email })
                         })).json()
                         console.log(response)
                         document.querySelector("#createalert").textContent = response.message

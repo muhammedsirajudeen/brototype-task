@@ -1,20 +1,34 @@
-<div class="container-fluid d-flex justify-content-center align-items-center" id="mt">
+<div class="container-fluid d-flex justify-content-center align-items-center" id="mt-5">
     <form>
         <div class="form-group m-2">
             <div class="text-container">
                 <h3>REGISTER</h3>
             </div>
             <label for="exampleInputEmail1">Username</label>
-            <input name="username" required type="text" class="form-control" id="InputEmail"
+            <input name="username" required type="text" class="form-control" id="InputUsername"
                 aria-describedby="emailHelp" placeholder="Enter username">
             <p id="usernameAlert" class="red">placeholder text</p>
         </div>
         <div class="form-group m-2">
+            <label for="exampleInputPassword1">Email Address</label>
+            <input name="email" required type="email" class="form-control" id="InputEmail"
+                placeholder="Enter email">
+            <p id="EmailAlert" class="red"></p>
+        </div>
+        <div class="form-group m-2">
+            <label for="exampleInputPassword1">Place</label>
+            <input name="place" required type="text" class="form-control" id="InputPlace"
+                placeholder="Enter email">
+            <p id="PlaceAlert" class="red"></p>
+        </div>
+
+        <div class="form-group m-2">
             <label for="exampleInputPassword1">Password</label>
             <input name="password" required type="password" class="form-control" id="InputPassword"
                 placeholder="Enter password">
-            <p id="passwordAlert" class="red">placeholder text</p>
+            <p id="passwordAlert" class="red"></p>
         </div>
+
         <div class="form-group m-2 margin-top ">
             <label for="exampleInputPassword1">Confirm Password</label>
             <input name="confirmpassword" required type="password" class="form-control" id="ConfirmPassword"
@@ -42,17 +56,21 @@
     }
     authValidator();
 
-    function validator(username, password, confirmpassword) {
+    function validator(username, password, confirmpassword,email,place) {
         let usernameAlert = document.querySelector("#usernameAlert");
         let passwordAlert = document.querySelector("#passwordAlert");
         let confirmPasswordAlert = document.querySelector("#confirmAlert")
+        let EmailAlert=document.querySelector("#EmailAlert")
+        let PlaceAlert=document.querySelector("#PlaceAlert")
         console.log(confirmPasswordAlert)
-        let usernameInput = document.querySelector("#InputEmail");
+        let usernameInput = document.querySelector("#InputUsername");
         let passwordInput = document.querySelector("#InputPassword");
         let confirmPasswordInput = document.querySelector("#ConfirmPasword")
-        console.log(password === confirmpassword)
+        let emailInput=document.querySelector("#InputEmail")
+        let placeInput=document.querySelector("#InputPlace")
         let flag = true;
         const regex = /^[a-zA-Z0-9@_]*$/;
+        const Emailregex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         usernameAlert.style.visibility = "hidden";
         passwordAlert.style.visibility = "hidden";
@@ -94,6 +112,34 @@
             passwordAlert.style.visibility = "visible";
             flag = false;
         }
+        //for email
+        if ((email.replace(/\s/g, "")).length === 0) {
+            EmailAlert.textContent = "The username can't be empty";
+            EmailAlert.style.visibility = "visible";
+            emailInput.value = "";
+            flag = false;
+        }//else if(!(regex.test(email))){
+        //     EmailAlert.textContent = "the email contain special characters";
+        //     EmailAlert.style.visibility = "visible";
+        //     flag = false;
+
+        // }
+        //  else if ((Emailregex.test(username))) {
+        //     EmailAlert.textContent = "should be a email";
+        //     EmailAlert.style.visibility = "visible";
+        //     flag = false;
+        // }
+        if ((place.replace(/\s/g, "")).length === 0) {
+            PlaceAlert.textContent = "The place can't be empty";
+            PlaceAlert.style.visibility = "visible";
+            placeInput.value = "";
+            flag = false;
+        
+        } else if (!(regex.test(username))) {
+            PlaceAlert.textContent = "Can only contain @ or _ as special characters";
+            PlaceAlert.style.visibility = "visible";
+            flag = false;
+        }
 
 
 
@@ -108,7 +154,7 @@
         let formData = new FormData(e.target);
         const formBody = new URLSearchParams(formData).toString();
 
-        let flag = validator(formData.get("username"), formData.get("password"), formData.get("confirmpassword"));
+        let flag = validator(formData.get("username"), formData.get("password"), formData.get("confirmpassword"),formData.get("email"),formData.get("place"));
         // Send this to the server now and it's over
         if (flag) {
             let response = await (await fetch("/register", {

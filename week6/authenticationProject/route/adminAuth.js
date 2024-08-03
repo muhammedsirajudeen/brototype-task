@@ -28,6 +28,8 @@ router.get("/user",async (req,res)=>{
   }
 })
 
+;
+
 
 router
   .route("/users")
@@ -39,14 +41,15 @@ router
     }
   })
   .put(async (req, res) => {
-    let { username, password,newusername,newpassword } = req.body;
+    let { username, password,newusername,newpassword,currentplace,currentemail } = req.body;
     try {
       let updateUser=await userModel.findOne({username:username})
 
       //updated based on data coming
-      if (username && password) {
+      if (username && currentplace && currentemail) {
         updateUser.username=newusername
-        updateUser.password=sha512(newpassword)
+        updateUser.place=currentplace
+        updateUser.email=currentemail
         await updateUser.save()
         res.json({ message: "success" });
       } else if (username) {
@@ -54,11 +57,17 @@ router
         await updateUser.save()
         res.json({ message: "success" });
 
-      } else if (password) {
-        updateUser.password=sha512(newpassword)
+      } else if (currentplace) {
+        updateUser.place=currentplace
         await updateUser.save()  
         res.json({ message: "success" });
-      }else{
+      }else if(currentemail){
+        updateUser.email=currentemail
+        await updateUser.save()  
+        res.json({ message: "success" });
+
+      }
+      else{
         res.json({message:"insufficient info"})
       }
     } catch (error) {
