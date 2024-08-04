@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#"><b>ADVENTURE ZONE ADMIN</b></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/home">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#"><b>
+              <%= username %>
+            </b></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/signup"><%= authenticated ? '' : 'Register' %></a>
+        </li>
+  
+      </ul>
+      <span class="navbar-text" id="end">
+        <button id="margin-right" class="btn btn-success">
+          <%= authenticated ? 'Signout from admin and user account' : 'Signin' %>
+        </button>
+      </span>
+    </div>
+  </nav>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let button = document.querySelector("#margin-right");
+      button.addEventListener("click", async () => {
+        console.log("clicked")
+        let data = await (await fetch("/signout?source=admin")).json();
+        console.log(data)
+        if (data.message === "success") {
+          window.location.href = "/";
+        } else {
+          alert("Signout failed");
+        }
+      });
+    });
+  </script>

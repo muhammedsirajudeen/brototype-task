@@ -17,7 +17,11 @@
 </head>
 
 <body>
-  <%- include('../partials/navbar') %>
+    <% if (pagesource==="user") { %>
+      <%- include('../partials/navbar') %>
+    <% } else { %>
+      <%- include('../partials/adminnavbar') %>
+    <% } %>
     <main>
       <%- body %>
         <!-- Placeholder for the page content -->

@@ -11,45 +11,99 @@ const router = express.Router();
 
 //if session redirect to home
 router.get("/", authMiddleware("login"), (req, res) => {
-  res.render("pages/Login", {
-    authenticated: false,
-    username: null,
-  });
+  if(req.session.username){
+    res.redirect("/home")
+      
+  }else{
+    res.render("pages/Login", {
+      authenticated: false,
+      username: null,
+      pagesource:"user"
+    });
+  
+  }
+
 });
 
 //if no session redirect to login page
 router.get("/home", authMiddleware("login"), (req, res) => {
-  res.render("pages/Home", {
-    placeListing: placeListing,
-    authenticated: true,
-    username: req.session.username,
-  });
+  // if((req.session.authorization==="admin" && req.session.usersession) ){
+    res.render("pages/Home", {
+      placeListing: placeListing,
+      authenticated: true,
+      username: req.session.username,
+      pagesource:"user"
+    });
+  
+  
 });
 
-// handling this in client side an exceptional case
+
+
+// handling this in client side an exceptional case i actually understood the problem lets
 router.get("/authenticator", (req, res) => {
-  if (req.session.username) {
-    res.json({ message: "success" });
+  console.log()
+  if(req.session.authorization==="admin"){
+    console.log(req.session.adminsession,req.session.usersession)
+    res.json({message:"success",adminsession:req.session.adminsession,usersession:req.session.usersession,admin:true})
+  }
+  else if (req.session.username ) {
+    res.json({ message: "success",usersession:req.session.usersession });
   } else {
     res.json({ message: "failure" });
   }
 });
 
+// router.get("/adminauthenticator", (req, res) => {
+//   if (req.session.username ) {
+//     res.json({ message: "success" });
+//   } else {
+//     res.json({ message: "failure" });
+//   }
+// });
+
 router.get("/signup", authMiddleware("signup"), (req, res, next) => {
   res.render("pages/Signup", {
     authenticated: false,
     username: null,
+    pagesource:"user"
   });
 });
 
+
+
 router.get("/signout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      console.log(error);
+   if(req.session.authorization==="admin"){
+    if(req.query.source==="user"){
+      //here destroy user session
+      req.session.usersession=false
+      res.json({ message: "adminsuccess" });
+
+    }else if(req.query.source==="admin"){
+      //here destroy admin session
+      req.session.adminsession=false
+      req.session.destroy((error) => {
+        if (error) {
+          console.log(error);
+        }
+      });
+      res.json({ message: "success" });
+
+    }else{
+      console.log("its the else case lets handle it ")
     }
-  });
-  res.clearCookie("cookie.sid");
-  res.json({ message: "success" });
+  
+    
+  }else{
+    req.session.destroy((error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+    res.clearCookie("cookie.sid");
+    res.json({ message: "success" });
+  
+  }
 });
 
 router.post("/auth", async (req, res) => {
@@ -65,6 +119,16 @@ router.post("/auth", async (req, res) => {
         hashedPassword === checkUser.password
       ) {
         req.session.username = username;
+        if(checkUser.authorization==="admin"){
+          req.session.usersession=true
+          req.session.adminsession=true
+
+          req.session.authorization="admin"
+        }else{
+          req.session.adminsession=false
+          req.session.usersession=true
+          req.session.authorization="user"
+        }        
         res.json({ message: "success" });
       } else {
         res.json({ message: "invalid credentials" });

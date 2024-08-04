@@ -5,7 +5,7 @@ if (mongoose.models && mongoose.models.User) {
   User = mongoose.models.User;
 } else {
   const userSchema=new mongoose.Schema({
-      
+      //add required
       username:String,
       password:String,
       authorization:{

@@ -6,11 +6,18 @@ const authMiddleware = require("../database/helper/authMiddleware");
 const router = express.Router();
 const incrementer = 10;
 
-router.get("/", (req, res) => {
-  res.render("pages/adminPages/adminLogin", {
-    authenticated: false,
-    username: null,
-  });
+
+router.get("/", authMiddleware("admin"), (req, res) => {
+  if(req.session.authorization==="admin"){
+    res.redirect("/admin/dashboard")
+  }else{
+    res.render("pages/adminPages/adminLogin", {
+      authenticated: false,
+      username: null,
+      pagesource:"user"
+    });
+  
+  }
 });
 
 router.get("/user",async (req,res)=>{
@@ -89,7 +96,7 @@ router
 //Set Authorization Access to Admin
 router.get(
   "/dashboard",
-    authMiddleware("login"), async (req, res) => {
+    authMiddleware("admin"), async (req, res) => {
     if(req.session?.authorization==="admin"){
       let page = Number.parseInt(req.query.page);
       req.session.username = "faizan123";
@@ -113,6 +120,7 @@ router.get(
         username: "faizan123",
         usersArray: usersArray,
         arrayLength: arrayLength / 10 + 1,
+        pagesource:"admin"
       });
 
     }else{
@@ -135,7 +143,9 @@ router.post("/auth", async (req, res) => {
           res.json({ message: "insufficient permissions" });
         } else {
           req.session.username = username;
+          req.session.adminsession=true
           req.session.authorization = "admin";
+
           res.json({ message: "success" });
         }
       } else {

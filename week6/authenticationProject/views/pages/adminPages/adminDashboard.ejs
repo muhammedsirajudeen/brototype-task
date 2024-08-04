@@ -232,28 +232,23 @@
                     }
                     //for email
                     if ((email.replace(/\s/g, "")).length === 0) {
-                        EmailAlert.textContent = "The username can't be empty";
+                        EmailAlert.textContent = "The email can't be empty";
                         EmailAlert.style.visibility = "visible";
                         emailInput.value = "";
                         flag = false;
-                    }//else if(!(regex.test(email))){
-                    //     EmailAlert.textContent = "the email contain special characters";
-                    //     EmailAlert.style.visibility = "visible";
-                    //     flag = false;
-
-                    // }
-                    //  else if ((Emailregex.test(username))) {
-                    //     EmailAlert.textContent = "should be a email";
-                    //     EmailAlert.style.visibility = "visible";
-                    //     flag = false;
-                    // }
+                    }
+                     else if (!(Emailregex.test(email))) {
+                        EmailAlert.textContent = "should be a email";
+                        EmailAlert.style.visibility = "visible";
+                        flag = false;
+                    }
                     if ((place.replace(/\s/g, "")).length === 0) {
                         PlaceAlert.textContent = "The place can't be empty";
                         PlaceAlert.style.visibility = "visible";
                         placeInput.value = "";
                         flag = false;
                     
-                    } else if (!(regex.test(username))) {
+                    } else if (!(regex.test(place))) {
                         PlaceAlert.textContent = "Can only contain @ or _ as special characters";
                         PlaceAlert.style.visibility = "visible";
                         flag = false;

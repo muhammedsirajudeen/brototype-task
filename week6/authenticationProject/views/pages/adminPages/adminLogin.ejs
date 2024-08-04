@@ -23,13 +23,20 @@
 <script defer>
 
 
-    async function authValidator() {
-        let response = await (await fetch('/authenticator')).json();
-        if (response.message === "success") {
-            window.location.href = "/admin/dashboard";
-        }
-    }
-    authValidator();
+    // async function authValidator() {
+    //     let response = await (await fetch('/authenticator')).json();
+    //     console.log(response)
+    //     if (response.message === "success" && response.adminsession ) {
+    //         window.location.href = "/admin/dashboard";
+    //     }else if(response.role==="admin"){
+    //         window.location.href="/admin"
+    //     }
+    //     else if(response.message==="success")
+    //     {
+    //         window.location.href="/"
+    //     }
+    // }
+    // authValidator();
 
     function validator(username, password) {
         let usernameAlert = document.querySelector("#usernameAlert");

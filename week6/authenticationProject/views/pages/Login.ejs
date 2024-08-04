@@ -25,8 +25,9 @@
     import validator from "/script/validator.js"
     async function authValidator() {
         let response = await (await fetch('/authenticator')).json();
-        if (response.message === "success") {
-            window.location.href = "/home";
+        console.log(response)
+        if (response.message === "success" && response.usersession) {
+                window.location.href="/home"
         }
     }
     authValidator();
