@@ -5,6 +5,8 @@ const placeListing = require("../placeLister");
 const userModel = require("../database/models/User");
 const authMiddleware = require("../database/helper/authMiddleware");
 const sha512 = require("../database/helper/hasherFunction");
+const { passwordStrength } = require('check-password-strength')
+
 
 const router = express.Router();
 
@@ -18,7 +20,8 @@ router.get("/", authMiddleware("login"), (req, res) => {
       authenticated: false,
       username: null,
       pagesource:"user",
-      authorization:req.session.authorization
+      authorization:req.session.authorization,
+      adminsession:req.session?.adminsession
     });
   
   }
@@ -33,7 +36,9 @@ router.get("/home", authMiddleware("login"), (req, res) => {
       authenticated: true,
       username: req.session.username,
       pagesource:"user",
-      authorization:req.session.authorization
+      authorization:req.session.authorization,
+      adminsession:req.session?.adminsession
+
     });
   
   
@@ -68,7 +73,9 @@ router.get("/signup", authMiddleware("signup"), (req, res, next) => {
     authenticated: false,
     username: null,
     pagesource:"user",
-    authorization:req.session.authorization
+    authorization:req.session.authorization,
+    adminsession:req.session?.adminsession
+
 
   });
 });
@@ -117,6 +124,7 @@ router.post("/auth", async (req, res) => {
     if (!checkUser) {
       res.json({ message: "user doesnt exist" });
     } else {
+      
       if (
         username === checkUser.username &&
         hashedPassword === checkUser.password
@@ -124,7 +132,9 @@ router.post("/auth", async (req, res) => {
         req.session.username = username;
         if(checkUser.authorization==="admin"){
           req.session.usersession=true
-          req.session.adminsession=true
+          req.session.adminsession=false
+          req.session.authorization="user"
+
 
           req.session.authorization="admin"
         }else{
@@ -146,11 +156,15 @@ router.post("/auth", async (req, res) => {
 //only admin can add another admin dont forget to handle this
 router.post("/register", async (req, res) => {
   let { username, password , place ,email } = req.body;
+  console.log(passwordStrength(password).value)
   try {
     let user = await userModel.findOne({ username: username });
     if (user) {
       res.json({ message: "the username already exists" });
-    } else {
+    }else if(passwordStrength(password).value === "Weak"|| passwordStrength(password).value=== "Too weak" ){
+      res.json({message:`the password is ${passwordStrength(password).value}`})
+    }
+     else {
       let newUser = userModel({
         username: username,
         password: sha512(password),

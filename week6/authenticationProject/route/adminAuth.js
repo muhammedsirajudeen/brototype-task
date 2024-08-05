@@ -15,7 +15,9 @@ router.get("/", authMiddleware("admin"), (req, res) => {
       authenticated: false,
       username: null,
       pagesource:"user",
-      authorization:req.session.authorization
+      authorization:req.session.authorization,
+      adminsession:req.session?.adminsession
+
 
     });
   
@@ -114,7 +116,7 @@ router
 router.get(
   "/dashboard",
     authMiddleware("admin"), async (req, res) => {
-    if(req.session?.authorization==="admin"){
+    if(req.session?.authorization==="admin" && req.session.adminsession ){
       let page = Number.parseInt(req.query.page);
       req.session.username = "faizan123";
       let usersArray = await userModel.find();
@@ -126,7 +128,7 @@ router.get(
       if (page) {
         usersArray = usersArray.slice(
           page * 10 - incrementer,
-          page * incrementer + 1
+          page * incrementer
         );
       } else {
         usersArray = usersArray.slice(0, incrementer);
@@ -138,7 +140,9 @@ router.get(
         usersArray: usersArray,
         arrayLength: arrayLength / 10 + 1,
         pagesource:"admin",
-        authorization:req.session.authorization
+        authorization:req.session.authorization,
+        adminsession:req.session?.adminsession
+
 
       });
 
