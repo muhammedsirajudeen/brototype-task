@@ -50,35 +50,50 @@ router
     }
   })
   .put(async (req, res) => {
-    let { username, password,newusername,newpassword,currentplace,currentemail } = req.body;
+    let { username, password,newusername,newpassword,currentplace,currentemail,currentauthorization } = req.body;
+    
     try {
       let updateUser=await userModel.findOne({username:username})
 
       //updated based on data coming
-      if (username && currentplace && currentemail) {
+      if (username && currentplace && currentemail && currentauthorization) {
         updateUser.username=newusername
         updateUser.place=currentplace
         updateUser.email=currentemail
+        updateUser.authorization=currentauthorization
+
         await updateUser.save()
+
         res.json({ message: "success" });
       } else if (username) {
         updateUser.username=newusername
         await updateUser.save()
+
         res.json({ message: "success" });
 
       } else if (currentplace) {
         updateUser.place=currentplace
-        await updateUser.save()  
+        await updateUser.save()
+
         res.json({ message: "success" });
       }else if(currentemail){
         updateUser.email=currentemail
-        await updateUser.save()  
+        await updateUser.save()
+
+        res.json({ message: "success" });
+
+      }
+      else if(currentauthorization){
+        updateUser.authorization=currentauthorization
+        await updateUser.save()
+
         res.json({ message: "success" });
 
       }
       else{
         res.json({message:"insufficient info"})
       }
+
     } catch (error) {
       console.log(error);
       res.json({ message: "failed" });
