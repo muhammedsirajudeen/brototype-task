@@ -21,7 +21,12 @@
     </ul>
     <span class="navbar-text" id="end">
       <button id="margin-right" class="btn btn-success">
-        <%= authenticated ? 'Signout from User Account' : 'Signin' %>
+        <% if (authorization==="admin") { %>
+          <%= authenticated ? 'Go to Admin Dashboard' : 'Signin' %>
+
+          <% } else { %>
+            <%= authenticated ? 'Signout from User Account' : 'Signin' %>
+            <% } %>
       </button>
     </span>
   </div>
@@ -31,8 +36,16 @@
   document.addEventListener("DOMContentLoaded", function () {
     let button = document.querySelector("#margin-right");
     button.addEventListener("click", async () => {
+      console.log((button.textContent).trim()==="Go to Admin Dashboard")
+      if((button.textContent).trim()==="Signin"){
+        window.location.href="/"
+        return
+      }else if((button.textContent).trim()==="Go to Admin Dashboard"){
+        window.location.href="/admin/dashboard"
+        return
+      }      
       //if you need user session and admin session to be cleared in one go use this
-      let data = await (await fetch("/signout?source=user")).json();
+      let data = await (await fetch("/signout?source=admin")).json();
       //else this
       // let data = await (await fetch("/signout?source=user")).json();
       console.log(data)

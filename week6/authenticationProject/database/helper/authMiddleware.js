@@ -15,7 +15,9 @@ const authMiddleware = (returner) => {
       res.render("pages/Login", {
         authenticated: false,
         username: null,
-        pagesource:"user"
+        pagesource:"user",
+        authorization:req.session.authorization
+
       });
     }
     };
@@ -35,7 +37,9 @@ const authMiddleware = (returner) => {
         res.render("pages/Signup", {
           authenticated: false,
           username: null,
-          pagesource:"user"
+          pagesource:"user",
+          authorization:req.session.authorization
+
         });
       }
     };
@@ -51,7 +55,9 @@ const authMiddleware = (returner) => {
         res.render("pages/adminPages/adminLogin", {
           authenticated: false,
           username: null,
-          pagesource:"user"
+          pagesource:"user",
+          authorization:req.session.authorization
+
         });
       }
     };

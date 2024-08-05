@@ -4,7 +4,6 @@ const crypto = require("crypto");
 const placeListing = require("../placeLister");
 const userModel = require("../database/models/User");
 const authMiddleware = require("../database/helper/authMiddleware");
-
 const sha512 = require("../database/helper/hasherFunction");
 
 const router = express.Router();
@@ -18,7 +17,8 @@ router.get("/", authMiddleware("login"), (req, res) => {
     res.render("pages/Login", {
       authenticated: false,
       username: null,
-      pagesource:"user"
+      pagesource:"user",
+      authorization:req.session.authorization
     });
   
   }
@@ -32,7 +32,8 @@ router.get("/home", authMiddleware("login"), (req, res) => {
       placeListing: placeListing,
       authenticated: true,
       username: req.session.username,
-      pagesource:"user"
+      pagesource:"user",
+      authorization:req.session.authorization
     });
   
   
@@ -66,7 +67,9 @@ router.get("/signup", authMiddleware("signup"), (req, res, next) => {
   res.render("pages/Signup", {
     authenticated: false,
     username: null,
-    pagesource:"user"
+    pagesource:"user",
+    authorization:req.session.authorization
+
   });
 });
 

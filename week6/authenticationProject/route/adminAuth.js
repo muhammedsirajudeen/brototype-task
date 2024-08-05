@@ -14,7 +14,9 @@ router.get("/", authMiddleware("admin"), (req, res) => {
     res.render("pages/adminPages/adminLogin", {
       authenticated: false,
       username: null,
-      pagesource:"user"
+      pagesource:"user",
+      authorization:req.session.authorization
+
     });
   
   }
@@ -120,7 +122,9 @@ router.get(
         username: "faizan123",
         usersArray: usersArray,
         arrayLength: arrayLength / 10 + 1,
-        pagesource:"admin"
+        pagesource:"admin",
+        authorization:req.session.authorization
+
       });
 
     }else{
@@ -144,6 +148,7 @@ router.post("/auth", async (req, res) => {
         } else {
           req.session.username = username;
           req.session.adminsession=true
+          req.session.usersession=true
           req.session.authorization = "admin";
 
           res.json({ message: "success" });

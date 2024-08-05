@@ -4,6 +4,7 @@ const expressLayouts = require("express-ejs-layouts");
 const authRouter = require("./route/authentication");
 const adminRouter = require("./route/adminAuth");
 const dbConnect = require("./database/helper/dbConnect");
+const { pagesource } = require("./database/helper/homeArgs");
 require("dotenv").config();
 
 const app = express();
@@ -41,6 +42,8 @@ app.use((req, res, next) => {
   res.status(404).render("pages/404", {
     authenticated: req.session?.username ? true : false,
     username: req.session?.username,
+    pagesource:"user",
+    authorization:req.session.user
   });
 });
 app.listen(PORT, () => console.log(`Running On Port ${PORT}`));
