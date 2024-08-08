@@ -1,6 +1,8 @@
 function validator(username, password) {
     let usernameAlert = document.querySelector("#usernameAlert");
+    usernameAlert.textContent=''
     let passwordAlert = document.querySelector("#passwordAlert");
+    passwordAlert.textContent=''
     let usernameInput = document.querySelector("#InputEmail");
     let passwordInput = document.querySelector("#InputPassword");
 

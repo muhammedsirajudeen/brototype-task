@@ -43,7 +43,8 @@ app.use((req, res, next) => {
     authenticated: req.session?.username ? true : false,
     username: req.session?.username,
     pagesource:"user",
-    authorization:req.session.user
+    authorization:req.session.user,
+    adminsession:null
   });
 });
 app.listen(PORT, () => console.log(`Running On Port ${PORT}`));

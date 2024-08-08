@@ -171,7 +171,13 @@
             })).json();
             console.log(response)
             if (response.message === "success") {
-                    window.location.href = "/home";
+
+                    let loginAlert = document.querySelector("#loginAlert");
+                    loginAlert.style.visibility = "visible";
+
+                    loginAlert.style.color="green"
+                    loginAlert.textContent = response.message;
+                    setTimeout(()=>window.location.href = "/home",1000)
                     // window.localStorage.setItem("authstatus", true);
 
                 
