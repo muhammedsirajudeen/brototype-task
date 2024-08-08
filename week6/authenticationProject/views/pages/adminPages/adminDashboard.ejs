@@ -146,27 +146,27 @@
                             <div
                                 class="edit-user-container d-flex flex-column justify-content-center align-items-center">
 
-                                <input name="username" required type="text" class="form-control" id="createuser"
+                                <input name="username" required type="text" class="form-control" id="createusertwo"
                                 aria-describedby="emailHelp" placeholder="Enter username">
-                            <p id="usernameAlert" class="red">placeholder text</p>
+                            <p id="usernameAlerttwo" class="red"></p>
 
-                            <input type="email" name="email"  required class="form-control" id="createemail"
+                            <input type="email" name="email"  required class="form-control" id="createemailtwo"
                                 placeholder="Enter email">
-                            <p id="EmailAlert" class="red"></p>
+                            <p id="EmailAlerttwo" class="red"></p>
 
-                            <input name="place" required type="text" class="form-control" id="createplace"
+                            <input name="place" required type="text" class="form-control" id="createplacetwo"
                                 placeholder="Enter address">
-                            <p id="PlaceAlert" class="red"></p>
+                            <p id="PlaceAlerttwo" class="red"></p>
 
-                            <input name="password" required type="password" class="form-control" id="createpassword"
+                            <input name="password" required type="password" class="form-control" id="createpasswordtwo"
                             placeholder="Enter password">
-                            <p id="passwordAlert" class="red"></p>
+                            <p id="passwordAlerttwo" class="red"></p>
 
-                            <input name="confirmpassword" required type="password" class="form-control" id="createconfirmpassword"
+                            <input name="confirmpassword" required type="password" class="form-control" id="createconfirmpasswordtwo"
                             placeholder="Enter password">
             
-                            <p id="confirmpasswordAlert" class="red"></p>
-                            <p id="confirmAlert" class="red"></p>
+                            <p id="confirmpasswordAlerttwo" class="red"></p>
+                            <p id="confirmAlerttwo" class="red"></p>
 
                                 <button type="button" id="createbuttonsend" class="m-3 createbutton">Create</button>
                                 <small><b>
@@ -185,16 +185,22 @@
                 // import validator from "/script/validator.js"
                 function secondvalidator(username,email,place){
                     let usernameAlert = document.querySelector("#usernameAlert");
+                    usernameAlert.textContent=''
                     let passwordAlert = document.querySelector("#passwordAlert");
-                    let confirmPasswordAlert = document.querySelector("#confirmAlert")
+                    // passwordAlert.textContent=''
+                    // let confirmPasswordAlert = document.querySelector("#confirmAlert")
+                    // confirmPasswordAlert.textContent=''
                     let EmailAlert=document.querySelector("#EmailAlert")
+                    EmailAlert.textContent=''
                     let PlaceAlert=document.querySelector("#PlaceAlert")
+                    PlaceAlert.textContent=''
                     let usernameInput = document.querySelector("#createuser");
                     let passwordInput = document.querySelector("#createpassword");
                     let confirmPasswordInput = document.querySelector("#createconfirmpasword")
                     let emailInput=document.querySelector("#createemail")
                     let placeInput=document.querySelector("#createplace")
                     let flag = true;
+                    
                     const regex = /^[a-zA-Z0-9@_]*$/;
                     const Emailregex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
@@ -239,17 +245,23 @@
 
                 }
                 function validator(username, password, confirmpassword,email,place) {
-                    let usernameAlert = document.querySelector("#usernameAlert");
-                    let passwordAlert = document.querySelector("#passwordAlert");
-                    let confirmPasswordAlert = document.querySelector("#confirmAlert")
-                    let EmailAlert=document.querySelector("#EmailAlert")
-                    let PlaceAlert=document.querySelector("#PlaceAlert")
+                    
+                    let usernameAlert = document.querySelector("#usernameAlerttwo");
+                    usernameAlert.textContent=''
+                    let passwordAlert = document.querySelector("#passwordAlerttwo");
+                    passwordAlert.textContent=''
+                    let confirmPasswordAlert = document.querySelector("#confirmAlerttwo")
+                    confirmPasswordAlert.textContent=''
+                    let EmailAlert=document.querySelector("#EmailAlerttwo")
+                    EmailAlert.textContent=''
+                    let PlaceAlert=document.querySelector("#PlaceAlerttwo")
+                    PlaceAlert.textContent=''
                     console.log(confirmPasswordAlert)
-                    let usernameInput = document.querySelector("#createuser");
-                    let passwordInput = document.querySelector("#createpassword");
-                    let confirmPasswordInput = document.querySelector("#createconfirmpasword")
-                    let emailInput=document.querySelector("#createemail")
-                    let placeInput=document.querySelector("#createplace")
+                    let usernameInput = document.querySelector("#createusertwo");
+                    let passwordInput = document.querySelector("#createpasswordtwo");
+                    let confirmPasswordInput = document.querySelector("#createconfirmpasswordtwo")
+                    let emailInput=document.querySelector("#createemailtwo")
+                    let placeInput=document.querySelector("#createplacetwo")
                     let flag = true;
                     const regex = /^[a-zA-Z0-9@_]*$/;
                     const Emailregex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -272,19 +284,22 @@
                         flag = false;
                     }
                     if (password === confirmpassword) {
+                        confirmPasswordAlert.style.color = "green"
 
                         confirmPasswordAlert.textContent = "The passwords match";
-                        confirmpasswordAlert.textContent = "";
+                        confirmPasswordInput.textContent = "";
 
-                        confirmPasswordAlert.style.color = "green"
                         confirmPasswordAlert.style.visibility = "visible";
 
-                        // flag = false;
+                        
                     } else {
-                        confirmpasswordAlert.textContent = "The passwords doesnt match";
-                        confirmPasswordAlert.textContent = "";
+                        confirmPasswordAlert.style.visibility = "visible";
 
-                        confirmpasswordAlert.style.visibility = "visible";
+                        confirmPasswordAlert.style.color = "red"
+
+                        confirmPasswordAlert.textContent = "The passwords doesnt match";
+                        // confirmPasswordAlert.textContent = "";
+
                         flag = false
                     }
 
@@ -600,14 +615,15 @@
                 })
 
                 document.querySelector(".createbutton").addEventListener("click", async () => {
-                    let username = document.querySelector("#createuser").value
-                    let password = document.querySelector("#createpassword").value
-                    let confirmpassword=document.querySelector("#createconfirmpassword").value
-                    let place = document.querySelector("#createplace").value
-                    let email = document.querySelector("#createemail").value
-                    console.log(place)
+                    let username = document.querySelector("#createusertwo").value
+                    let password = document.querySelector("#createpasswordtwo").value
+                    let confirmpassword=document.querySelector("#createconfirmpasswordtwo").value
+                    let place = document.querySelector("#createplacetwo").value
+                    let email = document.querySelector("#createemailtwo").value
+                    console.log(username,password)
 
                     let flag = validator(username, password,confirmpassword,email,place)
+                    console.log(flag)
                     if (flag) {
                         let response = await (await fetch("/register", {
                             method: 'POST',
@@ -622,6 +638,8 @@
                             document.querySelector("#createalert").style.color = "green"
                             setTimeout(() => window.location.reload(), 1000)
                         } else {
+                            document.querySelector("#createalert").value=response.message
+
                             document.querySelector("#createalert").style.color = "red"
                         }
 

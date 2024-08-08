@@ -40,8 +40,6 @@ router.get("/home", authMiddleware("login"), (req, res) => {
       adminsession:req.session?.adminsession
 
     });
-  
-  
 });
 
 
