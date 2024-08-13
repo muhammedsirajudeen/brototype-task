@@ -38,6 +38,12 @@ app.use(
 
 app.use("/", authRouter);
 app.use("/admin", adminRouter);
+app.get("/user/:username",(req,res)=>{
+  console.log(req.originalUrl)
+  let data=req.query.domain
+
+  res.send(req.params.username)
+})
 app.use((req, res, next) => {
   res.status(404).render("pages/404", {
     authenticated: req.session?.username ? true : false,
@@ -47,4 +53,6 @@ app.use((req, res, next) => {
     adminsession:null
   });
 });
+
+
 app.listen(PORT, () => console.log(`Running On Port ${PORT}`));

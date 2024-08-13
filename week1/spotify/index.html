@@ -10,6 +10,7 @@
     <title>Spotify</title>
 </head>
 <body>
+    <!-- main container is divided into left and right -->
     <div class="maincontainer">
         <div class="leftsubcontainer">
             <div class="leftcontainer">
@@ -81,12 +82,16 @@
         <div class="rightcontainer">
             <div class="top-right-container">
                 <!-- add left and right curoor kinda button here -->
+                 <div class="left-arrow-container">
+                    <img src="./icons/leftarrow.png" class="icon" >
+                 </div>
                 <div class="auth-container">
                     <button class="signup">Sign Up</button>
                     <button class="login">Login</button>
                     
                 </div>
             </div>
+            <!-- mobile navigation container is responsive wont be visibile in md w -->
 
             <div class="mobile-navigation-container">
                 <div class="mobile-navigation-sub-container">
@@ -102,12 +107,16 @@
                 </div>
             </div>
 
+            <!-- has  some trouble with alignment  -->
             <div class="bottom-right-container">
-                <h3 class="top-right-text" >Popular Artists</h3>
+                <div class="text-container" id="artist" >
+                    <h3 class="top-right-text""  >Popular Artists</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
 
                 <div class="artistmaincontainer">
                     <div class="artistcontainer" id="artistone" >
-                        <img src="./arijith.jpeg" class="artistimage" >
+                        <img src="./arijith.jpeg" class="albumimage"  id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -116,7 +125,7 @@
 
                     </div>
                     <div class="artistcontainer">
-                        <img src="./pritam.jpg" class="artistimage" >
+                        <img src="./pritam.jpg" class="albumimage" id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -125,7 +134,7 @@
 
                     </div>
                     <div class="artistcontainer">
-                        <img src="./rahman.jpeg" class="artistimage" >
+                        <img src="./rahman.jpeg" class="albumimage" id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -134,7 +143,7 @@
 
                     </div>
                     <div class="artistcontainer">
-                        <img src="./anirudh.jpeg.jpeg" class="artistimage" >
+                        <img src="./anirudh.jpeg.jpeg" class="albumimage" id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -143,7 +152,7 @@
 
                     </div>
                     <div class="artistcontainer">
-                        <img src="./vishal.jpeg" class="artistimage" >
+                        <img src="./vishal.jpeg" class="albumimage" id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -152,7 +161,7 @@
 
                     </div>
                     <div class="artistcontainer">
-                        <img src="./sachin.jpeg" class="artistimage" >
+                        <img src="./sachin.jpeg" class="albumimage"  id="artistimage" >
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
@@ -161,9 +170,13 @@
 
                     </div>
                 </div>
-                <h3 class="top-right-text" >Popular Albums</h3>
-                <div class="albumcontainer">
-                    <div class="albumsubcontainer">
+                <div class="text-container">
+                    <h3 class="top-right-text" >Popular Albums</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
+                <div class="artistmaincontainer">
+                    <div class="artistcontainer">
                         <img src="./album/lovehoteljpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
@@ -173,7 +186,7 @@
                         <p class="album-text" id="album-sub-text"  >left over max</p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer">
                         <img src="./movie/animal.jpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
@@ -183,7 +196,7 @@
                         <p class="album-text" id="album-sub-text"  >animal song playlist</p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer">
                         <img src="./movie/raja.jpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
@@ -193,7 +206,7 @@
                         <p class="album-text" id="album-sub-text"  >timeless classic song</p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer">
                         <img src="./movie/moose.jpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
@@ -203,7 +216,7 @@
                         <p class="album-text" id="album-sub-text">Sidhu Moosa Wala</p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer">
                         <img src="./movie/ashique2.jpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
@@ -214,9 +227,13 @@
 
                     </div>                    
                 </div>
-                <h3 class="top-right-text" >Featured Charts</h3>
-                <div class="albumcontainer">
-                    <div class="albumsubcontainer">
+                <div class="text-container">
+                    <h3 class="top-right-text" >Featured Charts</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
+                <div class="artistmaincontainer">
+                    <div class="artistcontainer" id="color-container" >
                         <div class="color-container">
                             <p class="color-text">TOP SONGS GLOBAL</p>
                         </div>
@@ -224,23 +241,23 @@
                             <img src="./icons/play.png" class="playimage" >
                         </div>
 
-                        <p class="album-text">Top Songs Global</p>
+                        <p class="album-text">Top Songs </p>
                         <p class="album-text" id="album-sub-text"  >Your weekly playlist of songs that have<br> been played the most... </p>
 
                     </div>
-                    <div class="albumsubcontainer">
-                        <div class="color-container" id="second" >
-                            <p class="color-text" >TOP 100 SONGS</p>
+                    <div class="artistcontainer" id="color-container" >
+                        <div class="color-container" id="second"  >
+                            <p class="color-text" >TOP SONGS</p>
                         </div>
                         <div class="playbutton" id="playone" >
                             <img src="./icons/play.png" class="playimage" >
                         </div>
 
-                        <p class="album-text">Top 100 Songs</p>
-                        <p class="album-text" id="album-sub-text"  >The songs that have <br> been played the most ... </p>
+                        <p class="album-text">Top Hits</p>
+                        <p class="album-text" id="album-sub-text"  >Your weekly playlist of songs that have<br> been played the most...</p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer" id="color-container">
                         <div class="color-container" id="third" >
                             <p class="color-text" >WEEKLY HITS</p>
                         </div>
@@ -252,7 +269,7 @@
                         <p class="album-text" id="album-sub-text"  >The songs that have been<br> played the most in the week  ... </p>
 
                     </div>
-                    <div class="albumsubcontainer">
+                    <div class="artistcontainer">
                         <div class="color-container" id="fourth" >
                             <p class="color-text" >MOST LISTENED</p>
                         </div>
@@ -265,7 +282,11 @@
 
                     </div>                  
                 </div>
-                <h3 class="top-right-text" >Trending Episodes</h3>
+                <div class="text-container">
+                    <h3 class="top-right-text" >Trending Episodes</h3>
+                    <h4 id="head-text">Show all</h4>
+                </div>
+                
                 <div class="albumcontainer">
                     <div class="albumsubcontainer">
                         <img src="./episodes/balaji.webp" class="albumimage">
@@ -307,7 +328,7 @@
                         <p class="album-text">Mahabaratha</p>
                         <p class="album-text" id="album-sub-text"  >Experience the grandeur</p>
 
-                    </div>
+                    </div> 
                     <div class="albumsubcontainer">
                         <img src="./episodes/rain.jpeg" class="albumimage">
                         <div class="playbutton" id="playone" >
@@ -319,7 +340,7 @@
 
                     </div>                    
                 </div>
-
+                <!-- dont forget to make it responsive -->
                 <div class="bottom-text-container">
                     <div class="text-sub-container">
                         <h3 class="bottom-text">Company</h3>
@@ -399,9 +420,10 @@
                     </div>
                     
                 </div>
+                <!-- horizontal rule for large devices -->
                 <hr>
 
-                <p class="copyright-text" >Copyright Spotify@2024</p>
+                <p  id="mobile-text" class="copyright-text" >Copyright Spotify@2024</p>
 
 
             </div>

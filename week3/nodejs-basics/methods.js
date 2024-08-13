@@ -29,3 +29,13 @@ console.log(proxy1.name)
 console.log(obj.name)
 
 proxy1.display()
+
+let objs={
+    name:"sadin",
+    greet: ()=>{
+        console.log(this)
+    }
+}
+let objss=new Object(objs)
+
+objss.greet()

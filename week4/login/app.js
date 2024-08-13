@@ -17,6 +17,11 @@ const PORT=3000
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Pragma', 'no-cache');
+    next();
+});
 app.use(express.static('public'))
 app.use(session(
     {

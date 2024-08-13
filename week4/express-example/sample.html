@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <form >
+        <input type="text" name="name">
+        <input type="submit" value="submit">
+    </form>
+    <script>
+        document.querySelector("form").addEventListener("submit",async function (e){
+            e.preventDefault()  
+            let formdata = new FormData(this)
+            let formbody=new URLSearchParams(formdata).toString()
+            
+            let response=await (await fetch("/auth",
+                {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    },
+                    body:formbody
+                }
+            )).json()
+            console.log(response)
+        })
+    </script>
+</body>
+</html>

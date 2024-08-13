@@ -11,7 +11,7 @@ function opener(){
 sidenavbutton.onclick=()=>{
     opener()
 }
-
+// making it a drawer
 function closer(){
     sidebarcontainer.style.width="0vw"
     sidebarflex.style.display="none"

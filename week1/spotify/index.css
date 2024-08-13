@@ -5,6 +5,7 @@ body{
     overflow-x: hidden;
     margin: 0px;
     padding: 0px;
+    overflow-y: hidden;
 }
 .maincontainer{
     width: 100%;
@@ -91,14 +92,14 @@ body{
 }
 .language-container{
     border-style: solid;
-    border-width: 1px;
+    border-width: 0.5px;
     border-color: white;
     background-color: rgb(75, 75, 75,0.1);
     color: white;
     font-size: 10px;
     font-weight: bolder;
-    width:110px;
-    height: 35px;
+    width:120px;
+    height: 45px;
     border-radius: 20px;
     margin-top: 50px;
     margin-bottom: 10px;
@@ -113,6 +114,9 @@ body{
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90vh;
 }
 .top-right-container{
     display: flex;
@@ -120,9 +124,10 @@ body{
     width: 100%;
     background-color:  rgb(75, 75, 75,0.2) ;
     border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
 .auth-container{
-    margin-left: 74rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,6 +168,7 @@ body{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    width: 100%;
 }
 .artistcontainer{
     width: 200px;
@@ -398,8 +404,102 @@ a{
 .mobile-navigation-container{
     display: none;
 }
+.left-arrow-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1vw;
+    background-color: black;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    border-radius: 100%;
+}
 #mobile{
     visibility: hidden;
+}
+.text-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+#head-text{
+    font-size: medium;
+    color: gray;
+    margin-right: 10px;
+}
+@media only screen and (max-width:900px)  {
+
+    body{
+        overflow-y: hidden;
+    }
+    .rightcontainer{
+        overflow-y: scroll;
+        height: 95vh;
+        overflow-x: hidden;
+        width: 50%;
+
+    }
+    .leftsubcontainer{
+        height: 95vh;
+        width: 50vw;
+    }
+    .top-right-text{
+        font-size: 17px;
+    }
+    .artistcontainer{
+        margin-left: 0px;
+    }
+    .albumimage{
+        height: 100px;
+        width: 100px;
+    }
+    .artistimage{
+        height: 150px;
+        width: 150px;
+    }
+    .albumimage{
+        height: 150px;
+        width: 150px;
+        border-radius: 10px;
+        margin: 20px;
+    }
+    .color-container{
+        border-radius: 0px;
+        width: 150px;
+        height: 150px;
+        margin: 20px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 10px;
+    }
+    .color-text{
+        font-size: 20px;
+    }
+    .leftbottomcontainer{
+        background-color: rgb(75, 75, 75,0.2);
+        border-radius: 10px;
+        width: 400px;
+        height: auto;
+        margin-left: 10px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+        height: 77vh;
+    }
+    .tiny-bottom-container{
+        margin-top: 25vh;
+    }
+    .album-text{
+        margin-top: 5px;
+    }
+
+
+    
 }
 
 @media only screen and (max-width: 600px) {
@@ -407,8 +507,18 @@ a{
         background-color: rgb(14, 14, 14);
         overflow-x: hidden;
     }
+    .rightcontainer{
+        width: 100%;
+    }
     .leftsubcontainer{
         display: none;
+    }
+    .artistcontainer{
+        margin-top: -10px;
+        margin: 7px;
+        justify-content: start;
+        height: 175px;
+
     }
     .top-right-container{
         display: none;
@@ -431,14 +541,16 @@ a{
     }
     .mobile-navigation-sub-container{
         display: flex;
-        justify-content: start;
+        justify-content: space-between;
         align-items: center;
         width: 100%;
         height: 100%;
     }
     .open-text{
         background-color: white;
-        padding: 10px;
+        padding: 2px;
+        height: 30px;
+        width: 90px;
         border-style: hidden;
         border-radius: 30px;
         font-weight: 900;
@@ -447,17 +559,16 @@ a{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 45vw;
         
 
     }
+    
     .nav-icon{
         height: 25px;
         width: 25px;
         margin: 20px;
     }
     .top-right-text{
-        margin-top: 7vh;
         font-size: 20px;
     }
     .artistimage{
@@ -474,34 +585,53 @@ a{
     }
     .artist-text{
         font-weight: 400;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        margin-top: -10px;
+        font-size: 15px;
     }
     .albumcontainer{
         overflow-x: scroll;
+        overflow-y: hidden;
         width: 90vw; 
+
     }
     .albumsubcontainer{
-        margin: 10px;
+        justify-content: start;
+        height: 175px;
+        margin: 7px;
     }
     .albumimage{
         height: 20vh;
-        width: 35vw;
+        width: 20vw;
+        scale: 1.5;
+        /* scale: 1.5; */
         border-radius: 0px;
+        box-sizing: border-box;
     }
     #album-sub-text{
         display: none;
     }
     .album-text{
         font-weight: 400;
+        font-size: 15px;
     }
     .color-container{
         border-radius: 0px;
-        width: 35vw;
+        /* width: 10rem; */
+        /* margin: 7px; */
+        margin: 7px;
+
+        padding: 0px;
     }
     .color-text{
-        font-size: 25px;
+        font-size: 15px;
     }
     .bottom-text-container{
         flex-direction: column;
+        margin: 0;
+        margin-top: 20px;
     }
     .horizontal-line{
         width: 100%;
@@ -513,5 +643,41 @@ a{
     #mobile{
         visibility: visible;
     }
+    hr{
+        display: none;
+    }
+    #mobile-text{
+        display: none;
+    }
+    #head-text{
+        display: none;
+    }
+    #artist{
+        margin-top: 5vh;
+    }
+    .text-container{
+        margin-top: 2vh;
+    }
+    .bottom-tab-container{
+        display: none;
+    }
+    .color-container{
+        margin: 7px;
+        height: 100px;
+        width: 105px;
+        scale: 1.2;
+    }
+    #artistimage{
+        height: 75px;
+        width: 75px;
+        scale: 1.65;
+    }
+    #color-container{
+        width: 40vw;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+    }
 
-}
+
+}   

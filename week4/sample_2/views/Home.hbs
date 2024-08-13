@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Math</th>
+      <th scope="col">Science</th>
+      <th scope="col">English</th>
+      <th scope="col">Status</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    {{#each markListing}}
+      <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{name}}</td>
+        <td>{{math}}</td>
+        <td>{{science}}</td>
+        <td>{{english}}</td>
+        <td> {{#if pass}} <button id="button" class="btn btn-success">pass</button> {{else}} <button id="button" class="btn btn-danger">failed</button>{{/if}} </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

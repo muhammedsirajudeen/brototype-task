@@ -21,6 +21,22 @@
     </form>
 </div>
 <script defer>
+window.addEventListener("popstate",()=>{
+    console.log("back navigation")
+})
+
+async function authValidator(){
+
+    
+let response=await (await fetch('/authenticator')).json()
+if(response.message==="success"){
+    window.location.href="/home"
+}
+}
+authValidator()
+
+
+
 function validator(username,password){
     let usernameAlert=document.querySelector("#usernameAlert")
     let passwordAlert=document.querySelector("#passwordAlert")
@@ -92,6 +108,7 @@ async function submitHandler(e){
 
         if(response.message==="success"){
             window.location.href="/home"
+            window.localStorage.setItem("authstatus",true)
         }else{
             //give a modal here
             let loginAlert=document.querySelector("#loginAlert")
