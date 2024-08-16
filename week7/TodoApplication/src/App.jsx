@@ -6,6 +6,8 @@ import TickImage from "/tick.png";
 import FalseImage from "/false.png";
 import DeleteImage from "/delete.png";
 import EditImage from "/edit.png";
+import UpImage from "/up.png"
+import DownImage from "/down.png"
 function App() {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -26,7 +28,9 @@ function App() {
     } else {
       isFirstRender.current = false;
       let tasks=JSON.parse(window.localStorage.getItem("tasks")) ?? []
+      //changing order now doesnt matter
       if(tasks.length>0){
+        tasks=tasks.sort((a,b)=>a.id-b.id)
         let id=(tasks[tasks.length-1]).id
         idCount.current=id
   
@@ -103,6 +107,44 @@ function App() {
     }
   }
 
+  function upHandler(id){
+    let index=0
+    for(let i=0;i<tasks.length;i++){
+      if(tasks[i].id==id){
+        index=i
+      }
+    }
+
+    console.log(index)
+    if(index===0) return
+    let taskcopy=JSON.parse(JSON.stringify(tasks))
+    let copy=tasks[index]
+    taskcopy.splice(index,1)
+    //we have deleted from that specified index now we have to move it up
+    taskcopy.splice(index-1,0,copy)
+    setTasks(taskcopy)
+
+    
+
+  }
+  function downHandler(id){
+    let index=0
+    for(let i=0;i<tasks.length;i++){
+      if(tasks[i].id==id){
+        index=i
+      }
+    }
+
+    console.log(index)
+    if(index===tasks.length-1) return
+    let taskcopy=JSON.parse(JSON.stringify(tasks))
+    let copy=tasks[index]
+    taskcopy.splice(index,1)
+    //we have deleted from that specified index now we have to move it up
+    taskcopy.splice(index+1,0,copy)
+    setTasks(taskcopy)
+  }
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -118,6 +160,15 @@ function App() {
               key={task.id}
               className="flex items-center justify-evenly w-full mt-10"
             >
+              <div className="flex flex-col justify-center items-center">
+                <button>
+                  <img className="h-6 w-6"  src={UpImage} onClick={()=>upHandler(task.id)} ></img>
+                </button>
+                <button>
+                  <img className="h-6 w-6"  src={DownImage} onClick={()=>downHandler(task.id)} ></img>
+                </button>
+
+              </div>
               <div className="flex w-1/4 h-full items-center justify-center ">
                 <p className="w-full text-xs text-white align-middle">
                   {task.task}
