@@ -18,17 +18,18 @@ export default function Recommendations({
       <div className='flex items-center justify-center'>
         {products.map((product: DocumentData) => {
           return (
-          <div key={product.id} className='flex mt-10 border border-gray-400 mr-20 flex-col items-start w-60 h-auto justify-center'>
+          <div key={product.id} className='flex mt-10 border border-gray-400 mr-20 flex-col items-start w-60 h-auto justify-center overflow-clip'>
             <img className='w-60 h-40' src={product.Images[0]}/>
-            <div className='flex absolute mb-64 bg-white rounded-full items-center justify-center h-8 w-8' onClick={()=>favHandler(product.id)} >
+            <div className='flex  bg-white rounded-full items-center justify-center h-8 w-8' onClick={()=>favHandler(product.id)} >
               <img src={FavoriteImage} className='h-6 w-6'/>
             </div>
-            <p className='font-bold text-xl ml-2 mt-2'>₹ {product.Price}</p>
-            <p className='font-bold text-lg ml-2 mt-2'>{product.Model}</p>
-            <p className='font-light text-lg ml-2 mt-2'>{product.ProductName}</p>
-            <p className='font-bold text-xs ml-2 mt-2'>{product.PostingDate}</p>
-            <p className='font-light text-xs ml-2 mt-2'>{product.LocationName}</p>
+            <p className='font-bold text-gray-700 text-xl ml-2 mt-2'>₹ {product.Price}</p>
+            <p className='font-light text-sm ml-2 mt-2'>{product.Model}</p>
+            <div className='flex justify-between w-max '>
+              <p className='font-bold text-xs ml-2 mt-2'>{product.PostingDate}</p>
+              <p className='font-light text-xs ml-2 mt-2 '>{product.LocationName}</p>
 
+            </div>
           </div>
           )
         })}

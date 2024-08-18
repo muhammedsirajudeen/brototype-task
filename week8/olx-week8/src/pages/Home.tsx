@@ -24,7 +24,6 @@ export default function Home(): ReactElement {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
         data.id = doc.id
-        console.log(data.Location)
         products.push(data)
       })
       setProducts(products)
