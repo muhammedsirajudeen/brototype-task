@@ -7,3 +7,33 @@ body{
     overflow-x: hidden;
     overflow-y: scroll;
 }
+.skeleton-loader {
+    background-color: #ffffff;
+    border-radius: 4px;
+
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .skeleton-loader::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #d9d8d8 25%, #f6f2f2 50%, #d7d0d0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
