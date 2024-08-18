@@ -14,7 +14,8 @@ export default function Home(): ReactElement {
     // the data has differing fields so
     const [products,setProducts]=useState<Array<DocumentData>>([])
     const [loading,setLoading]=useState(true)
-    const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
+    //generating 50 array elements so that we can map over it
+    const numbers = Array.from({ length: 50 }, (_, i) => i + 1);
 
     useEffect(()=>{
         async function getData(){
@@ -38,12 +39,13 @@ export default function Home(): ReactElement {
             <TopBar setDialog={setDialog} />
             {dialog && <CategoryBox/> }
             <Recommendations products={products} />
+            {/* Home page loading animation */}
             {loading && 
-                <div className='flex items-start justify-start  w-full h-full '>
+                <div className='flex flex-wrap items-start justify-start  w-full h-full '>
                     {
                         numbers.map(()=>{
                             return(
-                                <div className='flex ml-20 items-start justify-start flex-col'>
+                                <div className='flex ml-20 mt-10 items-start justify-start flex-col'>
                                     <div className='skeleton-loader h-40 w-52'></div>
                                     <div className='skeleton-loader mt-5 h-10 w-52'></div>
                                 </div>
