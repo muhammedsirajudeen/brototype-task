@@ -1,5 +1,5 @@
-import { createContext } from "react";
+import { createContext } from 'react'
 
-const OlxContext = createContext<number>(0);
+const OlxContext = createContext<number>(0)
 
-export default OlxContext;
+export default OlxContext

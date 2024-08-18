@@ -8,8 +8,8 @@ function App() {
     <BrowserRouter>
       <OlxContext.Provider value={10}>
         <Routes>
-          <Route path="/" element={<Navbar />} >
-            <Route index={true} element={<Home/>}/>
+          <Route path="/" element={<Navbar />}>
+            <Route index={true} element={<Home />} />
           </Route>
         </Routes>
       </OlxContext.Provider>
