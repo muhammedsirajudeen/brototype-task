@@ -9,7 +9,12 @@ export default {
       },
       width:{
         'custom':'55vw',
-        'input':'50vw'
+        'input':'50vw',
+        'image':'35vw',
+  
+      },
+      height:{
+        'dialog':'40vh'
       }
     },
   },

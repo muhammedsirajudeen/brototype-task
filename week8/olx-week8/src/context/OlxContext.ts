@@ -1,5 +1,9 @@
-import { createContext } from 'react'
+import { createContext, Dispatch, SetStateAction } from 'react'
 
-const OlxContext = createContext<number>(0)
+interface contextProps{
+    logindialog:boolean,
+    setLogindialog:Dispatch<SetStateAction<boolean>>
+}
+const OlxContext = createContext<contextProps | null >(null)
 
 export default OlxContext

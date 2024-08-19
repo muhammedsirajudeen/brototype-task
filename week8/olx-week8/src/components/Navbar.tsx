@@ -1,4 +1,4 @@
-import { ReactElement, useReducer, useState } from 'react'
+import { ReactElement, useContext, useReducer, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import OlxLogo from '../assets/Logos/olx.svg'
 import Search from '../assets/Logos/search.svg'
@@ -6,6 +6,7 @@ import SearchWhite from '../assets/Logos/SearchWhite.png'
 import DownArrow from '../assets/Logos/downarrow.svg'
 import AddImage from '../assets/Logos/add.svg'
 import LocationImage from '../assets/Logos/location.png'
+import OlxContext from '../context/OlxContext'
 interface stateType {
   location: boolean
   language: boolean
@@ -32,7 +33,9 @@ export default function Navbar(): ReactElement {
     location: false,
     language: false,
   })
+
   const [search, setSearch] = useState<string>('')
+  const context=useContext(OlxContext)
   function locationHandler() {
     dispatcher({ type: 'LOCATION' })
   }
@@ -42,6 +45,9 @@ export default function Navbar(): ReactElement {
   }
   function languageHandler() {
     dispatcher({ type: 'LANGUAGE' })
+  }
+  function loginHandler(){
+    context?.setLogindialog(true)
   }
 
   return (
@@ -121,7 +127,7 @@ export default function Navbar(): ReactElement {
             )}
           </div>
         </div>
-        <button className=" border-2 border-t-navbarcolor border-l-navbarcolor border-r-navbarcolor border-b-borderedgecolor font-bold text-borderedgecolor text-sm ml-10">
+        <button className=" border-2 border-t-navbarcolor border-l-navbarcolor border-r-navbarcolor border-b-borderedgecolor font-bold text-borderedgecolor text-sm ml-10" onClick={loginHandler}>
           Login
         </button>
         <button className="ml-20 flex items-center justify-evenly bg-white p-2 text-borderedgecolor font-bold text-sm border-4 rounded-3xl w-20 border-t-cyan-300 border-l-yellow-400 border-b-blue-600 border-r-blue-600">
@@ -130,6 +136,9 @@ export default function Navbar(): ReactElement {
         </button>
       </div>
       <Outlet />
+      <div className='flex fixed bottom-0 items-center justify-center h-10 w-full bg-borderedgecolor mt-10'>
+            <h1 className='text-2xl font-bold text-white'>Olx</h1>
+      </div>
     </>
   )
 }
