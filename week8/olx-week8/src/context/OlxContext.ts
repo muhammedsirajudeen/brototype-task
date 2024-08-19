@@ -2,7 +2,11 @@ import { createContext, Dispatch, SetStateAction } from 'react'
 
 interface contextProps{
     logindialog:boolean,
-    setLogindialog:Dispatch<SetStateAction<boolean>>
+    setLogindialog:Dispatch<SetStateAction<boolean>>,
+    authentication:boolean,
+    setAuthentication:Dispatch<SetStateAction<boolean>>,
+    username:string,
+    setUsername:Dispatch<SetStateAction<string>>
 }
 const OlxContext = createContext<contextProps | null >(null)
 

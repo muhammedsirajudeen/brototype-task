@@ -95,11 +95,11 @@ export default function Home(): ReactElement {
                           <></>
                     }
                     {loginpage==="login" ?
-                          <EmailLogin setLoginpage={setLoginpage}/>
+                          <EmailLogin key={1}  setLoginpage={setLoginpage}/>
                     :<></> }
                     {
                       loginpage==="signup" ? 
-                        <EmailSignup setLoginpage={setLoginpage}/>
+                        <EmailSignup key={2} setLoginpage={setLoginpage}/>
                       :
                       <></>
                     }

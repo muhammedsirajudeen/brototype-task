@@ -1,15 +1,21 @@
 import { ReactElement, useContext, useReducer, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import OlxLogo from '../assets/Logos/olx.svg'
 import Search from '../assets/Logos/search.svg'
 import SearchWhite from '../assets/Logos/SearchWhite.png'
 import DownArrow from '../assets/Logos/downarrow.svg'
 import AddImage from '../assets/Logos/add.svg'
 import LocationImage from '../assets/Logos/location.png'
+import ProfileImage from "../assets/Logos/ProfileImage.png"
+import DownImage from "../assets/Logos/downarrow.svg"
 import OlxContext from '../context/OlxContext'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebaseHelper/firebaseHelper'
+
 interface stateType {
   location: boolean
   language: boolean
+  login:boolean
 }
 interface actionType {
   type: string
@@ -22,6 +28,10 @@ const reducer = (state: stateType, action: actionType) => {
 
     case 'LANGUAGE':
       return { ...state, language: !state.language }
+    
+    case 'LOGIN':
+      return {...state,login: !state.login}
+
 
     default:
       return state
@@ -32,10 +42,12 @@ export default function Navbar(): ReactElement {
   const [dialogstate, dispatcher] = useReducer(reducer, {
     location: false,
     language: false,
+    login:false
   })
 
   const [search, setSearch] = useState<string>('')
   const context=useContext(OlxContext)
+  const navigate=useNavigate()
   function locationHandler() {
     dispatcher({ type: 'LOCATION' })
   }
@@ -48,6 +60,30 @@ export default function Navbar(): ReactElement {
   }
   function loginHandler(){
     context?.setLogindialog(true)
+  }
+  function logoutHandler(){
+    dispatcher({type:'LOGIN'})
+
+    signOut(auth).then(()=>{
+      context?.setAuthentication(false)
+      context?.setUsername("")
+    })
+  }
+  function profileHandler(){
+    dispatcher({type:'LOGIN'})
+  }
+  function navprofileHandler(){
+    dispatcher({type:'LOGIN'})
+
+    navigate('/profile')
+  }
+  function sellHandler(){
+
+    if(!context?.authentication){
+      context?.setLogindialog(true)
+    }else{
+      navigate('/postad')
+    }
   }
 
   return (
@@ -127,15 +163,45 @@ export default function Navbar(): ReactElement {
             )}
           </div>
         </div>
-        <button className=" border-2 border-t-navbarcolor border-l-navbarcolor border-r-navbarcolor border-b-borderedgecolor font-bold text-borderedgecolor text-sm ml-10" onClick={loginHandler}>
-          Login
-        </button>
-        <button className="ml-20 flex items-center justify-evenly bg-white p-2 text-borderedgecolor font-bold text-sm border-4 rounded-3xl w-20 border-t-cyan-300 border-l-yellow-400 border-b-blue-600 border-r-blue-600">
+        {
+          context?.authentication ?
+          <div className='flex flex-col'>
+            <button className='flex items-center justify-center ml-10'>
+              <img src={ProfileImage} className='h-8 w-8'/>
+              <img src={DownImage} className='h-8  w-8' onClick={profileHandler}  />
+            </button>
+            {
+              dialogstate.login &&
+              <div className="relative h-0">
+              
+                <div className="h-72 w-72 p-2 mt-6 bg-white shadow-lg flex flex-col items-center justify-center ">
+                  <div className='flex  items-center justify-center'>
+                    <img src={ProfileImage} className='h-6 w-6'/>
+                    <p className='font-bold text-'>{context.username}</p>
+                  </div>
+                  <button className='flex items-center justify-center bg-borderedgecolor w-full p-2 text-white font-bold mt-2' onClick={navprofileHandler} >View and Edit Profile</button>
+                  <button className='flex mt-5 items-center justify-start font-light' onClick={logoutHandler}>Logout</button>
+
+                </div>
+              
+            </div>
+            }
+
+
+          </div>
+          :
+            <button className=" border-2 border-t-navbarcolor border-l-navbarcolor border-r-navbarcolor border-b-borderedgecolor font-bold text-borderedgecolor text-sm ml-10" onClick={loginHandler}>
+              Login
+            </button>
+          
+        }
+        <button className="ml-20 flex items-center justify-evenly bg-white p-2 text-borderedgecolor font-bold text-sm border-4 rounded-3xl w-20 border-t-cyan-300 border-l-yellow-400 border-b-blue-600 border-r-blue-600" onClick={sellHandler} >
           <img src={AddImage} className="h-4 w-4" />
           <p>SELL</p>
         </button>
       </div>
       <Outlet />
+      
       <div className='flex fixed bottom-0 items-center justify-center h-10 w-full bg-borderedgecolor mt-10'>
             <h1 className='text-2xl font-bold text-white'>Olx</h1>
       </div>
