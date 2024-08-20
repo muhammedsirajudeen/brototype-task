@@ -27,7 +27,7 @@ export default function EmailLogin({setLoginpage}:{setLoginpage:Dispatch<SetStat
               console.log(user);
               setSuccessmessage("login successful")
               context?.setAuthentication(true)
-              context?.setUsername(user.email)
+              context?.setUsername(user.email ?? "")
               context?.setLogindialog(false)
             //   alert("success")
               // ...

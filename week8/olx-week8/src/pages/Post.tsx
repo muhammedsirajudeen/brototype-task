@@ -218,7 +218,7 @@ export default function Post():ReactElement{
             Price:price,
             ProductCategory:"Car",
             ProductName:title,
-            Tranmission:transmission,
+            Transmission:transmission,
             Variant:variant,
             Username:username
         }
