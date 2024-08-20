@@ -167,7 +167,7 @@ export default function Navbar(): ReactElement {
           context?.authentication ?
           <div className='flex flex-col'>
             <button className='flex items-center justify-center ml-10'>
-              <img src={ProfileImage} className='h-8 w-8'/>
+              <img src={context.profileimage ? context.profileimage : ProfileImage} className='h-8 w-8 rounded-full'/>
               <img src={DownImage} className='h-8  w-8' onClick={profileHandler}  />
             </button>
             {

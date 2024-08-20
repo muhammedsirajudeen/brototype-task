@@ -1,18 +1,24 @@
-import { ReactElement, useContext,useState,useEffect, useRef, FormEvent } from "react";
+import { ReactElement, useContext,useState,useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import OlxContext from "../context/OlxContext";
 import TopBar from "../components/TopBar";
 import CategoryBox from "../components/CategoryBox";
 import ProfileImage from "../assets/Logos/ProfileImage.png"
 import ListLogo from "../assets/Logos/listinglogo.webp"
 import app, {auth} from "../firebaseHelper/firebaseHelper"
-import { onAuthStateChanged, User } from "firebase/auth";
+import { EmailAuthProvider, getAuth, onAuthStateChanged, reauthenticateWithCredential, updateEmail, updateProfile, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { collection, deleteDoc, doc, DocumentData, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
+import ClipLoader from "react-spinners/ClipLoader";
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
 
 import DeleteImage from "../assets/Logos/DeleteImage.png"
 import EditImage from "../assets/Logos/EditImage.png"
+import { getDownloadURL, getStorage, ref, uploadBytesResumable, UploadTaskSnapshot } from "firebase/storage";
+// import { File } from "buffer";
+
+
+
 export default function Profile():ReactElement{
     const context=useContext(OlxContext)
     const {toast}=useToast()
@@ -25,10 +31,14 @@ export default function Profile():ReactElement{
     const dialogRef=useRef<HTMLDialogElement>(null)
     const [dialogcontext,setDialogcontext]=useState<string>("")
     const [currentproduct,setCurrentproduct]=useState<DocumentData>()
+    const [email,setEmail]=useState<string>("")
+    const [password,setPassword]=useState<string>("")
+    const [uploadstate,setUploadstate]=useState<boolean>(false)
     const formRef=useRef<HTMLFormElement>(null)
+    const profilepictureRef=useRef<HTMLInputElement>(null)
     const navigate=useNavigate()
     const db = getFirestore(app)
-
+    const fileInput=useRef<FormData>(new FormData())
     useEffect(()=>{
         onAuthStateChanged(auth,(user)=>{
           if(user){
@@ -44,6 +54,7 @@ export default function Profile():ReactElement{
       },[navigate])
       useEffect(() => {
         const username=context?.username
+        setEmail(username ?? "")
         if(username){
             async function getData() {
                 const db = getFirestore(app)
@@ -67,7 +78,9 @@ export default function Profile():ReactElement{
       }, [context?.username])
     
     function editHandler(){
-        alert("edit clicked")
+        // alert("edit clicked")
+        setDialogcontext("password")
+        dialogRef.current?.show()
     }
     function shareHandler(){
         alert("share clicked")
@@ -177,6 +190,126 @@ export default function Profile():ReactElement{
               }) 
         }
     }
+    function profilepictureHandler(){
+        profilepictureRef.current?.click()
+    }
+    function fileAddHandler(e:ChangeEvent<HTMLInputElement>){
+        if(e.target.files){
+            const file=e.target.files[0]
+            if(fileInput.current){
+                fileInput.current.append("files",file)
+
+            }
+            const reader=new FileReader()
+            reader.onloadend=(e)=>{
+                const imageElement:HTMLImageElement | null=document.querySelector(`#image`)
+                if(imageElement){
+                    console.log("success")
+                    imageElement.src=e.target?.result as string
+
+                }else{
+                    alert("some error")
+                }
+            }
+            reader.readAsDataURL(file)
+        }
+
+    }
+    async function updateEmailHandler( newEmail:string, password:string) {
+        try {
+          // Re-authenticate the user
+          const auth = getAuth();
+          const user = auth.currentUser;
+          if(user){
+            if(user.email){
+                console.log("here")
+                const credential = EmailAuthProvider.credential(user.email, password);
+                await reauthenticateWithCredential(user,credential);
+          
+                
+                await updateEmail(user,newEmail);
+            
+                console.log('Email updated successfully');
+    
+              }
+
+          }
+
+
+        } catch (error) {
+          console.error('Error updating email:', error);
+        }
+      }
+    function profileEditHandler(){
+        setUploadstate(true)
+        const files=fileInput.current.getAll("files")
+        // console.log(files)
+        const storage = getStorage();
+        const length=files.length
+        if(length===0){
+            // setLoading(false)
+            return
+        } 
+
+   
+
+        files.forEach((file)=>{
+            
+            const fileAssert=file as File
+            const storageRef = ref(storage, fileAssert.name); // Replace with your desired path
+
+            const uploadTask = uploadBytesResumable(storageRef, fileAssert);
+            
+            uploadTask.on(
+              'state_changed',
+              (snapshot: UploadTaskSnapshot) => {
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    console.log(progress)
+                //   setUploadProgress(progress);
+              },
+              (err: Error) => {
+                //   setError(err);
+                    console.error('Error uploading file:', err)
+                    setUploadstate(false)
+
+              },
+              async () => {
+                try {
+                  const downloadURL = await getDownloadURL(
+                    uploadTask.snapshot.ref
+                  )
+                  console.log('File available at', downloadURL)
+                  const auth = getAuth();
+                  const user = auth.currentUser;
+              
+                  if (user) {
+                    updateProfile(user, { photoURL: downloadURL })
+                      .then(() => {
+                        console.log('User profile updated successfully');
+                        setUploadstate(false)
+                        window.location.reload()
+                      })
+                      .catch((error) => {
+                        console.error('Error updating user profile:', error);
+                        setUploadstate(false)
+                      });
+                      //update email too here
+                      
+
+                  }
+
+                  // You can optionally reset state here (file, uploadProgress, error)
+                } catch (err) {
+                  // setError(err);
+                  console.error('Error getting download URL:', err)
+                  setUploadstate(false)
+
+                }
+              }
+            )
+        })
+    }
     return(
         <>
         <Toaster/>
@@ -187,7 +320,8 @@ export default function Profile():ReactElement{
         {/* dialog */}
         <dialog className="bg-white shadow-2xl border border-black w-96 h-96 mt-20 rounded-lg overflow-y-scroll" open={open} ref={dialogRef} >
                 <button className="font-bold text-lg w-full flex items-center justify-center mt-2" onClick={()=>dialogRef.current?.close()} >x</button>
-                {dialogcontext === "edit" ?
+                {
+                (dialogcontext === "edit") && 
                     <div className="flex flex-col items-center justify-center">
                         <form className="flex flex-col items-start justify-center" onSubmit={submiteditHandler} ref={formRef} >
                             <input type="hidden" value={currentproduct?.id} name="idField" />
@@ -219,8 +353,11 @@ export default function Profile():ReactElement{
                         </form>
 
                     </div>
-                        :
-                    <>
+                    }
+
+                    {
+                        (dialogcontext==="delete") && 
+                        <>
                         <h1 className="font-bold text-xs text-center mt-10">Do you wanna Delete {currentproduct?.id}</h1>
                         <div className="flex items-center justify-center h-full  w-full">
                             <button className="bg-white border border-black text-black p-2 font-bold " onClick={()=>dialogRef.current?.close()} >Cancel</button>
@@ -228,20 +365,50 @@ export default function Profile():ReactElement{
                             <button className="bg-red-600 text-white font-bold p-2 ml-10" onClick={actualdeleteHandler}>Delete</button>
                         </div>
                     </>
-                }
+                    }
+                    {
+                        (dialogcontext==="password") &&
+                        <div className="flex w-full flex-col items-center justify-center">
+                            <input type="text" className="h-10 border border-black mt-10" placeholder="enter the password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                            <button type="button" className="bg-borderedgecolor p-2 m-5 text-white font-bold mt-20" onClick={()=>updateEmailHandler(email,password)} >Edit</button>
+                        </div>
+                    }
+
                 
         </dialog>
+        {/*  while changing email we wanna ask password */}
+
+
         <div className="grid grid-cols-2 items-center justify-center bg-white p-20">
             <div className="flex w-full flex-col items-center justify-center">
-                <img src={ProfileImage} className="h-20 w-20"/>
-                <h1 className="font-bold text-xl text-borderedgecolor mt-5">{context?.username}</h1> 
+                <img id="image" src={context?.profileimage ? context.profileimage : ProfileImage} className="h-20 w-20 rounded-full "/>
+                <button className="flex items-center h-6 w-6 justify-center bg-black rounded-full" onClick={profilepictureHandler} >
+                    <img src={EditImage} className="h-4 w-4"/>
+
+                </button>
+                {/* for uploading files */}
+                <input type="file" hidden ref={profilepictureRef} onChange={fileAddHandler} />
+                {/* <h1 className="font-bold text-xl text-borderedgecolor mt-5">{context?.username}</h1>  */}
+                <input className="font-bold text-xl text-borderedgecolor mt-5 w-52 border border-black "   value={email} onChange={(e)=>setEmail(e.target.value)}  />
                 <p className="text-xs mt-5">Member since {user?.metadata.creationTime} </p>
                 <div className="flex items-center justify-evenly mt-10">
                     <p className="text-xs ">0 followers</p>
                     <p className="text-xs ml-5">0 following</p>
                 </div>
                 <p className="font-bold text-xs mt-5">Email {user?.emailVerified? "" : "Not" } Verified</p>
-                <button className="flex items-center justify-center bg-borderedgecolor p-2 w-72 mt-5 text-white font-bold" onClick={editHandler} >Edit Profile</button>
+                <button className="flex items-center justify-center bg-borderedgecolor p-2 w-72 mt-5 text-white font-bold" onClick={profileEditHandler} >Edit Profile</button>
+                <button className="flex items-center justify-center bg-borderedgecolor p-2 w-72 mt-5 text-white font-bold" onClick={editHandler} >Edit Email</button>
+                {
+                    uploadstate &&
+                    <ClipLoader
+                    color={'black'}
+                    loading={uploadstate}
+                    cssOverride={{height:30,width:30}}
+                    size={150}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />                }
+
                 <button className="border border-borderedgecolor border-t-white border-l-white border-r-white text-borderedgecolor font-bold mt-5" onClick={shareHandler} >Share Profile</button>
             </div>
             {/* have to check dynamically based on listing */}

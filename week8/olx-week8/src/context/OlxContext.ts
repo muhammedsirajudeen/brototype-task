@@ -6,7 +6,9 @@ interface contextProps{
     authentication:boolean,
     setAuthentication:Dispatch<SetStateAction<boolean>>,
     username:string,
-    setUsername:Dispatch<SetStateAction<string>>
+    setUsername:Dispatch<SetStateAction<string>>,
+    profileimage:string,
+    // setProfileimage:Dispatch<SetStateAction<string>>
 }
 const OlxContext = createContext<contextProps | null >(null)
 

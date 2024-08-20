@@ -14,12 +14,15 @@ function App() {
   const [logindialog,setLogindialog]=useState<boolean>(false)
   const [authentication,setAuthentication]=useState<boolean>(false)
   const [username,setUsername]=useState<string>("")  
+  const [profileimage,setProfileimage]=useState<string>("")
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
       if(user){
         console.log(user)
         setAuthentication(true)
         setUsername(user.email??"")
+        setProfileimage(user.photoURL ?? "")
+
       }else{
         console.log("user not found")
       }
@@ -27,7 +30,7 @@ function App() {
   },[])
   return (
     <BrowserRouter>
-      <OlxContext.Provider value={{logindialog,setLogindialog,authentication,setAuthentication,username,setUsername}}>
+      <OlxContext.Provider value={{logindialog,setLogindialog,authentication,setAuthentication,username,setUsername,profileimage}}>
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index={true} element={<Home />} />
