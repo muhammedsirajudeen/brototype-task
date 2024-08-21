@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
 import { useContext, useState } from "react";
 import NetflixContext from "../../context/NetflixContext";
 import validator from "validator";
 import { ClipLoader } from "react-spinners";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
+import "./Login.css"
 interface errorProps{
     emailError:string,
     passwordError:string
@@ -56,12 +56,12 @@ export default function Login() {
   }
   return (
     <div
-      className={` ${styles.maincontainer} h-screen w-screen overflow-x-hidden overflow-y-hidden `}
+      className={`maincontainer h-screen w-screen overflow-x-hidden overflow-y-hidden `}
     >
       <img src="netflixlogo.svg" className="h-40 w-40 ml-20 " />
       <div className="w-full flex flex-col items-center justify-center">
         <div
-          className={`${styles.logincontainer} w-1/4 h-auto signin-container flex flex-col items-center justify-start p-2`}
+          className={`logincontainer w-1/4 h-auto signin-container flex flex-col items-center justify-start p-2`}
         >
           <h1 className="text-3xl text-white font-bold mt-10">Signin</h1>
           <input

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import styles from "./Login.module.css"
 import { ChangeEvent, useContext, useState } from "react"
 import NetflixContext from "../../context/NetflixContext"
 import validator from "validator"
+import "./Login.css"
 export default function Signup(){
     const navigate=useNavigate()    
     const [email,setEmail]=useState<string>("")
@@ -25,7 +25,7 @@ export default function Signup(){
         navigate('/create',{state:{email:email}})
     }
     return(
-        <div className={` ${styles.maincontainer} h-screen w-screen overflow-x-hidden overflow-y-hidden `} >
+        <div className={`maincontainer h-screen w-screen overflow-x-hidden overflow-y-hidden `} >
                 <img src="netflixlogo.svg" className="h-40 w-40 ml-20 " />
                 <div className="flex flex-col items-center justify-center mt-30">
                     <h1 className="font-bold text-center text-headingsize text-white">
