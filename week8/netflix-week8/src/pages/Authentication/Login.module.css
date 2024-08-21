@@ -1,0 +1,12 @@
+body{
+    background-image: url("background_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.maincontainer{
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.logincontainer{
+    background-color: rgba(0, 0, 0, 0.8)
+}
