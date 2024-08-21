@@ -30,7 +30,8 @@ interface errorProps{
     descriptionError:string,
     priceError:string,
     kilometersError:string,
-    locationError:string
+    locationError:string,
+    imageError:string
 
 }
 
@@ -66,7 +67,8 @@ export default function Post():ReactElement{
             descriptionError:"",
             priceError:"",
             kilometersError:"",
-            locationError:""
+            locationError:"",
+            imageError:""
 
         }
     )
@@ -146,10 +148,10 @@ export default function Post():ReactElement{
         // console.log(files)
         const storage = getStorage();
         const length=files.length
-        alert(files.length)
-        if(length===0){
+        alert(length)
+        if(length<2){
             
-
+            setErrors((prev)=>({...prev,imageError:"select atleast 2 images"}))
             setLoading(false)
             return
         } 
@@ -458,6 +460,7 @@ export default function Post():ReactElement{
                 className="hidden h-10 w-full"
               />
             </div>
+            <p className="text-xs text-red-700">{errors.imageError}</p>
 
             <label htmlFor="location">Location*</label>
             <input

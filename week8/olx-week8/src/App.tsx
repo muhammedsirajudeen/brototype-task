@@ -10,11 +10,13 @@ import {auth} from "../src/firebaseHelper/firebaseHelper"
 import Profile from './pages/Profile'
 import PostAd from './pages/PostAd'
 import Post from './pages/Post'
+import { DocumentData } from 'firebase/firestore'
 function App() {
   const [logindialog,setLogindialog]=useState<boolean>(false)
   const [authentication,setAuthentication]=useState<boolean>(false)
   const [username,setUsername]=useState<string>("")  
   const [profileimage,setProfileimage]=useState<string>("")
+  const [products,setProducts]=useState<Array<DocumentData>>([])
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
       if(user){
@@ -30,7 +32,7 @@ function App() {
   },[])
   return (
     <BrowserRouter>
-      <OlxContext.Provider value={{logindialog,setLogindialog,authentication,setAuthentication,username,setUsername,profileimage}}>
+      <OlxContext.Provider value={{logindialog,setLogindialog,authentication,setAuthentication,username,setUsername,profileimage,products,setProducts}}>
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index={true} element={<Home />} />

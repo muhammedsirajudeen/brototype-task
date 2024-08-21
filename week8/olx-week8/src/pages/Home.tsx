@@ -18,7 +18,7 @@ import EmailSignup from '../components/EmailSignup'
 export default function Home(): ReactElement {
   const [dialog, setDialog] = useState<boolean>(false)
   // the data has differing fields so
-  const [products, setProducts] = useState<Array<DocumentData>>([])
+  // const [products, setProducts] = useState<Array<DocumentData>>([])
   const [loading, setLoading] = useState(true)
   
   const [loginpage,setLoginpage]=useState<string>("home")
@@ -38,7 +38,8 @@ export default function Home(): ReactElement {
         data.id = doc.id
         products.push(data)
       })
-      setProducts(products)
+      // setProducts(products)
+      context?.setProducts(products)
       setLoading(false)
     }
     getData()
@@ -56,7 +57,7 @@ export default function Home(): ReactElement {
     <>
       <TopBar setDialog={setDialog} />
       {dialog && <CategoryBox />}
-      <Recommendations products={products} />
+      <Recommendations products={context?.products ?? []} />
       {/* Home page loading animation */}
       {loading && (
         <div className="flex flex-wrap items-start justify-start  w-full h-full ">

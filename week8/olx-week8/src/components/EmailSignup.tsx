@@ -7,26 +7,40 @@ import { FirebaseError } from "firebase/app";
 import {auth} from "../firebaseHelper/firebaseHelper"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import OlxContext from "../context/OlxContext";
+import ClipLoader from "react-spinners/ClipLoader";
+import validator from "validator";
 export default function EmailSignup({setLoginpage}:{setLoginpage:Dispatch<SetStateAction<string>>}):ReactElement{
     const [email,setEmail]=useState<string>("")
     const [password,setPassword]=useState("")
     const [successmessage,setSuccessmessage]=useState<string>("")
     const [errormessage,setErrormessage]=useState<string>("")
+    const [loading,setLoading]=useState<boolean>(false)
     const context=useContext(OlxContext)
     function navHandler(page:string){
         setLoginpage(page)
     }
     function verifyHandler(){
-
+            setLoading(true)
+            if(password.length<8){
+              setErrormessage("password less than 8 characters")
+              setLoading(false)
+              return
+            }
+            if(!validator.isEmail(email)){
+              setErrormessage("enter a proper email")
+              setLoading(false)
+              return
+            }
+            
             createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.table(user)
-                alert(user);
                 setSuccessmessage("Signup Successful")
                 context?.setAuthentication(true)
                 context?.setUsername(user.email ?? "")
                 context?.setLogindialog(false)
+                setLoading(false)
                 // setLoginpage("login")
 
                 
@@ -35,6 +49,7 @@ export default function EmailSignup({setLoginpage}:{setLoginpage:Dispatch<SetSta
                 // alert(err);
                 console.log(err)
                 setErrormessage("Try again")
+                setLoading(false)
                 // window.location.reload();
             });
     }
@@ -56,6 +71,14 @@ export default function EmailSignup({setLoginpage}:{setLoginpage:Dispatch<SetSta
         <button onClick={verifyHandler} className='flex border-2 p-2 justify-center mt-10 font-bold text-borderedgecolor w-full border-borderedgecolor ' >
           Next
         </button>
+        <ClipLoader
+          color={'black'}
+          loading={loading}
+          cssOverride={{height:30,width:30}}
+          size={30}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />   
         <p className="text-xs text-green-500">{successmessage}</p>
         <p className="text-xs text-red-700">{errormessage}</p>
         <p className='text-xs text-gray-400 flex items-center justify-center font-light'>

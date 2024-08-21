@@ -6,31 +6,44 @@ import LeftArrow from "../assets/Logos/leftarrow.png"
 import {auth} from "../firebaseHelper/firebaseHelper"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import OlxContext from "../context/OlxContext";
+import ClipLoader from "react-spinners/ClipLoader";
+import validator from "validator"
 export default function EmailLogin({setLoginpage}:{setLoginpage:Dispatch<SetStateAction<string>>}):ReactElement{
     const [email,setEmail]=useState<string>("")
     const [password,setPassword]=useState("")
     const [errormessage,setErrormessage]=useState<string>("")
     const [successmessage,setSuccessmessage]=useState<string>("")
+    const [loading,setLoading]=useState<boolean>(false)
     const context=useContext(OlxContext)
     function navHandler(page:string){
         setLoginpage(page)
     }
     function verifyHandler(){
-        //add validation here        
-        // if(email==="" || phone.length<10){
-        //     alert("enter full number")
-        // }else{
+            setLoading(true)
+            if(password.length<8){
+              setErrormessage("password less than 8 characters")
+              setLoading(false)
+              return
+            }
+            if(!validator.isEmail(email)){
+              setErrormessage("enter a proper email")
+              setLoading(false)
+              return
+            }
+            
+            
             signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               // Signed in 
               const user = userCredential.user
               console.log(user);
               setSuccessmessage("login successful")
+              setLoading(false)
               context?.setAuthentication(true)
               context?.setUsername(user.email ?? "")
               context?.setLogindialog(false)
-            //   alert("success")
-              // ...
+          
+    
             })
             .catch((error) => {
               const errorCode = error.code;
@@ -38,8 +51,9 @@ export default function EmailLogin({setLoginpage}:{setLoginpage:Dispatch<SetStat
               console.log(errorCode)
               console.log(errorMessage)
               setErrormessage("login failed")
+              setLoading(false)
             });       
-        // }
+ 
     }
     return(
         <>
@@ -60,6 +74,14 @@ export default function EmailLogin({setLoginpage}:{setLoginpage:Dispatch<SetStat
         </button>
         <p className="text-xs text-green-600">{successmessage}</p>
         <p className="text-xs text-red-700">{errormessage}</p>
+        <ClipLoader
+                    color={'black'}
+                    loading={loading}
+                    cssOverride={{height:30,width:30}}
+                    size={30}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />   
         <p className='text-xs text-gray-400 flex items-center justify-center font-light'>
           Your contact number is never shared with external parties nor do we use it to spam you in any way.
         </p>

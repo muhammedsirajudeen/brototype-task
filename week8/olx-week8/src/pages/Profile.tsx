@@ -243,13 +243,11 @@ export default function Profile():ReactElement{
     function profileEditHandler(){
         setUploadstate(true)
         const files=fileInput.current.getAll("files")
+        if(files.length===0){setUploadstate(false);return}
         // console.log(files)
         const storage = getStorage();
         const length=files.length
-        if(length===0){
-            // setLoading(false)
-            return
-        } 
+        console.log("the length is"+length)
 
    
 

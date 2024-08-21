@@ -72,7 +72,7 @@ export default function ProductListing():ReactElement{
                 <div className="w-1/2 flex flex-col items-start justify-start">
                     <div className="bg-white w-96  h-auto shadow-lg border border-gray-400 p-2">
                         <div className="flex items-center justify-start">
-                            <p className="font-bold text-3xl m-5 text-borderedgecolor">₹ {product?.Price}</p>
+                            <p className="font-bold text-xl m-5 text-borderedgecolor">₹ {product?.Price}</p>
                             <img src={ShareImage} className="h-6 w-6 ml-20" onClick={shareHandler} />
                             <img src={FavoriteImage} className="h-6 w-6 ml-20" onClick={favHandler} />
 
@@ -84,7 +84,7 @@ export default function ProductListing():ReactElement{
 
                     <div className="bg-white w-96 mt-10 h-auto shadow-lg border border-gray-400 p-2">
                         <div className="flex items-center justify-start">
-                            <p className="font-bold text-3xl m-5 text-borderedgecolor">{product?.Username}</p>
+                            <p className="font-bold text-xs m-5 text-borderedgecolor">{product?.Username}</p>
                             <img src={RightArrow} className="h-6 w-6" onClick={()=>profileHandler(product?.Username)} />
                         </div>
                         <button className="w-full p-2 h-max border border-borderedgecolor">

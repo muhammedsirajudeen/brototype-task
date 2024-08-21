@@ -11,6 +11,7 @@ import DownImage from "../assets/Logos/downarrow.svg"
 import OlxContext from '../context/OlxContext'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebaseHelper/firebaseHelper'
+import { DocumentData } from 'firebase/firestore'
 
 interface stateType {
   location: boolean
@@ -51,9 +52,21 @@ export default function Navbar(): ReactElement {
   function locationHandler() {
     dispatcher({ type: 'LOCATION' })
   }
-  function searchHandler() {
+  function searchHandler(search:string) {
     console.log(search)
-    alert(search)
+    if(search.length===0){window.location.reload()}
+    const products=context?.products
+    console.log(products)
+    const regexp=new RegExp(search,'i')
+    const MatchedProduct:Array<DocumentData>=[]
+    products?.forEach((product)=>{
+      console.log(product)
+      if(regexp.test(product.ProductName)){
+        MatchedProduct.push(product)
+      }
+    })
+    context?.setProducts(MatchedProduct)
+
   }
   function languageHandler() {
     dispatcher({ type: 'LANGUAGE' })
@@ -89,7 +102,7 @@ export default function Navbar(): ReactElement {
   return (
     <>
       <div className="flex justify-start items-center bg-navbarcolor h-14 w-full">
-        <img src={OlxLogo} className="h-8 w-8" />
+        <img src={OlxLogo} className="h-8 w-8" onClick={()=>navigate('/')} />
         <div className="flex flex-col">
           <div className="h-10 ml-2 bg-white w-72 border-2 rounded-sm border-borderedgecolor flex items-center justify-start ">
             <img src={Search} className="ml-2 h-4 w-4" />
@@ -128,11 +141,11 @@ export default function Navbar(): ReactElement {
             type="text"
             placeholder="Find Cars, Mobile Phones and ..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>{setSearch(e.target.value); searchHandler(e.target.value)}}
           />
           <div
             className="h-10 bg-borderedgecolor flex items-center justify-center  w-28"
-            onClick={searchHandler}
+            // onClick={searchHandler}
           >
             <img src={SearchWhite} className=" h-6 w-6 text-white " />
           </div>

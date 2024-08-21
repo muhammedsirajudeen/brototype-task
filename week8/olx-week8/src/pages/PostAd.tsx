@@ -18,24 +18,24 @@ export default function PostAd():ReactElement{
                     <p className="font-light text-sm ">Cars</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
-                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center">
-                    <p className="font-light text-sm ">Cars</p>
+                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center"  onClick={()=>setCategories(["car"])} >
+                    <p className="font-light text-sm ">Land</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
-                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center">
-                    <p className="font-light text-sm ">Cars</p>
+                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center"  onClick={()=>setCategories(["car"])} >
+                    <p className="font-light text-sm ">Services</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
-                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center">
-                    <p className="font-light text-sm ">Cars</p>
+                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center"  onClick={()=>setCategories(["car"])} >
+                    <p className="font-light text-sm ">Electronics</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
-                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center">
-                    <p className="font-light text-sm ">Cars</p>
+                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center"  onClick={()=>setCategories(["car"])} >
+                    <p className="font-light text-sm ">Watches</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
-                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center">
-                    <p className="font-light text-sm ">Cars</p>
+                <button className="w-full flex justify-between border border-gray-300 h-12 hover:bg-gray-300 items-center"  onClick={()=>setCategories(["car"])} >
+                    <p className="font-light text-sm ">Jwellery</p>
                     <img src={RightArrow} className="h-6 w-6"/>
                 </button>
             </div>   

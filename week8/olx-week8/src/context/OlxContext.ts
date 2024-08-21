@@ -1,3 +1,4 @@
+import { DocumentData } from 'firebase/firestore'
 import { createContext, Dispatch, SetStateAction } from 'react'
 
 interface contextProps{
@@ -8,6 +9,8 @@ interface contextProps{
     username:string,
     setUsername:Dispatch<SetStateAction<string>>,
     profileimage:string,
+    setProducts:Dispatch<SetStateAction<Array<DocumentData>>>,
+    products:Array<DocumentData>
     // setProfileimage:Dispatch<SetStateAction<string>>
 }
 const OlxContext = createContext<contextProps | null >(null)

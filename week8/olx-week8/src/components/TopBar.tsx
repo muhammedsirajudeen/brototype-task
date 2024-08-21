@@ -21,13 +21,13 @@ export default function TopBar({
           Cars
         </Link>
         <Link to="/cars" className="text-xs ml-10">
-          Cars
+          Bikes
         </Link>
         <Link to="/cars" className="text-xs ml-10">
-          Cars
+          Machinery
         </Link>
         <Link to="/cars" className="text-xs ml-10">
-          Cars
+          Vessels
         </Link>
       </div>
     </div>
