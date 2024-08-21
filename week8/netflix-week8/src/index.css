@@ -1,3 +1,72 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/* body{
+    background-color: white;
+    background-image: none;
+} */
+ body{
+    overflow-x: hidden;
+ }
+ .moviecontainer{
+    /* width: 100vw;
+    height: 10vh; */
+    overflow-x: scroll !important;
+ }
+ .image{
+    height: 200px;
+    min-width: 200px;
+    
+ }
+ ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px; /* Set the height of the scrollbar to 5px */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #d90a0a;
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  .skeleton-loader {
+    background-color: #ffffff;
+    border-radius: 4px;
+
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .skeleton-loader::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #d9d8d8 25%, #f6f2f2 50%, #d7d0d0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  .image-max{
+    height:70vh;
+    width: 40vw;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }

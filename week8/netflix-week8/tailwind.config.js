@@ -11,6 +11,12 @@ module.exports = {
       },
       fontSize:{
         headingsize:"3vw"
+      },
+      height:{
+        video:"90vh"
+      },
+      width:{
+        video:"100%"
       }
     },
   },
