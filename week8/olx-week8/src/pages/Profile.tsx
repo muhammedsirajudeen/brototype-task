@@ -14,6 +14,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 import DeleteImage from "../assets/Logos/DeleteImage.png"
 import EditImage from "../assets/Logos/EditImage.png"
+import ImageIcon from "../assets/Logos/imageicon.png"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable, UploadTaskSnapshot } from "firebase/storage";
 // import { File } from "buffer";
 
@@ -39,6 +40,13 @@ export default function Profile():ReactElement{
     const navigate=useNavigate()
     const db = getFirestore(app)
     const fileInput=useRef<FormData>(new FormData())
+    const productfileInput=useRef<FormData>(new FormData())
+    const [editloader,setEditloader]=useState<boolean>(false)
+    //ref for fileuploader= element
+    const fileUploader=useRef<HTMLInputElement>(null)
+    const imgCount=useRef<number>(0)
+    const downloadArray:Array<string>=[]
+
     useEffect(()=>{
         onAuthStateChanged(auth,(user)=>{
           if(user){
@@ -101,6 +109,7 @@ export default function Profile():ReactElement{
         console.log(product.id)
     }
     function submiteditHandler(e:FormEvent<HTMLFormElement>){
+        setEditloader(true)
         e.preventDefault()
         const formElement=e.target as HTMLFormElement
         console.log(formElement.ProductName.value)
@@ -126,44 +135,115 @@ export default function Profile():ReactElement{
               return
 
         }
-        updateDoc(productRef, {
-             ProductName: formElement.ProductName.value ,
-             LocationName:formElement.LocationName.value,
-             Kilometers:formElement.Kilometers.value,
-             Model:formElement.Model.value,
-             OwnerChain:formElement.OwnerChain.value,
-             Price:formElement.Price.value,
-             Transmission:formElement.Transmission.value,
-             Variant:formElement.Variant.value,
-
-              })
-          .then(() => {
-            console.log('Document updated successfully')
-            
+        //first upload file here
+        const files=productfileInput.current.getAll("files")
+        // console.log(files)
+        const storage = getStorage();
+        const length=files.length
+        // alert(length)
+        if(length<2){
             toast({
                 color:"black",
                 style:{color:"white",backgroundColor:"black"},
                 variant:"destructive",
-                title: "Edited Successfully",
-                description: "Your Edits are Successful",
+                title: "atleast 2 images",
+                description: "atleast 2 images",
 
               })
-            dialogRef.current?.close()
-            setTimeout(() => {
-                window.location.reload()
-            }, 1000);
-              
-          })
-          .catch((error: Error) => {
-            console.error('Error updating document:  ', error)
-            toast({
-                style:{color:"white",backgroundColor:"red",fontWeight:900},
-                variant:"destructive",
-                title: "Edited Successfully",
-                description: "Your Edits are Successful",
+            // setErrors((prev)=>({...prev,imageError:"select atleast 2 images"}))
+            setEditloader(false)
+            return
+        } 
 
-              })
-          })
+        let count=0
+
+        files.forEach((file)=>{
+            const fileAssert=file as File
+            const storageRef = ref(storage, fileAssert.name); // Replace with your desired path
+
+            const uploadTask = uploadBytesResumable(storageRef, fileAssert);
+            
+            uploadTask.on(
+              'state_changed',
+              (snapshot: UploadTaskSnapshot) => {
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    console.log(progress)
+                //   setUploadProgress(progress);
+              },
+              (err: Error) => {
+                //   setError(err);
+                    console.error('Error uploading file:', err)
+                    setEditloader(false)
+
+              },
+              async () => {
+                try {
+                  const downloadURL = await getDownloadURL(
+                    uploadTask.snapshot.ref
+                  )
+                  console.log('File available at', downloadURL)
+                  downloadArray.push(downloadURL)
+                  count++
+                  console.log(count,length)
+                  if(length===count){
+                    setEditloader(false)
+                    updateDoc(productRef, {
+                        ProductName: formElement.ProductName.value ,
+                        LocationName:formElement.LocationName.value,
+                        Kilometers:formElement.Kilometers.value,
+                        Model:formElement.Model.value,
+                        OwnerChain:formElement.OwnerChain.value,
+                        Price:formElement.Price.value,
+                        Transmission:formElement.Transmission.value,
+                        Variant:formElement.Variant.value,
+                        Images:downloadArray 
+           
+                         })
+                     .then(() => {
+                       console.log('Document updated successfully')
+                       setEditloader(false)
+
+                       toast({
+                           color:"black",
+                           style:{color:"white",backgroundColor:"black"},
+                           variant:"destructive",
+                           title: "Edited Successfully",
+                           description: "Your Edits are Successful",
+           
+                         })
+                        setTimeout(()=>window.location.reload(),1000)
+                        dialogRef.current?.close()
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1000);
+                         
+                     })
+                     .catch((error: Error) => {
+                       console.error('Error updating document:  ', error)
+                       setEditloader(false)
+
+                       toast({
+                           style:{color:"white",backgroundColor:"red",fontWeight:900},
+                           variant:"destructive",
+                           title: "Edited Successfully",
+                           description: "Your Edits are Successful",
+           
+                         })
+                     })                   
+
+                }
+
+                  // You can optionally reset state here (file, uploadProgress, error)
+                } catch (err) {
+                  // setError(err);
+                  console.error('Error getting download URL:', err)
+                }
+              }
+            )
+        })
+
+
 
     }
     async function actualdeleteHandler(){
@@ -308,6 +388,31 @@ export default function Profile():ReactElement{
             )
         })
     }
+    function fileHandler(){
+        fileUploader.current?.click()
+    }
+    function fileAddProductHandler(e:ChangeEvent<HTMLInputElement>){
+        if(e.target.files){
+            const file=e.target.files[0]
+            productfileInput.current.append("files",file)
+            const reader=new FileReader()
+            reader.onloadend=(e)=>{
+                const imageElement:HTMLImageElement | null=document.querySelector(`#image${imgCount.current}`)
+                if(imageElement){
+                    console.log("success")
+                    imageElement.src=e.target?.result as string
+
+                }else{
+                    alert("some error")
+                }
+            }
+            reader.readAsDataURL(file)
+        }
+        imgCount.current++
+        if(imgCount.current===6){
+            imgCount.current=0
+        }
+    }
     return(
         <>
         <Toaster/>
@@ -320,7 +425,7 @@ export default function Profile():ReactElement{
                 <button className="font-bold text-lg w-full flex items-center justify-center mt-2" onClick={()=>dialogRef.current?.close()} >x</button>
                 {
                 (dialogcontext === "edit") && 
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex ml-10 flex-col items-center justify-center">
                         <form className="flex flex-col items-start justify-center" onSubmit={submiteditHandler} ref={formRef} >
                             <input type="hidden" value={currentproduct?.id} name="idField" />
                             <label className="text-borderedgecolor text-xs" htmlFor="productname">Product Name*</label>
@@ -346,8 +451,62 @@ export default function Profile():ReactElement{
 
                             <label className="text-borderedgecolor text-xs mt-4" htmlFor="variant">Variant*</label>                            
                             <input id="variant" type="text" name="Variant" className="h-8 w-3/4 border border-black " placeholder="Enter the price" defaultValue={currentproduct?.Variant}/>
+                            <div className="mb-10 flex flex-col items-start justify-center">
+                            <h1 className="text-lg text-borderedgecolor mt-5 font-bold">
+                                Add Photos
+                            </h1>
+                            <div className="mb-10 flex  items-start flex-wrap justify-start mt-10">
+                                <div
+                                className="flex h-10 w-10 m-5  items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image1" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                                <div
+                                className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image2" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                                <div
+                                className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image3" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                                <div
+                                className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image4" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                                <div
+                                className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image5" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                                <div
+                                className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
+                                onClick={fileHandler}
+                                >
+                                <img id="image6" src={ImageIcon} className="h-6 w-6" />
+                                </div>
+                            </div>
+                            </div>
+                            <input type="file" ref={fileUploader} onChange={fileAddProductHandler} className="hidden" />
 
-                            <button type="submit" className="bg-borderedgecolor text-white font-bold text-xs m-10 p-3">Edit</button>
+                        <div className="flex items-center justify-center">
+                            <button disabled={editloader} type="submit" className="bg-borderedgecolor text-white font-bold text-xs m-10 p-3">Edit</button>
+                            <ClipLoader
+                                color={'black'}
+                                loading={editloader}
+                                cssOverride={{height:30,width:30}}
+                                size={150}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                        </div>
                         </form>
 
                     </div>
