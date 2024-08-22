@@ -6,40 +6,51 @@ import Navbar from './components/Navbar'
 import ProductListing from './pages/ProductListing'
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
-import {auth} from "../src/firebaseHelper/firebaseHelper"
+import { auth } from '../src/firebaseHelper/firebaseHelper'
 import Profile from './pages/Profile'
 import PostAd from './pages/PostAd'
 import Post from './pages/Post'
 import { DocumentData } from 'firebase/firestore'
 function App() {
-  const [logindialog,setLogindialog]=useState<boolean>(false)
-  const [authentication,setAuthentication]=useState<boolean>(false)
-  const [username,setUsername]=useState<string>("")  
-  const [profileimage,setProfileimage]=useState<string>("")
-  const [products,setProducts]=useState<Array<DocumentData>>([])
-  useEffect(()=>{
-    onAuthStateChanged(auth,(user)=>{
-      if(user){
+  const [logindialog, setLogindialog] = useState<boolean>(false)
+  const [authentication, setAuthentication] = useState<boolean>(false)
+  const [username, setUsername] = useState<string>('')
+  const [profileimage, setProfileimage] = useState<string>('')
+  const [products, setProducts] = useState<Array<DocumentData>>([])
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         console.log(user)
         setAuthentication(true)
-        setUsername(user.email??"")
-        setProfileimage(user.photoURL ?? "")
-
-      }else{
-        console.log("user not found")
+        setUsername(user.email ?? '')
+        setProfileimage(user.photoURL ?? '')
+      } else {
+        console.log('user not found')
       }
     })
-  },[])
+  }, [])
   return (
     <BrowserRouter>
-      <OlxContext.Provider value={{logindialog,setLogindialog,authentication,setAuthentication,username,setUsername,profileimage,products,setProducts}}>
+      <OlxContext.Provider
+        value={{
+          logindialog,
+          setLogindialog,
+          authentication,
+          setAuthentication,
+          username,
+          setUsername,
+          profileimage,
+          products,
+          setProducts,
+        }}
+      >
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index={true} element={<Home />} />
-            <Route path='/productlisting' element={<ProductListing/>}/>
-            <Route path='/profile' element={<Profile/>}/>
-            <Route path='/postad' element={<PostAd/>}/>
-            <Route path='/post' element={<Post/>}/>
+            <Route path="/productlisting" element={<ProductListing />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/postad" element={<PostAd />} />
+            <Route path="/post" element={<Post />} />
           </Route>
         </Routes>
       </OlxContext.Provider>
