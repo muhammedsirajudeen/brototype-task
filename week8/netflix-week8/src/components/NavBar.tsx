@@ -5,9 +5,6 @@ import NetflixContext from "../context/NetflixContext";
 export default function NavBar():ReactElement{
     const context=useContext(NetflixContext)
     const navigate=useNavigate()
-    function searchHandler(){
-        alert("search clicked") 
-    }
     return(
         <div className="flex items-center justify-evenly w-full h-10 pt-10">
             <img src="netflixlogo.svg" className="h-40 w-40" onClick={()=>navigate('/home')} />
@@ -27,7 +24,9 @@ export default function NavBar():ReactElement{
             <Link to='/list'>
                 <p className="text-sm text-gray-400">My list</p>
             </Link>
-            <img src="search.png" className="h-6 w-6" onClick={searchHandler} />
+            <Link to='/search'>
+                <img src="search.png" className="h-6 w-6"  />
+            </Link>
             <div className="flex items-center justify-center">
                 <img src={context.user?.photoURL ?? "user.png"} className="h-6 w-6"/>
                 <img src="downarrow.png" className="h-6 w-6" onClick={()=>navigate('/profile')} />

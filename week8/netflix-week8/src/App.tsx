@@ -11,6 +11,7 @@ import { onAuthStateChanged, User } from 'firebase/auth'
 import Details from './pages/Home/Details'
 import Watch from './pages/Home/Watch'
 import Profile from './pages/Home/Profile'
+import Search from './pages/Home/Search'
 // import { useContext } from 'react'
 function App() {
   // const context=useContext(NetflixContext)
@@ -39,6 +40,7 @@ function App() {
         <Route path='/details' element={<Details/>}/>
         <Route path='/watch' element={<Watch/>}/>
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='/search' element={<Search/>}/>
       </Routes>
     </BrowserRouter>
 

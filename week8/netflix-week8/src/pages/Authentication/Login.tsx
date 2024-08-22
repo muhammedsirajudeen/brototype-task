@@ -30,7 +30,7 @@ export default function Login() {
     }else{
         setErrormessage((prev)=>({...prev,emailError:""}))
     }
-    if (password.length < 8) {
+    if (password.length < 8 || password.trim()==='' ) {
       //set error message
       setErrormessage((prev)=>({...prev,passwordError:"password must be minimum 8 characters long"}))
       setLoading(false)
