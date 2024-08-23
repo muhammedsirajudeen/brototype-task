@@ -3,6 +3,7 @@ import { ChangeEvent, useContext, useState } from "react"
 import NetflixContext from "../../context/NetflixContext"
 import validator from "validator"
 import "./Login.css"
+import { toast, ToastContainer } from "react-toastify"
 export default function Signup(){
     const navigate=useNavigate()    
     const [email,setEmail]=useState<string>("")
@@ -22,7 +23,12 @@ export default function Signup(){
 
     }
     function nextpageHandler(){
-        navigate('/create',{state:{email:email}})
+        if(emailstatus){
+            navigate('/create',{state:{email:email}})
+
+        }else{
+            toast("enter proper email")
+        }
     }
     return(
         <div className={`maincontainer h-screen w-screen overflow-x-hidden overflow-y-hidden `} >
@@ -45,7 +51,7 @@ export default function Signup(){
                     </button>
                 </div>
                 <p className="text-sm text-center mt-4 text-red-600 font-bold">{errormessage}</p>
-
+                <ToastContainer/>
         </div>  
     )
 }

@@ -47,6 +47,8 @@ export default function Create():ReactElement{
             }
             setLoading(false)
     
+        }else{
+            toast("enter proper password")
         }
     }
     return(
