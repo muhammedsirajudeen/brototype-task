@@ -14,8 +14,6 @@ import GuitarImage from '../assets/Logos/GuitarImage.png'
 
 import EmailLogin from '../components/EmailLogin'
 import EmailSignup from '../components/EmailSignup'
-import { Toaster } from '@/components/ui/toaster'
-import { useToast } from '@/components/ui/use-toast'
 
 export default function Home(): ReactElement {
   const [dialog, setDialog] = useState<boolean>(false)
