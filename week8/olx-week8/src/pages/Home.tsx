@@ -14,6 +14,8 @@ import GuitarImage from '../assets/Logos/GuitarImage.png'
 
 import EmailLogin from '../components/EmailLogin'
 import EmailSignup from '../components/EmailSignup'
+import { Toaster } from '@/components/ui/toaster'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Home(): ReactElement {
   const [dialog, setDialog] = useState<boolean>(false)
@@ -22,7 +24,7 @@ export default function Home(): ReactElement {
   const [loading, setLoading] = useState(true)
 
   const [loginpage, setLoginpage] = useState<string>('home')
-
+  // const {toast}=useToast()
   const context = useContext(OlxContext)
   console.log(context)
   //generating 50 array elements so that we can map over it
@@ -54,6 +56,7 @@ export default function Home(): ReactElement {
 
   return (
     <>
+    {/* <Toaster/> */}
       <TopBar setDialog={setDialog} />
       {dialog && <CategoryBox />}
       <Recommendations products={context?.products ?? []} />

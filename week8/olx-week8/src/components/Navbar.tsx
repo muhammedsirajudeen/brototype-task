@@ -55,6 +55,14 @@ export default function Navbar(): ReactElement {
   function locationHandler() {
     dispatcher({ type: 'LOCATION' })
   }
+  function emptysearchHandler(){
+    toast({
+      style: { color: 'white', backgroundColor: 'black', fontWeight: 900 },
+      variant: 'destructive',
+      title: 'search should not be empty',
+      description: 'check your search term',
+    })
+  }
   function searchHandler(search: string) {
     console.log(search)
     if (search.length === 0) {
@@ -162,7 +170,7 @@ export default function Navbar(): ReactElement {
             className="h-10 bg-borderedgecolor flex items-center justify-center  w-28"
             // onClick={searchHandler}
           >
-            <img src={SearchWhite} className=" h-6 w-6 text-white " />
+            <img src={SearchWhite} className=" h-6 w-6 text-white " onClick={emptysearchHandler} />
           </div>
         </div>
         <div className="flex flex-col ml-10">
@@ -209,7 +217,7 @@ export default function Navbar(): ReactElement {
                 <div className="h-72 w-72 p-2 mt-6 bg-white shadow-lg flex flex-col items-center justify-center ">
                   <div className="flex  items-center justify-center">
                     <img src={ProfileImage} className="h-6 w-6" />
-                    <p className="font-bold text-">{context.username}</p>
+                    <p className="font-bold text-xs">{context.username}</p>
                   </div>
                   <button
                     className="flex items-center justify-center bg-borderedgecolor w-full p-2 text-white font-bold mt-2"
