@@ -19,9 +19,10 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import ImageIcon from '../assets/Logos/imageicon.png'
 import { validationHelper } from '../helper/validationHelper'
 import { addDoc, collection, getFirestore } from 'firebase/firestore'
-import app from '../firebaseHelper/firebaseHelper'
+import app, { auth } from '../firebaseHelper/firebaseHelper'
 import OlxContext from '../context/OlxContext'
 import { useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
 const FuelTypesArray = ['CNG & Hybrids', 'Diesel', 'Electric', 'LPG', 'Petrol']
 
 const Tranmission = ['Automatic', 'Manual']
@@ -56,6 +57,20 @@ export default function Post(): ReactElement {
   const navigate = useNavigate()
   const imgCount = useRef<number>(0)
   const fileRef = useRef<HTMLInputElement>(null)
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+      if(!user){
+        navigate('/')
+        // setUser(user)
+        // setAuthentication(true)
+        // setUsername(user.email??"")
+        // setProfileimage(user.photoURL ?? "")
+
+      }else{
+        console.log("user not found")
+      }
+    })
+  },[navigate])
   //link to the uploaded path
   const downloadArray: Array<string> = []
   useEffect(() => {
@@ -108,35 +123,59 @@ export default function Post(): ReactElement {
     e.preventDefault()
     const brandError = validationHelper(brand)
     const modelError = validationHelper(model)
-    // const yearError=validationHelper(year)
+    const yearError=()=>{
+      if(year.length<4 || year.trim()===''){
+
+        return "enter proper year"
+      }
+      return "enter proper year"
+
+    }
     const ownersError = validationHelper(owners)
     const titleError = validationHelper(title)
     const descriptionError = validationHelper(description)
-    // const priceError=validationHelper(price)
-    // const kilometersError=validationHelper(kilometers)
+    const priceError=()=>{
+      if(price.length<4 || price.trim()===''){
+        return "enter proper price"
+      }
+      return ""
+    }
+    const kilometersError=()=>{
+      if(kilometers.length<3 || kilometers.trim()===''){
+        return "enter proper kilometers"
+      }
+      return ""
+      
+    }
     const locationError = validationHelper(location)
     setErrors((prev) => ({
       ...prev,
       brandError: brandError,
       modelError: modelError,
-      //   yearError: yearError,
+      yearError: yearError(),
       ownersError: ownersError,
       titleError: titleError,
       descriptionError: descriptionError,
-      //   priceError: priceError,
-      //   kilometersError:kilometersError,
+      priceError: priceError(),
+      kilometersError:kilometersError(),
       locationError: locationError,
     }))
+
+
+
+
+    
+
 
     if (
       brandError ||
       modelError ||
-      //   yearError ||
+      yearError() ||
       ownersError ||
       titleError ||
       descriptionError ||
-      //   priceError ||
-      //   kilometersError ||
+      priceError() ||
+      kilometersError() ||
       locationError
     ) {
       setLoading(false)

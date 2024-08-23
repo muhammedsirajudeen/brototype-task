@@ -21,7 +21,7 @@ export default function Recommendations({
   return (
     <div className="flex ml-20 items-start justify-center flex-col">
       <h1 className="font-normal mt-5 text-lg">Fresh recommendations</h1>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center flex-wrap wrap justify-center">
         {products.map((product: DocumentData) => {
           return (
             <div

@@ -15,6 +15,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import OlxContext from '../context/OlxContext'
 import ClipLoader from 'react-spinners/ClipLoader'
 import validator from 'validator'
+import { Toaster } from './ui/toaster'
+import { useToast } from './ui/use-toast'
 export default function EmailSignup({
   setLoginpage,
 }: {
@@ -26,6 +28,7 @@ export default function EmailSignup({
   const [errormessage, setErrormessage] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const context = useContext(OlxContext)
+  const {toast}=useToast()
   function navHandler(page: string) {
     setLoginpage(page)
   }
@@ -51,6 +54,13 @@ export default function EmailSignup({
         context?.setUsername(user.email ?? '')
         context?.setLogindialog(false)
         setLoading(false)
+        toast({
+          color: 'black',
+          style: { color: 'white', backgroundColor: 'black' },
+          variant: 'destructive',
+          title: 'logged in succesfully',
+          description: '',
+        })
         // setLoginpage("login")
       })
       .catch((err: FirebaseError) => {
@@ -64,6 +74,7 @@ export default function EmailSignup({
 
   return (
     <>
+    <Toaster/>
       <div className="flex items-center justify-between">
         <img
           src={LeftArrow}

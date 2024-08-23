@@ -143,14 +143,14 @@ export default function Profile(): ReactElement {
     console.log(formElement.ProductName.value)
     const productRef = doc(db, 'Products', formElement.idField.value)
     if (
-      formElement.ProductName.value.length === 0 ||
-      formElement.LocationName.value.length === 0 ||
-      formElement.Kilometers.value.length === 0 ||
-      formElement.Model.value.length === 0 ||
-      formElement.OwnerChain.value.length === 0 ||
-      formElement.Price.value.length === 0 ||
-      formElement.Transmission.value.length === 0 ||
-      formElement.Variant.value.length === 0
+      (formElement.ProductName.value.length === 0 || formElement.ProductName.value.trim() === '') ||
+      (formElement.LocationName.value.length === 0 || formElement.LocationName.value.trim() === '') ||
+      (formElement.Kilometers.value.length === 0 || formElement.Kilometers.value.trim() === '' ) ||
+      (formElement.Model.value.length === 0 || formElement.Model.value.trim() === '') ||
+      (formElement.OwnerChain.value.length === 0 || formElement.OwnerChain.value.trim() === '') ||
+      (formElement.Price.value.length === 0 || formElement.Price.value.trim() === '') ||
+      (formElement.Transmission.value.length === 0 || formElement.Transmission.value.trim() === '') ||
+      (formElement.Variant.value.length === 0 || formElement.Variant.value.trim() === '')
     ) {
       toast({
         color: 'black',
@@ -159,6 +159,7 @@ export default function Profile(): ReactElement {
         title: 'Check Entered Details',
         description: 'Check your entered details',
       })
+      setEditloader(false)
       return
     }
     //first upload file here
@@ -571,37 +572,37 @@ export default function Profile(): ReactElement {
                     className="flex h-10 w-10 m-5  items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image1" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image1" src={currentproduct?.Images[0] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                   <div
                     className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image2" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image2" src={currentproduct?.Images[1] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                   <div
                     className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image3" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image3" src={currentproduct?.Images[2] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                   <div
                     className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image4" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image4" src={currentproduct?.Images[3] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                   <div
                     className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image5" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image5" src={currentproduct?.Images[4] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                   <div
                     className="flex h-10 w-10 m-5 items-center justify-center  border-black bg-black"
                     onClick={fileHandler}
                   >
-                    <img id="image6" src={ImageIcon} className="h-6 w-6" />
+                    <img id="image6" src={currentproduct?.Images[5] ?? ImageIcon} className="h-6 w-6" />
                   </div>
                 </div>
               </div>

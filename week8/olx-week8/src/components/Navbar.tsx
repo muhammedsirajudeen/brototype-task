@@ -12,6 +12,8 @@ import OlxContext from '../context/OlxContext'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebaseHelper/firebaseHelper'
 import { DocumentData } from 'firebase/firestore'
+import { Toaster } from './ui/toaster'
+import { useToast } from './ui/use-toast'
 
 interface stateType {
   location: boolean
@@ -47,6 +49,8 @@ export default function Navbar(): ReactElement {
 
   const [search, setSearch] = useState<string>('')
   const context = useContext(OlxContext)
+  const { toast } = useToast()
+
   const navigate = useNavigate()
   function locationHandler() {
     dispatcher({ type: 'LOCATION' })
@@ -80,6 +84,13 @@ export default function Navbar(): ReactElement {
     signOut(auth).then(() => {
       context?.setAuthentication(false)
       context?.setUsername('')
+      toast({
+        color: 'black',
+        style: { color: 'white', backgroundColor: 'black' },
+        variant: 'destructive',
+        title: 'logged out succesfully',
+        description: '',
+      })
     })
   }
   function profileHandler() {
@@ -100,6 +111,8 @@ export default function Navbar(): ReactElement {
 
   return (
     <>
+      <Toaster />
+
       <div className="flex justify-start items-center bg-navbarcolor h-14 w-full">
         <img src={OlxLogo} className="h-8 w-8" onClick={() => navigate('/')} />
         <div className="flex flex-col">

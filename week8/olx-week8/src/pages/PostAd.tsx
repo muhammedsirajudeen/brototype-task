@@ -1,9 +1,25 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import RightArrow from '../assets/Logos/rightarrow.svg'
 import { useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebaseHelper/firebaseHelper'
 export default function PostAd(): ReactElement {
   const [categories, setCategories] = useState<Array<string>>([''])
   const navigate = useNavigate()
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+      if(!user){
+        navigate('/')
+        // setUser(user)
+        // setAuthentication(true)
+        // setUsername(user.email??"")
+        // setProfileimage(user.photoURL ?? "")
+
+      }else{
+        console.log("user not found")
+      }
+    })
+  },[navigate])
   function categoryHandler(category: string) {
     //post add here
     navigate('/post', { state: { category: category } })
