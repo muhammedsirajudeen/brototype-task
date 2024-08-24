@@ -128,7 +128,7 @@ export default function Post(): ReactElement {
 
         return "enter proper year"
       }
-      return "enter proper year"
+      return ""
 
     }
     const ownersError = validationHelper(owners)

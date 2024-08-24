@@ -252,7 +252,7 @@ export default function Navbar(): ReactElement {
         </button>
       </div>
       <Outlet />
-
+      {/* footer element  */}
       <div className="flex fixed bottom-0 items-center justify-center h-10 w-full bg-borderedgecolor mt-10">
         <h1 className="text-2xl font-bold text-white">Olx</h1>
       </div>
