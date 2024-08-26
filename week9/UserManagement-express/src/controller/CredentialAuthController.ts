@@ -1,6 +1,7 @@
 import { Request,Response } from "express"
 import User from "../model/User"
 import jwt from "jsonwebtoken"
+//dont forget to hash the password being stored
 const CredentialSignup=async (req:Request,res:Response)=>{
     try{
         const {email,password}=req.body
