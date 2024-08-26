@@ -3,6 +3,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Login from './pages/Authentication/Login'
 import Signup from './pages/Authentication/Signup'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

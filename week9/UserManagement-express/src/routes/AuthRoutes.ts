@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
-import AuthController from "../controller/AuthController";
-import passport from "passport";
+import GoogleAuthController from "../controller/GoogleAuthController";
+import CredentialAuthController from "../controller/CredentialAuthController";
 const router = express.Router();
-import "./passport-setup/passport-setup"
-router.get('/google',
-    passport.authenticate('google', { scope: ['profile','email'] })
-  );
-router.get("/google/callback",passport.authenticate('google'),AuthController.REDIRECT_GOOGLE)
 
+router.post('/google/login',GoogleAuthController.GoogleLogin)
+router.post('/google/signup',GoogleAuthController.GoogleSignup)
+
+router.post('/credential/signup',CredentialAuthController.CredentialSignup)
+router.post('/credential/signin',CredentialAuthController.CredentialSignin)
 
 export default router;

@@ -6,6 +6,7 @@ import cors, { CorsOptions, CorsOptionsDelegate } from "cors"
 dotenv.config();
 //routes
 import AuthRoute from "../src/routes/AuthRoutes";
+import passport from "passport";
 const app = express();
 const port = 3000;
 connectDB()
@@ -29,11 +30,8 @@ const corsOptions: CorsOptions | CorsOptionsDelegate = {
 };
 
 
-app.use(session({
-  secret: 'your secret key',
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(passport.initialize());
+app.use(cors(corsOptions))
 // Middleware
 app.use(express.json());
 

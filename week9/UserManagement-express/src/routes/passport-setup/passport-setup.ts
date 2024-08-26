@@ -1,45 +1,33 @@
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as JwtStrategy, ExtractJwt, JwtFromRequestFunction } from 'passport-jwt';
+import { Request, Response, NextFunction } from 'express';
 import User from '../../model/User';
-import * as dotenv from 'dotenv';
-dotenv.config();
+// import keys from './config/keys'; // Your secret or public key
 
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID!,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-  callbackURL: '/auth/google/callback',
-},
-async (accessToken: string, refreshToken: string, profile: any, done: any) => {
-  console.log(profile)
+// Define options for JWT strategy
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() as JwtFromRequestFunction,
+  secretOrKey: "muhammedsirajudeen",
+};
 
-  // Check if user already exists in our db using email
-  const existingUser = await User.findOne({ email: profile.emails[0].value });
-  
-  if (existingUser) {
-    // If user exists, return the user
-    return done(null, existingUser);
-  }
-  console.log(profile)
-  // If user does not exist, create a new user in our db
-  const newUser = new User({
-    // googleId: profile.id,
-    // name: profile.displayName,
-    email: profile.emails[0].value,
-    profileImage:profile.photos[0].value,
-    password:profile.id
-  });
-  
-  await newUser.save();
-  done(null, newUser);
-}));
+// Create JWT strategy
+passport.use(
+  new JwtStrategy(options, async (jwtPayload, done) => {
+    try {
+      // Find the user specified in the token
+      const user = await User.findById(jwtPayload.id);
+      if (user) {
+        // If user exists, pass user to `req.user`
+        done(null, user);
+      } else {
+        // If user does not exist, return `false`
+        done(null, false);
+      }
+    } catch (error) {
+      done(error, false);
+    }
+  })
+);
 
-
-
-passport.serializeUser((user: any, done: any) => {
-  done(null, user.id); // Save the user ID to the session
-});
-
-passport.deserializeUser(async (id: string, done: any) => {
-  const user = await User.findById(id); // Fetch the user from the database
-  done(null, user);
-});
+// Initialize passport
+passport.initialize();

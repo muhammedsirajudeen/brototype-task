@@ -1,10 +1,14 @@
 import { ReactElement } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import {  TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
+import { useNavigate } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
 interface FormValues {
   email: string;
   password: string;
 }
+const url="http://localhost:3000/auth/google/signup"
 
 export default function Signup(): ReactElement {
   const {
@@ -17,6 +21,26 @@ export default function Signup(): ReactElement {
     // Handle form submission
     console.log(data);
   };
+  const navigate=useNavigate()
+  const googleHandler=useGoogleLogin(
+    {
+      onSuccess:async (codeResponse:TokenResponse)=>{
+        console.log(codeResponse)
+        const response=await axios.post(url,
+          {
+            userToken:codeResponse.access_token
+          }
+        )
+        console.log(response) 
+        if(response.status===200 && response.data.message==="success"){
+          navigate('/')
+        }else{
+          toast(response.data.message)
+        }
+      },
+      onError:(error)=>console.log(error)
+    }
+  )
 
   return (
     <div className="flex items-center justify-center">
@@ -59,13 +83,13 @@ export default function Signup(): ReactElement {
             </p>
           )}
 
-          <a
-            href="http://localhost:3000/auth/google"
+        <button
+            onClick={()=>googleHandler()}
             className="h-10 w-72 bg-white border mt-5 rounded-3xl border-gray-500 flex items-center justify-start"
           >
-            <img src="google.png" className="h-5 w-5 ml-2" alt="Google" />
-            <p className="text-xs font-normal ml-14">sign up with google</p>
-          </a>
+            <img src="google.png" className="h-5 w-5 ml-2" />
+            <p className="text-xs font-normal ml-14">Create Your Account</p>
+          </button>
           <button
             type="submit"
             className="h-10 w-72 bg-blue-200 mt-5 text-blue-600 text-xs flex items-center justify-center"
@@ -74,6 +98,8 @@ export default function Signup(): ReactElement {
           </button>
         </form>
       </div>
+      <ToastContainer />
+
     </div>
   );
 }
