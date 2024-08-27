@@ -5,8 +5,8 @@ import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import { useAppDispatch } from "../../store/hooks";
-import { setAuthenticated } from "../../store/globalSlice";
-
+import { setAuthenticated, setUser } from "../../store/globalSlice";
+import { tokenVerifier } from "../../App";
 interface FormValues {
   email: string;
   password: string;
@@ -31,8 +31,11 @@ export default function Login(): ReactElement {
     if (response.data.message === "success") {
       toast("signed in successfully");
       dispatch(setAuthenticated());
-      window.localStorage.setItem("token", response.data.token);
 
+      window.localStorage.setItem("token", response.data.token);
+      const user = await tokenVerifier();
+      console.log("the user is", user);
+      if (user) dispatch(setUser(user));
       setTimeout(() => navigate("/home"), 1000);
     } else {
       toast(response.data.message);
@@ -55,7 +58,9 @@ export default function Login(): ReactElement {
       if (response.status === 200 && response.data.message === "success") {
         window.localStorage.setItem("token", response.data.token);
         dispatch(setAuthenticated());
+        const user = await tokenVerifier();
 
+        if (user) dispatch(setUser(user));
         navigate("/home");
       } else {
         toast(response.data.message);

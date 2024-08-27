@@ -34,6 +34,19 @@ const GoogleLogin = async (req: Request, res: Response) => {
     let userData = data;
     const checkUser = await User.findOne({ email: userData.email });
     if (checkUser) {
+      if(checkUser.authorization==="admin"){
+        const token = jwt.sign(
+          {
+            id: checkUser.id,
+            email: checkUser.email,
+            password: checkUser.password,
+            admin:true
+          },
+          process.env.SECRET_KEY ?? "",
+          { expiresIn: "1h" }
+        );
+        return res.status(200).json({ message: "success", token: token });
+      }
       const token = jwt.sign(
         {
           id: checkUser.id,

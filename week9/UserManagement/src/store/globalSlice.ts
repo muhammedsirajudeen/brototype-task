@@ -1,45 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface userProps {
   email?: string;
   password?: string;
   profileImage?: string;
   _id?: string;
-  address?:string;
-  phone?:string;
+  address?: string;
+  phone?: string;
+  authorization?: string;
 }
 
 export interface GlobalState {
-  authenticated:boolean,
-  user:userProps
+  authenticated: boolean;
+  user: userProps;
 }
 
 //here do jwt authentication
 const initialState: GlobalState = {
   authenticated: false,
-  user:{}
-
-}
+  user: {},
+};
 
 export const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState,
   reducers: {
     setAuthenticated: (state) => {
-
-      state.authenticated = true
+      state.authenticated = true;
     },
-    clearAuthenticated:(state)=>{
-        state.authenticated=false
+    clearAuthenticated: (state) => {
+      state.authenticated = false;
     },
-    setUser:(state,action:PayloadAction<userProps>)=>{
-      state.user=action.payload
-    }
-
+    setUser: (state, action: PayloadAction<userProps>) => {
+      state.user = action.payload;
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { setAuthenticated,clearAuthenticated, setUser } = globalSlice.actions
+export const { setAuthenticated, clearAuthenticated, setUser } =
+  globalSlice.actions;
 
-export default globalSlice.reducer
+export default globalSlice.reducer;

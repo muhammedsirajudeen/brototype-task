@@ -1,12 +1,13 @@
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import connectDB from "./model/dbConnect";
-import session from "express-session";
 import cors, { CorsOptions, CorsOptionsDelegate } from "cors";
 dotenv.config();
 //routes
 import AuthRoute from "../src/routes/AuthRoutes";
 import UserRoutes from "./routes/UserRoutes"
+import AdminRoutes from "./routes/AdminRoutes"
+
 import passport from "passport";
 import corsOptions from "./helper/corsOptions";
 
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routes
 app.use("/auth", AuthRoute);
 app.use("/user",UserRoutes)
+app.use("/admin",AdminRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

@@ -8,17 +8,20 @@ import Profile from './pages/User/Profile';
 import url from './helper/backendUrl';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+
 import './App.css';
 import { useAppDispatch } from './store/hooks';
 import { setAuthenticated, setUser } from './store/globalSlice';
+import Dashboard from './pages/Admin/Dashboard';
 interface userProps{
   email:string,
   password:string,
   profileimage:string,
-  _id:string
+  _id:string,
+  authorization?:string
 }
 
-async function tokenVerifier() :Promise<userProps | null> {
+export async function tokenVerifier() :Promise<userProps | null> {
   const token = window.localStorage.getItem("token");
   if (token) {
     try {
@@ -28,7 +31,7 @@ async function tokenVerifier() :Promise<userProps | null> {
         }
       });
       if (response.data?.message === "success") {
-        return response.data.user;
+        return response.data.user as userProps ;
       } else {
         return null;
       }
@@ -65,6 +68,11 @@ const router = createBrowserRouter([
         path: '/profile',
         element: <Profile />,
         loader:tokenVerifier
+      },
+      {
+        path:'/admin',
+        element:<Dashboard/>,
+        loader:tokenVerifier
       }
     ]
   }
@@ -81,7 +89,8 @@ const App: React.FC = () => {
   }
   authState()
   return (
-    <RouterProvider router={router} />
+    // dont forget to include the fallback element
+    <RouterProvider  router={router} />
   );
 }
 

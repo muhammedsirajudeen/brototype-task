@@ -3,11 +3,13 @@ import { Strategy as JwtStrategy, ExtractJwt, JwtFromRequestFunction } from 'pas
 import { Request, Response, NextFunction } from 'express';
 import User from '../../model/User';
 // import keys from './config/keys'; // Your secret or public key
-
+import * as dotenv from "dotenv";
+import secret_key from '../../config/config';
+dotenv.config()
 // Define options for JWT strategy
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() as JwtFromRequestFunction,
-  secretOrKey: "muhammedsirajudeen",
+  secretOrKey: secret_key,
 };
 
 // Create JWT strategy
