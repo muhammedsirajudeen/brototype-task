@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import url from "../../helper/backendUrl";
 import { toast, ToastContainer } from "react-toastify";
+import EditUser from "../../components/EditUser";
 // import { useAppSelector } from "../../store/hooks";
 interface userProps {
   email: string;
@@ -19,8 +20,9 @@ export default function Dashboard(): ReactElement {
   const navigate = useNavigate();
   const [deletestate, setDeletestate] = useState<boolean>(false);
   const [deleteEmail, setDeleteEmail] = useState<string>("");
-  // const [editstate,setEditstate]
+  const [editstate, setEditstate] = useState<boolean>(false);
   const [users, setUsers] = useState<Array<userProps>>();
+  const [user, setUser] = useState<userProps>();
   useEffect(() => {
     if (data.authorization !== "admin") {
       navigate("/");
@@ -42,6 +44,10 @@ export default function Dashboard(): ReactElement {
   const deleteHandler = (email: string) => {
     setDeleteEmail(email);
     setDeletestate(true);
+  };
+  const editHandler = (user: userProps) => {
+    setEditstate(true);
+    setUser(user);
   };
   const deleteByEmail = async (email: string) => {
     console.log(email);
@@ -83,39 +89,45 @@ export default function Dashboard(): ReactElement {
           </button>
         </dialog>
       )}
-      {
-        !deletestate &&
+      {/* this is for editing the user data */}
+      {editstate && (
+        <EditUser user={user} setEditstate={setEditstate} editstate={editstate}/>
+      )}
+      {(!deletestate && !editstate) && (
         <div className="flex flex-col items-center justify-center">
-        <p className="font-light text-3xl mt-10">Admin Dashboard</p>
-        {users?.map((user) => {
-          return (
-            <div
-              key={user._id}
-              className="shadow-2xl flex flex-col items-start justify-center mt-10 w-96 h-auto p-10"
-            >
-              <div className="flex justify-start items-center">
-                <img
-                  src={user.profileImage ?? "user.png"}
-                  className="w-12 h-12 rounded-full"
-                />
-                <p className="font-bold text-xs w-3/4 ml-5">{user.email}</p>
+          <p className="font-light text-3xl mt-10">Admin Dashboard</p>
+          {users?.map((user) => {
+            return (
+              <div
+                key={user._id}
+                className="shadow-2xl flex flex-col items-start justify-center mt-10 w-96 h-auto p-10"
+              >
+                <div className="flex justify-start items-center">
+                  <img
+                    src={user.profileImage ?? "user.png"}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <p className="font-bold text-xs w-3/4 ml-5">{user.email}</p>
+                </div>
+                <div className="flex mt-10 items-center w-full justify-between">
+                  <button
+                    className="bg-red-700 text-white rounded-sm p-2"
+                    onClick={() => deleteHandler(user.email)}
+                  >
+                    <img src="delete.png" className="h-6 w-6" />
+                  </button>
+                  <button
+                    className="bg-black text-white rounded-sm p-2"
+                    onClick={() => editHandler(user)}
+                  >
+                    <img src="edit.png" className="h-6 w-6" />
+                  </button>
+                </div>
               </div>
-              <div className="flex mt-10 items-center w-full justify-between">
-                <button
-                  className="bg-red-700 text-white rounded-sm p-2"
-                  onClick={() => deleteHandler(user.email)}
-                >
-                  <img src="delete.png" className="h-6 w-6" />
-                </button>
-                <button className="bg-black text-white rounded-sm p-2">
-                  <img src="edit.png" className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      }
+            );
+          })}
+        </div>
+      )}
 
       <ToastContainer />
     </>

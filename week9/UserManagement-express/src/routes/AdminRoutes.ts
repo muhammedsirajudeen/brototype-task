@@ -15,4 +15,10 @@ router.delete(
   AdminController.DeleteUser
 );
 
+router.put(
+    "/user",
+    passport.authenticate("jwt", { session: false }),
+    AdminController.UpdateUser    
+)
+
 export default router;

@@ -43,7 +43,7 @@ export default function Profile(): ReactElement {
           phone: user.phone,
         });
         if (imageRef.current?.src) {
-          imageRef.current.src = user.profileImage;
+          imageRef.current.src = user.profileImage ?? "user.png" ;
         }
       }
     }
@@ -82,16 +82,16 @@ export default function Profile(): ReactElement {
     if (e.target.files) {
       const maxSize = 2 * 1024 * 1024; // 2MB in bytes
 
-      if (e.target.files[0].size >maxSize ) {
+      if (e.target.files[0].size > maxSize) {
         // errorSpan.textContent = 'File size exceeds 2MB.';
         // isValid = false;
-        toast("must be less than 2MB")
-        return
-    }
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        toast("must be less than 2MB");
+        return;
+      }
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       if (!allowedTypes.includes(e.target.files[0].type)) {
-        toast("invalid file type")
-        return
+        toast("invalid file type");
+        return;
       }
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -106,12 +106,17 @@ export default function Profile(): ReactElement {
     <div className="mt-20 flex items-center justify-center">
       <div className="h-auto p-2 w-96 shadow-xl rounded-xl flex flex-col items-center">
         <p className="font-light text-xl mt-2">PROFILE</p>
-        <img
-          ref={imageRef}
-          src={user?.profileImage ?? "user.png"}
-          className="h-20 w-20 rounded-full mt-2"
-          onClick={imageHandler}
-        />
+
+ 
+          <img
+            ref={imageRef}
+            src={user?.profileImage ?? "user.png" }
+            className="h-20 w-20 rounded-full mt-2"
+            onClick={imageHandler}
+          />
+        
+
+
         <p className="text-sm font-light mt-4">{user?.email}</p>
         <form
           className="flex flex-col items-start mt-2"
