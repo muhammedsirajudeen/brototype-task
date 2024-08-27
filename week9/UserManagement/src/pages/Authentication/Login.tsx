@@ -1,46 +1,68 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {  TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
+import { useAppDispatch } from "../../store/hooks";
+import { setAuthenticated } from "../../store/globalSlice";
 
 interface FormValues {
   email: string;
   password: string;
 }
-const url="http://localhost:3000/auth/google/login"
+const url = "http://localhost:3000";
 export default function Login(): ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  //setting of redux store inside the project
+  // const count = useAppSelector((state) => state.global.value)
+  const dispatch = useAppDispatch();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
     console.log(data);
-  };
-  const navigate=useNavigate()
-  const googleHandler=useGoogleLogin(
-    {
-      onSuccess:async (codeResponse:TokenResponse)=>{
-        console.log(codeResponse)
-        const response=await axios.post(url,
-          {
-            userToken:codeResponse.access_token
-          }
-        )
-        console.log(response) 
-        if(response.status===200 && response.data.message==="success"){
-          navigate('/home')
-        }else{
-          toast(response.data.message)
-        }
-      },
-      onError:(error)=>console.log(error)
+    const response = await axios.post(url + "/auth/credential/signin", {
+      email: data.email,
+      password: data.password,
+    });
+    if (response.data.message === "success") {
+      toast("signed in successfully");
+      dispatch(setAuthenticated());
+      window.localStorage.setItem("token", response.data.token);
+
+      setTimeout(() => navigate("/home"), 1000);
+    } else {
+      toast(response.data.message);
     }
-  )
+  };
+  const navigate = useNavigate();
+  const data = useLoaderData();
+  useEffect(() => {
+    if (data) {
+      navigate("/home");
+    }
+  }, [navigate, data]);
+  const googleHandler = useGoogleLogin({
+    onSuccess: async (codeResponse: TokenResponse) => {
+      console.log(codeResponse);
+      const response = await axios.post(url + "/auth/google/login", {
+        userToken: codeResponse.access_token,
+      });
+      console.log(response);
+      if (response.status === 200 && response.data.message === "success") {
+        window.localStorage.setItem("token", response.data.token);
+        dispatch(setAuthenticated());
+
+        navigate("/home");
+      } else {
+        toast(response.data.message);
+      }
+    },
+    onError: (error) => console.log(error),
+  });
 
   return (
     <div className="flex items-center justify-center">
@@ -96,7 +118,7 @@ export default function Login(): ReactElement {
           </button>
 
           <button
-            onClick={()=>googleHandler()}
+            onClick={() => googleHandler()}
             className="h-10 w-72 bg-white border mt-5 rounded-3xl border-gray-500 flex items-center justify-start"
           >
             <img src="google.png" className="h-5 w-5 ml-2" />
@@ -110,7 +132,7 @@ export default function Login(): ReactElement {
           </a>
         </form>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

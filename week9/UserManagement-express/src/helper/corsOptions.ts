@@ -1,5 +1,5 @@
 import { CorsOptions, CorsOptionsDelegate } from "cors";
-const allowedOrigin:string = 'http://localhost:5173';
+const allowedOrigin: string = "http://localhost:5173";
 
 const corsOptions: CorsOptions | CorsOptionsDelegate = {
   origin: (

@@ -1,14 +1,14 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {  TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 interface FormValues {
   email: string;
   password: string;
 }
-const url="http://localhost:3000/auth/google/signup"
+const url = "http://localhost:3000";
 
 export default function Signup(): ReactElement {
   const {
@@ -16,31 +16,42 @@ export default function Signup(): ReactElement {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const navigate = useNavigate();
+  const data = useLoaderData();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
-    console.log(data);
-  };
-  const navigate=useNavigate()
-  const googleHandler=useGoogleLogin(
-    {
-      onSuccess:async (codeResponse:TokenResponse)=>{
-        console.log(codeResponse)
-        const response=await axios.post(url,
-          {
-            userToken:codeResponse.access_token
-          }
-        )
-        console.log(response) 
-        if(response.status===200 && response.data.message==="success"){
-          navigate('/')
-        }else{
-          toast(response.data.message)
-        }
-      },
-      onError:(error)=>console.log(error)
+    const response = await axios.post(url + "/auth/credential/signup", {
+      email: data.email,
+      password: data.password,
+    });
+    if (response.data.message === "success") {
+      toast("user created successfully");
+      setTimeout(() => navigate("/"), 1000);
+    } else {
+      toast(response.data.message);
     }
-  )
+  };
+
+  useEffect(() => {
+    if (data) {
+      navigate("/home");
+    }
+  }, [navigate, data]);
+  const googleHandler = useGoogleLogin({
+    onSuccess: async (codeResponse: TokenResponse) => {
+      console.log(codeResponse);
+      const response = await axios.post(url + "/auth/google/signup", {
+        userToken: codeResponse.access_token,
+      });
+      console.log(response);
+      if (response.status === 200 && response.data.message === "success") {
+        navigate("/");
+      } else {
+        toast(response.data.message);
+      }
+    },
+    onError: (error) => console.log(error),
+  });
 
   return (
     <div className="flex items-center justify-center">
@@ -83,8 +94,8 @@ export default function Signup(): ReactElement {
             </p>
           )}
 
-        <button
-            onClick={()=>googleHandler()}
+          <button
+            onClick={() => googleHandler()}
             className="h-10 w-72 bg-white border mt-5 rounded-3xl border-gray-500 flex items-center justify-start"
           >
             <img src="google.png" className="h-5 w-5 ml-2" />
@@ -99,7 +110,6 @@ export default function Signup(): ReactElement {
         </form>
       </div>
       <ToastContainer />
-
     </div>
   );
 }
