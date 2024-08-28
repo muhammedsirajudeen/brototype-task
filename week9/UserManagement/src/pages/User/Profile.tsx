@@ -51,17 +51,21 @@ export default function Profile(): ReactElement {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
     console.log(data);
-    const imageFile = imageRef.current?.src;
+    const formData=new FormData()
+    formData.append("phone",data.phone)
+    formData.append("address",data.address)
+    formData.append("email",user?.email ?? "")
+    if(fileRef.current?.files){
+      formData.append("file",fileRef.current?.files[0])
+    }
+    // const imageFile = imageRef.current?.src;
     try {
       const response = await axios.post(
         url + "/user/update",
-        {
-          phone: data.phone,
-          address: data.address,
-          profileImage: imageFile,
-        },
+        formData,
         {
           headers: {
+            'Content-Type':'multipart/form-data',
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
@@ -69,6 +73,7 @@ export default function Profile(): ReactElement {
       console.log(response);
       if (response.data.message === "success") {
         toast("profile updated successfully");
+        setTimeout(()=>window.location.reload(),1000)
       }
     } catch (error) {
       console.log(error);

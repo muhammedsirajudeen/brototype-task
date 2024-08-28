@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import User from "../model/User";
 import { IUser } from "../model/User";
+
+const backendUrl="http://localhost:3000/"
+
 const AllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
@@ -31,13 +34,19 @@ const UpdateUser = async (req: Request, res: Response) => {
   try {
     const { email,currentemail, phone, address, profileImage } = req.body;
     const checkUser=await User.findOne({email:currentemail})
+    let filename;
+    if(req.file?.filename){
+        filename=backendUrl+req.file.filename
+    }else if(checkUser?.profileImage){
+        filename=checkUser.profileImage
+    }
     const user=await User.findByIdAndUpdate(
       { _id: checkUser?._id },
       {
         email,
         phone,
         address,
-        profileImage,
+        profileImage:filename ?? "https://img.icons8.com/ios-glyphs/30/1A1A1A/user--v1.png",
       }
     );
     

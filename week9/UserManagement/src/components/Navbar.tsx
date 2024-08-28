@@ -27,7 +27,7 @@ export default function Navbar(): ReactElement {
           <a className="font-light text-white" href="/profile">
             <img
               src={user.profileImage ?? "user.png"}
-              className="h-6 w-6 rounded-full."
+              className="h-6 w-6 rounded-full"
             />
           </a>
         )}

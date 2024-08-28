@@ -6,14 +6,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Get the MongoDB URI from environment variables
-const dbURI = process.env.MONGODB_URI ?? "";
+const dbURI = process.env.MONGODB_URI as string;
 
 // Define an asynchronous function to connect to MongoDB
 const connectDB = async () => {
   try {
     // Connect to MongoDB using the URI from environment variables
     await mongoose.connect(dbURI, {
-      // Optionally, you can add additional options here
     });
     console.log("MongoDB connected");
   } catch (error) {

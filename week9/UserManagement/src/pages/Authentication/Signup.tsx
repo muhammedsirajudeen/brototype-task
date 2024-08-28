@@ -4,12 +4,11 @@ import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
+import url from "../../helper/backendUrl";
 interface FormValues {
   email: string;
   password: string;
 }
-const url = "http://localhost:3000";
-
 export default function Signup(): ReactElement {
   const {
     register,

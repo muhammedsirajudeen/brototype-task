@@ -1,7 +1,7 @@
 import express from "express";
 import AdminController from "../controller/AdminController";
 import passport from "passport";
-
+import upload from "../helper/fileuploadHelper";
 const router = express.Router();
 
 router.get(
@@ -16,9 +16,10 @@ router.delete(
 );
 
 router.put(
-    "/user",
-    passport.authenticate("jwt", { session: false }),
-    AdminController.UpdateUser    
-)
+  "/user",
+  passport.authenticate("jwt", { session: false }),
+  upload.single('file'),
+  AdminController.UpdateUser
+);
 
 export default router;
