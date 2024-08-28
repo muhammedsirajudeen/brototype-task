@@ -53,7 +53,7 @@ const UpdateUser = async (req: Request, res: Response) => {
     res.status(200).json({message:"success"})
   } catch (error) {
     console.log(error);
-    res.status(501).json({ message: "server error occured" });
+    res.status(500).json({ message: "server error occured" });
   }
 };
 

@@ -4,16 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router";
 import url from "../../helper/backendUrl";
 import { toast, ToastContainer } from "react-toastify";
-
-interface userProps {
-  email: string;
-  password: string;
-  profileImage: string;
-  _id: string;
-  address?: string;
-  phone?: string;
-}
-
+import userProps from "../../types/userProps";
 interface FormValues {
   phone: string;
   address: string;
@@ -43,7 +34,7 @@ export default function Profile(): ReactElement {
           phone: user.phone,
         });
         if (imageRef.current?.src) {
-          imageRef.current.src = user.profileImage ?? "user.png" ;
+          imageRef.current.src = user.profileImage ?? "user.png";
         }
       }
     }
@@ -51,29 +42,25 @@ export default function Profile(): ReactElement {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
     console.log(data);
-    const formData=new FormData()
-    formData.append("phone",data.phone)
-    formData.append("address",data.address)
-    formData.append("email",user?.email ?? "")
-    if(fileRef.current?.files){
-      formData.append("file",fileRef.current?.files[0])
+    const formData = new FormData();
+    formData.append("phone", data.phone);
+    formData.append("address", data.address);
+    formData.append("email", user?.email ?? "");
+    if (fileRef.current?.files) {
+      formData.append("file", fileRef.current?.files[0]);
     }
     // const imageFile = imageRef.current?.src;
     try {
-      const response = await axios.post(
-        url + "/user/update",
-        formData,
-        {
-          headers: {
-            'Content-Type':'multipart/form-data',
-            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(url + "/user/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
       console.log(response);
       if (response.data.message === "success") {
         toast("profile updated successfully");
-        setTimeout(()=>window.location.reload(),1000)
+        setTimeout(() => window.location.reload(), 1000);
       }
     } catch (error) {
       console.log(error);
@@ -112,15 +99,12 @@ export default function Profile(): ReactElement {
       <div className="h-auto p-2 w-96 shadow-xl rounded-xl flex flex-col items-center">
         <p className="font-light text-xl mt-2">PROFILE</p>
 
- 
-          <img
-            ref={imageRef}
-            src={user?.profileImage ?? "user.png" }
-            className="h-20 w-20 rounded-full mt-2"
-            onClick={imageHandler}
-          />
-        
-
+        <img
+          ref={imageRef}
+          src={user?.profileImage ?? "user.png"}
+          className="h-20 w-20 rounded-full mt-2"
+          onClick={imageHandler}
+        />
 
         <p className="text-sm font-light mt-4">{user?.email}</p>
         <form

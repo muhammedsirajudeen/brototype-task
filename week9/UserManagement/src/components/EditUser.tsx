@@ -1,23 +1,22 @@
-import axios from "axios";
-import { ChangeEvent, Dispatch, ReactElement, SetStateAction, useRef } from "react";
+import axios, { AxiosError } from "axios";
+import {
+  ChangeEvent,
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useRef,
+} from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import url from "../helper/backendUrl";
-interface userProps {
-  email: string;
-  password: string;
-  profileImage: string;
-  _id: string;
-  address?: string;
-  phone?: string;
-  authorization?: string;
-}
+import userProps from "../types/userProps";
 interface FormValues {
   email: string;
   password: string;
   phone: string;
   address: string;
 }
+
 export default function EditUser({
   editstate,
   setEditstate,
@@ -27,16 +26,20 @@ export default function EditUser({
   setEditstate: Dispatch<SetStateAction<boolean>>;
   user?: userProps;
 }): ReactElement {
-  const fileRef=useRef<HTMLInputElement>(null)
-  const imageRef=useRef<HTMLImageElement>(null)
+  const fileRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: { phone: user?.phone, email: user?.email,address:user?.address },
+    defaultValues: {
+      phone: user?.phone,
+      email: user?.email,
+      address: user?.address,
+    },
   });
-  
+
   const filechangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const maxSize = 2 * 1024 * 1024; // 2MB in bytes
@@ -64,31 +67,42 @@ export default function EditUser({
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // const imageFile = imageRef.current?.src;
-    console.log(data.email)
-    const formData=new FormData()
-    if(user?.email){
-      formData.append("currentemail",user?.email ?? "")
+    console.log(data.email);
+    const formData = new FormData();
+    if (user?.email) {
+      formData.append("currentemail", user?.email ?? "");
     }
-    formData.append("email",data.email)
-    formData.append("phone",data.phone)
-    formData.append("address",data.address)
-    if(fileRef.current?.files){
-      formData.append("file",fileRef.current.files[0])
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("address", data.address);
+    if (fileRef.current?.files) {
+      formData.append("file", fileRef.current.files[0]);
     }
-    const response=(await axios.put(url+"/admin/user",
-      formData
-      ,{
-        headers:{
-          'Content-Type':'multipart/form-data',
-          Authorization:`Bearer ${window.localStorage.getItem("token")}`
-        }
+    try{
+      const response = (
+        await axios.put(url + "/admin/user", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+      ).data;
+      console.log(response)
+      if (response.message === "success") {
+        toast("edited successfuly");
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        toast(response.message);
+        setTimeout(() => window.location.reload(), 1000);
+
       }
-    )).data
-    if(response.message==="success"){
-      toast("edited successfuly")
-      setTimeout(()=>window.location.reload(),1000)
-    }else{
-      toast(response.message)
+  
+    }catch(error){
+      if(error instanceof AxiosError){
+        console.log(error)
+        toast(error.message)
+  
+      }
     }
   };
   return (
@@ -103,7 +117,12 @@ export default function EditUser({
         x
       </button>
       <p className="text-xs mt-6">EDIT</p>
-      <img ref={imageRef} src={user?.profileImage ?? "user.png"} className="rounded-full w-10 h-10 mt-2" onClick={()=>fileRef.current?.click()}  />
+      <img
+        ref={imageRef}
+        src={user?.profileImage ?? "user.png"}
+        className="rounded-full w-28 h-28 mt-2"
+        onClick={() => fileRef.current?.click()}
+      />
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email" className="text-xs mt-5">
           Email
@@ -166,7 +185,12 @@ export default function EditUser({
         {errors.address && (
           <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>
         )}
-        <input ref={fileRef} onChange={filechangeHandler} type="file" className="hidden"/>
+        <input
+          ref={fileRef}
+          onChange={filechangeHandler}
+          type="file"
+          className="hidden"
+        />
         <button
           type="submit"
           className="h-10 w-72 bg-signin-button mt-5 text-white text-xs flex items-center justify-center"
@@ -174,7 +198,7 @@ export default function EditUser({
           EDIT
         </button>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </dialog>
   );
 }

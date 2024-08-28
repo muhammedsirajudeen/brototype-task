@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   ChangeEvent,
   Dispatch,
@@ -9,15 +9,7 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import url from "../helper/backendUrl";
-// interface userProps {
-//   email: string;
-//   password: string;
-//   profileImage: string;
-//   _id: string;
-//   address?: string;
-//   phone?: string;
-//   authorization?: string;
-// }
+
 interface FormValues {
   email: string;
   password: string;
@@ -37,9 +29,7 @@ export default function CreateUser({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
-
-  });
+  } = useForm<FormValues>({});
 
   const filechangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -71,26 +61,33 @@ export default function CreateUser({
     console.log(data.email);
     const formData = new FormData();
     formData.append("email", data.email);
-    formData.append("password",data.password)
+    formData.append("password", data.password);
     formData.append("phone", data.phone);
     formData.append("address", data.address);
     if (fileRef.current?.files) {
       formData.append("file", fileRef.current.files[0]);
     }
-    const response = (
-      await axios.post(url + "/auth/credential/signup", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-        },
-      })
-    ).data;
-    if (response.message === "success") {
-      toast("created successfuly");
-      setTimeout(() => window.location.reload(), 1000);
-    } else {
-      toast(response.message);
+    try{
+      const response = (
+        await axios.post(url + "/auth/credential/signup", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+      ).data;
+      if (response.message === "success") {
+        toast("created successfuly");
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        toast(response.message);
+      }
+    }catch(error){
+      if(error instanceof AxiosError){
+        toast(error.message)
+      }
     }
+
   };
   return (
     <dialog

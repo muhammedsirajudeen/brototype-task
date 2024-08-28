@@ -11,7 +11,7 @@ export default function Navbar(): ReactElement {
   const signoutHandler = () => {
     window.localStorage.clear();
     dispatch(clearAuthenticated());
-    dispatch(setUser({}))
+    dispatch(setUser({}));
     navigate("/");
   };
   return (
@@ -32,10 +32,11 @@ export default function Navbar(): ReactElement {
           </a>
         )}
 
-
         {user.authorization === "admin" ? (
-          <a href="/admin" className="font-light text-white mr-5">Admin Dashboard</a>
-        ) : authenticated  ? (
+          <a href="/admin" className="font-light text-white mr-5">
+            Admin Dashboard
+          </a>
+        ) : authenticated ? (
           <button
             onClick={signoutHandler}
             className="font-light text-white mr-5"
@@ -51,10 +52,14 @@ export default function Navbar(): ReactElement {
           </button>
         )}
 
-        {
-            location.pathname==="/admin"  &&
-            <button onClick={signoutHandler} className="font-light text-white mr-5">Signout</button> 
-        }
+        {location.pathname === "/admin" && (
+          <button
+            onClick={signoutHandler}
+            className="font-light text-white mr-5"
+          >
+            Signout
+          </button>
+        )}
       </nav>
       <Outlet />
     </>

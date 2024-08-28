@@ -1,24 +1,15 @@
 import axios from "axios";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import url from "../../helper/backendUrl";
 import { toast, ToastContainer } from "react-toastify";
 import EditUser from "../../components/EditUser";
 import CreateUser from "../../components/CreateUser";
-import { useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import Select, { SingleValue } from "react-select";
 
-// import { useAppSelector } from "../../store/hooks";
-interface userProps {
-  email: string;
-  password: string;
-  profileImage: string;
-  _id: string;
-  address?: string;
-  phone?: string;
-  authorization?: string;
-}
-
+// import { useAppSelectuser
+import userProps from "../../types/userProps";
 interface searchProps {
   search: string;
 }
@@ -44,6 +35,7 @@ export default function Dashboard(): ReactElement {
   const [searchstate, setSearchstate] = useState<string>("");
   const [users, setUsers] = useState<Array<userProps>>();
   const [user, setUser] = useState<userProps>();
+  const initialRender = useRef<number>(0);
   useEffect(() => {
     if (!data) {
       navigate("/");
@@ -61,25 +53,17 @@ export default function Dashboard(): ReactElement {
         })
       ).data;
       setUsers(users.users);
+      initialRender.current++;
     };
     fetchUsers();
   }, []);
   const {
-    register,
+    // register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<searchProps>();
 
-  const onSubmit = (data:searchProps) => {
-    // console.log(data.search)
-    
-    if (!searchstate) {
-      toast("please select a search term");
-      return
-    } else {
-      alert(data.search);
-    }
-  };
   const deleteHandler = (email: string) => {
     setDeleteEmail(email);
     setDeletestate(true);
@@ -112,6 +96,47 @@ export default function Dashboard(): ReactElement {
 
   const searchstateHandler = (value: SingleValue<optionProps>) => {
     setSearchstate(value?.value ?? "");
+  };
+  const onSubmit = (data: searchProps) => {
+    // console.log(data.search)
+
+    if (!searchstate) {
+      toast("please select a search term");
+      return;
+    } else {
+      if (searchstate === "email") {
+        const filteredUsers = users?.filter((user: userProps) => {
+          const regex = new RegExp(data.search);
+          if (regex.test(user.email)) {
+            return user;
+          }
+        });
+        setUsers(filteredUsers);
+      } else if (searchstate === "phone") {
+        const filteredUsers = users?.filter((user: userProps) => {
+          const regex = new RegExp(data.search);
+          if (regex.test(user.phone as string)) {
+            return user;
+          }
+        });
+        setUsers(filteredUsers);
+      } else if (searchstate === "address") {
+        const filteredUsers = users?.filter((user: userProps) => {
+          const regex = new RegExp(data.search);
+          if (regex.test(user.address as string)) {
+            return user;
+          }
+        });
+        setUsers(filteredUsers);
+      } else {
+        toast("invalid selection");
+      }
+    }
+  };
+  const handleCharacterChange = (search: string) => {
+    if (search.length === 0) {
+      window.location.reload();
+    }
   };
   return (
     <>
@@ -149,32 +174,70 @@ export default function Dashboard(): ReactElement {
       )}
       {!deletestate && !editstate && !createstate && (
         <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center justify-evenly mt-10 w-full">
-            <p className="font-light text-3xl  flex items-center">
-              Admin Dashboard
-            </p>
-            <div className="flex items-center justify-center border border-black">
+          <div className="flex items-center justify-center mt-10 w-full">
+            <div className="flex mr-10 items-center justify-center border border-black">
               <form
                 className="flex items-center"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <input
+                <Controller
+                  name="search"
+                  control={control}
+                  rules={{
+                    required: "Search term is required",
+                    minLength: {
+                      value: 3,
+                      message: "Search term must be at least 3 characters",
+                    },
+                    pattern: {
+                      value: specialCharacterRegex,
+                      message: "Invalid characters",
+                    },
+                    validate: (value: string) => {
+                      if (value.trim() === "") {
+                        return "Search term cannot be empty";
+                      }
+                      return true; // or return undefined to indicate no error
+                    },
+                  }}
+                  render={({ field }: { field: FieldValues }) => (
+                    <input
+                      type="text"
+                      className="h-8 w-50 placeholder:text-xs"
+                      {...field}
+                      placeholder="Enter the search term"
+                      onChange={(e) => {
+                        field.onChange(e); // react-hook-form handler
+                        handleCharacterChange(e.target.value); // Custom handler
+                      }}
+                    />
+                  )}
+                />
+                {/* <input
                   type="text"
                   className="h-8 w-50 placeholder:text-xs"
                   {...register("search", {
                     required: "Search term is required",
                     minLength: {
                       value: 3,
-                      message: "Search term must be at least 10 characters",
+                      message: "Search term must be at least 3 characters",
                     },
 
                     pattern: {
                       value: specialCharacterRegex,
                       message: "Invalid characters",
                     },
+                    validate:(search:string)=>{
+                      if(search.trim()===''){
+
+                        return "cannot be empty"
+                      }else{
+                        return true
+                      }
+                    }
                   })}
                   placeholder="enter the search term"
-                />
+                /> */}
                 <Select onChange={searchstateHandler} options={options} />
                 <button
                   type="submit"
@@ -182,8 +245,11 @@ export default function Dashboard(): ReactElement {
                 >
                   <img src="search.png" className="h-6 w-6" />
                 </button>
-                {errors.search && <p className="text-xs text-red-600" >{errors.search.message}</p>}
-
+                {errors.search && (
+                  <p className="text-xs text-red-600">
+                    {errors.search.message}
+                  </p>
+                )}
               </form>
             </div>
             <img src="create.png" className="h-4 w-4" onClick={createHandler} />
@@ -218,6 +284,11 @@ export default function Dashboard(): ReactElement {
               </div>
             );
           })}
+        </div>
+      )}
+      {users?.length === 0 && (
+        <div className="flex items-center justify-center mt-10">
+          <p className="font-bold text-3xl">User not found</p>
         </div>
       )}
 
