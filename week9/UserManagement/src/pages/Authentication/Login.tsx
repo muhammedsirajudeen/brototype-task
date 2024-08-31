@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
+import { TokenResponse, useGoogleLogin, UseGoogleLoginOptionsImplicitFlow } from "@react-oauth/google";
 import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
@@ -48,6 +48,7 @@ export default function Login(): ReactElement {
       navigate("/home");
     }
   }, [navigate, data]);
+  
   const googleHandler = useGoogleLogin({
     onSuccess: async (codeResponse: TokenResponse) => {
       console.log(codeResponse);
@@ -67,8 +68,10 @@ export default function Login(): ReactElement {
       }
     },
     onError: (error) => console.log(error),
-  });
-
+    // ux_mode:'redirect',
+    prompt:'select_account'
+  } as UseGoogleLoginOptionsImplicitFlow);
+ 
   return (
     <div className="flex items-center justify-center">
       <div className="h-auto flex flex-col items-center justify-start w-96 shadow-2xl mt-40 rounded-xl p-10">
