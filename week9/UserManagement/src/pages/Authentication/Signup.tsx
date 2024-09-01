@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -17,8 +17,10 @@ export default function Signup(): ReactElement {
   } = useForm<FormValues>();
   const navigate = useNavigate();
   const data = useLoaderData();
+  const [submit,setSubmit]=useState<boolean>(false)
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
+    setSubmit(true)
     const response = await axios.post(url + "/auth/credential/signup", {
       email: data.email,
       password: data.password,
@@ -26,9 +28,11 @@ export default function Signup(): ReactElement {
     if (response.data.message === "success") {
       toast("user created successfully");
       setTimeout(() => navigate("/"), 1000);
+      
     } else {
-      toast(response.data.message);
+      toast(response.data.message);      
     }
+    setSubmit(false)
   };
 
   useEffect(() => {
@@ -94,6 +98,7 @@ export default function Signup(): ReactElement {
           )}
 
           <button
+          
             onClick={() => googleHandler()}
             className="h-10 w-72 bg-white border mt-5 rounded-3xl border-gray-500 flex items-center justify-start"
           >
@@ -102,6 +107,7 @@ export default function Signup(): ReactElement {
           </button>
           <button
             type="submit"
+            disabled={submit}
             className="h-10 w-72 bg-blue-200 mt-5 text-blue-600 text-xs flex items-center justify-center"
           >
             CREATE YOUR ACCOUNT

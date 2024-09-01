@@ -6,6 +6,10 @@ const backendUrl="http://localhost:3000/"
 
 const AllUsers = async (req: Request, res: Response) => {
   try {
+    let user = req.user as IUser;
+    if (user.authorization !== "admin") {
+      return res.status(403).json({ message: "insufficient permissions" });
+    }
     const users = await User.find();
     const excludeUsers = users.filter((user) => user.authorization !== "admin");
     res.status(200).json({ message: "success", users: excludeUsers });
@@ -32,6 +36,11 @@ const DeleteUser = async (req: Request, res: Response) => {
 
 const UpdateUser = async (req: Request, res: Response) => {
   try {
+    let userhere = req.user as IUser;
+
+    if (userhere.authorization !== "admin") {
+      return res.status(403).json({ message: "insufficient permissions" });
+    }
     const { email,currentemail, phone, address, profileImage } = req.body;
     const checkUser=await User.findOne({email:currentemail})
     let filename;

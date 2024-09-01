@@ -2,7 +2,6 @@ import express from "express";
 import UserController from "../controller/UserController";
 const router = express.Router();
 import passport = require("passport");
-import multer from "multer";
 import "./passport-setup/passport-setup";
 import upload from "../helper/fileuploadHelper";
 

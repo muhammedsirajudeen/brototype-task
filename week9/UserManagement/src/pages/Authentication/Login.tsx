@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   TokenResponse,
@@ -25,6 +25,7 @@ export default function Login(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const data = useLoaderData();
+  const [submit,setSubmit]=useState<boolean>(false)
   useEffect(() => {
     if (data) {
       navigate("/home");
@@ -33,7 +34,8 @@ export default function Login(): ReactElement {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     // Handle form submission
-    console.log(data);
+    // console.log(data);
+    setSubmit(true)
     const response = await axios.post(url + "/auth/credential/signin", {
       email: data.email,
       password: data.password,
@@ -50,6 +52,7 @@ export default function Login(): ReactElement {
     } else {
       toast(response.data.message);
     }
+    setSubmit(false)
   };
   const googleHandler = useGoogleLogin({
     onSuccess: async (codeResponse: TokenResponse) => {
@@ -124,6 +127,7 @@ export default function Login(): ReactElement {
             )}
 
             <button
+            disabled={submit}
               type="submit"
               className="h-10 w-72 bg-signin-button mt-5 text-white text-xs flex items-center justify-center"
             >
