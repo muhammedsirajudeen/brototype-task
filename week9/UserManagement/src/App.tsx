@@ -1,46 +1,30 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  
+  RouterProvider,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Authentication/Login";
 import Signup from "./pages/Authentication/Signup";
 import Home from "./pages/User/Home";
 import Profile from "./pages/User/Profile";
-import url from "./helper/backendUrl";
-import axios from "axios";
+import Dashboard from "./pages/Admin/Dashboard";
+
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 import { useAppDispatch } from "./store/hooks";
 import { setAuthenticated, setUser } from "./store/globalSlice";
-import Dashboard from "./pages/Admin/Dashboard";
-import userProps from "./types/userProps";
-export async function tokenVerifier(): Promise<userProps | null> {
-  const token = window.localStorage.getItem("token");
-  if (token) {
-    try {
-      const response = await axios.get(`${url}/auth/verify`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.data?.message === "success") {
-        return response.data.user as userProps;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error("Token verification failed", error);
-      return null;
-    }
-  }
-  return null;
-}
+import { tokenVerifier } from "./helper/tokenVerifier";
+import ErrorElement from "./Error/ErrorElement";
 
 // Define your routes
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Navbar />,
+    errorElement:<ErrorElement/>,
     children: [
       {
         index: true,
