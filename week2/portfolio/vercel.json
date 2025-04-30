@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://muhammedsirajudeen.in/$1",
+      "permanent": true
+    }
+  ]
+}
